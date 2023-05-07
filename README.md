@@ -1,12 +1,18 @@
-# Group Repository for COMP SCI 2207/7207 Web & Database Computing Web Application Project (2023 Semester 1) 
+# JART Group Repository for COMP SCI 2207/7207 Web & Database Computing Web Application Project (2023 Semester 1)
 
-Your group's shared repository for the WDC 2023 Web App Project. 
 
-Auto commit/push/sync to Github is disabled by default in this repository.  
-- Enable the GitDoc extension to use this fucntionality (either in your VSCode settings, or in the Dev Container settings) 
+### Resources:
 
-See [HERE](https://myuni.adelaide.edu.au/courses/85266/pages/2023-web-application-group-project-specification) for the project specification.
+- Project Specifications [HERE](https://myuni.adelaide.edu.au/courses/85266/pages/2023-web-application-group-project-specification)
+- Collaborating on Github Repos [HERE](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests)
+- Live share extension [HERE](https://code.visualstudio.com/learn/collaboration/live-share)
 
-We recommend using the 'Shared Repository Model (Branch & Pull)' to collaborate on your work in this single repostory.
-- You can read more about collaborating on GitHub repositories [HERE](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests)
-- When working on the same file at the same time, the 'Live Share' feature in VSCode can also help.
+
+### Install and Run:
+To setup the project after cloning, simply run ``npm install`` in the project directory. This will download all the necessary node packages needed to run the app.
+
+In order to start the webserver, run one of the following commands in the terminal:
+ - ``npm run start`` - this will start the server normally.
+ - ``npm run dev`` - This will start the server, and any time a file is changed in the `src/` directory, it will automatically be reloaded.
+
+The server will now be accessible in the browser at ``http://localhost:8080``.
