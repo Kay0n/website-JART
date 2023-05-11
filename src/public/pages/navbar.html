@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Navbar</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      width: 240px;
+      background-color: #343a40;
+      padding-top: 60px;
+    }
+
+    .sidebar .nav-link {
+      color: #f8f9fa;
+    }
+
+    @media (max-width: 992px) {
+      .sidebar {
+        display: none;
+      }
+    }
+
+    .navbar-toggler {
+      border: none;
+    }
+
+    /* .navbar-toggler-icon {
+      background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'><path stroke='rgba(255, 255, 255)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/></svg>");
+    } */
+  </style>
+</head>
+<body>
+  <div class="sidebar d-none d-lg-block">
+    <ul class="nav flex-column">
+      <li class="nav-item">
+        <a class="nav-link" href="#"><span class="fas fa-compass me-2"></span>Explore</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#"><span class="fas fa-users me-2"></span>My Clubs</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#"><span class="fas fa-building me-2"></span>Managed Clubs</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#"><span class="fas fa-cog me-2"></span>Settings</a>
+      </li>
+    </ul>
+  </div>
+
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid w-100">
+      <a class="navbar-brand" href="#">
+        <img src="images/site-icon.png" alt="Site Icon" width="30" class="img-fluid">
+      </a>
+
+      <!-- <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse w-100" id="navbarSupportedContent"> -->
+        <form class="d-flex mx-auto w-75">
+          <input class="form-control me-2" type="search" placeholder="Search Clubs" aria-label="Search" style="width: 400px;">
+          <button class="btn btn-outline-primary" type="submit">
+            <span class="fas fa-search"></span>
+          </button>
+        </form>
+        <div class="ms-auto">
+            <ul class="navbar-nav w-100">
+                <li class="nav-item">
+                    <a class="nav-link" href="#"><span class="fas fa-cog fa-lg"></span></a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                    <i class="fas fa-user-circle fa-2xl"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+      <!-- </div> -->
+    </div>
+  </nav>
+</body>
+</html>

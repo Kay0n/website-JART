@@ -3,8 +3,8 @@ const router = express.Router();
 
 
 // login page route
-router.get("/register", (req, res) => {
-    res.sendFile("register.js");
+router.get("/login", (req, res) => {
+    res.sendFile("login.js");
 });
 
 

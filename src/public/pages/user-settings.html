@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="eng">
+<head>
+  <title>User Profile</title>
+  <!-- Include Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+  <div class="container mt-5">
+    <h1>User Profile</h1>
+    <hr>
+    <h3>Account Information</h3>
+    <form>
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" class="form-control" id="name" placeholder="Change your name">
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" class="form-control" id="email" placeholder="Change your email">
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" class="form-control" id="password" placeholder="Change your password">
+      </div>
+      <button type="submit" class="btn btn-success">Save</button>
+    </form>
+    <hr>
+    <h3>My Clubs</h3>
+    <ul class="list-group">
+      <li class="list-group-item">
+        <div class="d-flex justify-content-between">
+          <span>Club 1</span>
+          <button type="button" class="btn btn-sm btn-danger">Unsubscribe</button>
+        </div>
+      </li>
+      <li class="list-group-item">
+        <div class="d-flex justify-content-between">
+          <span>Club 2</span>
+          <button type="button" class="btn btn-sm btn-danger">Unsubscribe</button>
+        </div>
+      </li>
+      <!-- Add more list items for each subscribed club -->
+    </ul>
+  </div>
+
+  <!-- Include Bootstrap JS -->
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>
