@@ -9,7 +9,7 @@
 
 
 ### Install and Run:
-To setup the project after cloning, simply run ``npm install`` in the project directory. This will download all the necessary node packages needed to run the app. This assumes that node.js is installed.
+To setup the project after cloning, simply run ``npm install`` in the project directory. This will download all the necessary node packages needed to run the app. This assumes that node.js has already been installed.
 
 In order to start the webserver, run one of the following commands in the terminal:
  - ``npm run start`` - this will start the server normally.
