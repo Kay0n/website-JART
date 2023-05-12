@@ -1,50 +1,42 @@
 <!DOCTYPE html>
-<html lang="eng">
+<html lang="en">
 <head>
-  <title>User Profile</title>
-  <!-- Include Bootstrap CSS -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+	<title>User Profile</title>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
-  <div class="container mt-5">
-    <h1>User Profile</h1>
-    <hr>
-    <h3>Account Information</h3>
-    <form>
-      <div class="form-group">
-        <label for="name">Name</label>
-        <input type="text" class="form-control" id="name" placeholder="Change your name">
-      </div>
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input type="email" class="form-control" id="email" placeholder="Change your email">
-      </div>
-      <div class="form-group">
-        <label for="password">Password</label>
-        <input type="password" class="form-control" id="password" placeholder="Change your password">
-      </div>
-      <button type="submit" class="btn btn-success">Save</button>
-    </form>
-    <hr>
-    <h3>My Clubs</h3>
-    <ul class="list-group">
-      <li class="list-group-item">
-        <div class="d-flex justify-content-between">
-          <span>Club 1</span>
-          <button type="button" class="btn btn-sm btn-danger">Unsubscribe</button>
-        </div>
-      </li>
-      <li class="list-group-item">
-        <div class="d-flex justify-content-between">
-          <span>Club 2</span>
-          <button type="button" class="btn btn-sm btn-danger">Unsubscribe</button>
-        </div>
-      </li>
-      <!-- Add more list items for each subscribed club -->
-    </ul>
-  </div>
-
-  <!-- Include Bootstrap JS -->
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+	<div class="container mt-5">
+		<h1>User Profile</h1>
+		<hr>
+		<h3>Account Information</h3>
+		<form>
+			<div class="mb-3">
+				<label for="name" class="form-label">Name</label>
+				<input type="text" class="form-control" id="name" placeholder="Change your name">
+			</div>
+			<div class="mb-3">
+				<label for="email" class="form-label">Email</label>
+				<input type="email" class="form-control" id="email" placeholder="Change your email">
+			</div>
+			<div class="mb-3">
+				<label for="password" class="form-label">Password</label>
+				<input type="password" class="form-control" id="password" placeholder="Change your password">
+			</div>
+			<button type="submit" class="btn btn-success">Save</button>
+		</form>
+		<hr>
+		<h3>My Clubs</h3>
+		<ul class="list-group">
+			<li class="list-group-item d-flex justify-content-between">
+				<span>Club 1</span>
+				<button type="button" class="btn btn-sm btn-danger">Unsubscribe</button>
+			</li>
+			<li class="list-group-item d-flex justify-content-between">
+				<span>Club 2</span>
+				<button type="button" class="btn btn-sm btn-danger">Unsubscribe</button>
+			</li>
+		</ul>
+	</div>
 </body>
 </html>
