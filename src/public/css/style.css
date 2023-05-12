@@ -1,0 +1,25 @@
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 240px;
+    background-color: #343a40;
+    padding-top: 60px;
+}
+
+.sidebar .nav-link {
+    color: #f8f9fa;
+}
+
+
+
+#main-content {
+    position: relative;
+    left: 16em;
+}
+
+.container {
+    margin-left: 0;
+    margin-right: 0;
+}
