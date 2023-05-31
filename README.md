@@ -11,16 +11,19 @@
 ### Install and Run:
 To setup the project after cloning, simply run ``npm install`` in the project directory. This will download all the necessary node packages needed to run the app. This assumes that node.js has already been installed.
 
-In order to start the webserver, run one of the following commands in the terminal:
- - ``npm run start`` - this will start the server normally.
- - ``npm run dev`` - This will start the server, and any time a file is changed in the `src/` directory, it will automatically be reloaded.
+In order to start the webserver, first setup the mysql server by running the following in the terminal;:
+ - ``npm run dbsetup`` - This will reset and initialize the mysql server with the default schema **WARNING:** *All data will be lost.*
 
+Then run one of the following commands in the terminal:
+ - ``npm run start`` - This will start the server normally.
+ - ``npm run dev`` - This will start the server in watch mode. Any time a file is changed in the `src/` directory, the server will reload. Any changes must be saved in order to come into effect.
 The server will now be accessible in the browser at ``http://localhost:8080``.
 
 
 ### Directory Structure
 
- - `config` - contains configuration files for application settings, such as database connections.
- - `public` - stores static assets (e.g., CSS, JavaScript, images) accessible directly by clients.
- - `routes` - contains files defining routes and associated logic for handling requests.
- - `views`  - holds templates or html files for sending to the client.
+ - `config` - Contains config files for application settings, such as database connections and various libraries.
+ - `public` - Stores static assets (e.g., CSS, JavaScript, images) accessible directly by clients.
+ - `routes` - Contains any files defining routes and associated logic for handling requests.
+ - `pages`  - Contains any .html files to send to the client through routes
+
