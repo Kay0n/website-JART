@@ -1,3 +1,9 @@
+/**
+ * This file configures passport.js strategies for handling user authentiation.
+ * These are called by passport.authenticate() in other parts of the project.
+ * It ultimatley allows the user to sign in localy or with google, and persist that authentication.
+ */
+
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const GoogleStrategy = require("passport-google-oauth2").Strategy;
@@ -13,70 +19,69 @@ const localOptions = {
 const googleOptions = {
     clientID: "762330984825-6du48rjium3fuq8118ketappimpeqpvj.apps.googleusercontent.com" ,
     clientSecret: "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",
-    callbackURL: "http://localhost:8080/auth/google",
-    passReqToCallback: true
+    callbackURL: "http://localhost:8080/auth/google"
 };
 
 
-// called to verify if user is valid
-const authUserLocal = (email, password, done) => {
 
-    console.log("authUserLocal called");
+// verify if local user is valid
+const authLocal = async (email, password, done) => {
 
-    const user = database.getUser(email, "email");
+    const user = await database.getUserFromEmail(email);
 
-    // user not found
     if (!user) {
         return done(null, false, { message: "User Not Found" });
     }
 
-    // user is google account
-    if(user.alt_signin_id){
-        return done(null, false, { message: "User is google" });
-    }
+    const passwordIncorrect = (user.password === null || user.password !== password);
 
-    // password incorrect
-    if (user.password !== password) {
+    if (passwordIncorrect) {
         return done(null, false, { message: "Incorrect Password" });
     }
 
-    // authenticate user
-    done(null, user);
+    return done(null, user);
 
 };
 
 
 
-const authUserGoogle = (request, accessToken, refreshToken, profile, done) => {
+// verify if google user is valid, will create user if non-existant
+const authGoogle = async (request, accessToken, refreshToken, profile, done) => {
 
-    const user = database.getUser(profile.email, "email");
+    const user = await database.getUserFromEmail(profile.email);
 
-    // new user, create account
-    if (!user) {
-        return done(null, false, { message: "User Not Found" });
-    }
-
-
-    // authenticate user
-    done(null, user);
-};
-
-
-// serialize user to session
-passport.serializeUser((user, done) => {
-    done(null, user.id);
-});
-passport.deserializeUser((userId, done) => {
-    let user = database.getUser(userId, "id");
     if(user){
-        done(null, user);
-        return;
+        return done(null, user);
     }
-    done(null, false);
+
+    const newUser = await database.createUser(
+        profile.email,
+        null,
+        profile.given_name,
+        profile.family_name
+    );
+
+    return done(null, newUser);
+};
+
+
+
+// used by passport.js to serealize the user between session and req object
+passport.serializeUser((user, done) => {
+    done(null, user.user_id);
+});
+passport.deserializeUser(async (user_id, done) => {
+    const user = await database.getUserFromID(user_id)
+        .catch((err) => { done(err, null); });
+    if(!user){
+        return done("Error: could not find user in database when deserializing", null);
+    }
+    return done(null, user);
 });
 
 
-// export
-passport.use(new LocalStrategy(localOptions, authUserLocal));
-passport.use(new GoogleStrategy(googleOptions, authUserGoogle));
+
+
+passport.use(new LocalStrategy(localOptions, authLocal));
+passport.use(new GoogleStrategy(googleOptions, authGoogle));
 module.exports = passport;
