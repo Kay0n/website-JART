@@ -8,8 +8,8 @@
     "start": "node src/app.js",
     "predev": "service mysql start",
     "dev": "nodemon --watch src src/app.js",
-    "predbsetup": "service mysql start",
-    "dbsetup" : "mysql < schema.sql;"
+    "presetup": "service mysql start",
+    "setup" : "mysql < schema.sql;"
   },
   "keywords": [],
   "author": "",

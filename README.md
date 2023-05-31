@@ -12,7 +12,7 @@
 To setup the project after cloning, simply run ``npm install`` in the project directory. This will download all the necessary node packages needed to run the app. This assumes that node.js has already been installed.
 
 In order to start the webserver, first setup the mysql server by running the following in the terminal;:
- - ``npm run dbsetup`` - This will reset and initialize the mysql server with the default schema **WARNING:** *All data will be lost.*
+ - ``npm run setup`` - This will reset and initialize the mysql server with the default schema **WARNING:** *All existing data will be lost.*
 
 Then run one of the following commands in the terminal:
  - ``npm run start`` - This will start the server normally.
@@ -27,3 +27,5 @@ The server will now be accessible in the browser at ``http://localhost:8080``.
  - `routes` - Contains any files defining routes and associated logic for handling requests.
  - `pages`  - Contains any .html files to send to the client through routes
 
+### Dev Notes
+ - If you recieve any type errors resembling `Property 'given_name' does not exist on type 'User'`, just open the `types.ts` file. VSCode should reload all typechecking for the User object and this should go away.
