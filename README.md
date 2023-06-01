@@ -29,3 +29,4 @@ The server will now be accessible in the browser at ``http://localhost:8080``.
 
 ### Dev Notes
  - If you recieve any type errors resembling `Property 'given_name' does not exist on type 'User'`, just open the `types.ts` file. VSCode should reload all typechecking for the User object and this should go away.
+ - If you get an error like this in `app.js`, close and reopen VSCode. `Property 'use' does not exist on type 'Function'.`

@@ -7,6 +7,7 @@
 const express = require("express");
 const passport = require("../configs/passport.js");
 const database = require("../configs/database.js");
+const passwordUtils = require("../configs/bcrypt.js");
 const router = express.Router();
 
 
@@ -55,9 +56,11 @@ router.post("/register", async (req, res, next) => {
         return;
     }
 
+    const hashedPassword = await passwordUtils.hashPassword(req.body.password);
+
     const newUser = await database.createUser(
         req.body.email,
-        req.body.password,
+        hashedPassword,
         req.body.given_name,
         req.body.family_name
     );

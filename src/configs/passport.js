@@ -7,7 +7,8 @@
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const GoogleStrategy = require("passport-google-oauth2").Strategy;
-const database = require("./database"); // using fake database to test user login and logout
+const database = require("./database");
+const passwordUtils = require("./bcrypt.js");
 
 
 
@@ -26,6 +27,7 @@ const googleOptions = {
 
 // verify if local user is valid
 const authLocal = async (email, password, done) => {
+    // TODO: use connect-flash for user feedback
 
     const user = await database.getUserFromEmail(email);
 
@@ -33,13 +35,18 @@ const authLocal = async (email, password, done) => {
         return done(null, false, { message: "User Not Found" });
     }
 
-    const passwordIncorrect = (user.password === null || user.password !== password);
-
-    if (passwordIncorrect) {
+    if(user.password === null){
         return done(null, false, { message: "Incorrect Password" });
     }
 
-    return done(null, user);
+    const passwordsMatch = await passwordUtils.comparePasswords(password, user.password);
+
+    if (passwordsMatch) {
+        return done(null, user);
+    }
+
+    return done(null, false, { message: "Incorrect Password" });
+
 
 };
 
@@ -78,7 +85,6 @@ passport.deserializeUser(async (user_id, done) => {
     }
     return done(null, user);
 });
-
 
 
 
