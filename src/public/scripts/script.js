@@ -24,10 +24,9 @@ async function handleLoginSubmit(event){
         window.location.href = "/";
         return;
     }
-    const responseJSON = await response.json();
 
+    const responseJSON = await response.json();
     const errorElement = document.getElementById("form-error");
     // @ts-ignore
     errorElement.textContent = responseJSON.message;
-
 }

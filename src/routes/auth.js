@@ -5,9 +5,11 @@
  */
 
 const express = require("express");
+const validator = require("express-validator");
 const passport = require("../configs/passport.js");
 const database = require("../configs/database.js");
 const passwordUtils = require("../configs/bcrypt.js");
+const schemas = require("../configs/validationSchemas.js");
 const router = express.Router();
 
 
@@ -34,7 +36,13 @@ router.get("/logout", (req, res, next) => {
 
 
 
-router.post("/login", function(req, res, next) {
+router.post("/login", validator.checkSchema(schemas.login), function(req, res, next) {
+
+    const errors = validator.validationResult(req);
+    if (!errors.isEmpty()) {
+        const errorMessages = errors.array().map((error) => error.msg);
+        return res.status(400).json({ message: errorMessages });
+    }
 
     passport.authenticate("local", { failureMessage: true }, (err, user, info) => {
 
