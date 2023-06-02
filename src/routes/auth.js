@@ -34,15 +34,21 @@ router.get("/logout", (req, res, next) => {
 
 
 
-// login auth
-router.post(
-    "/login",
-    passport.authenticate("local", {
-        failureMessage: true,
-        failureRedirect: "/",
-        successRedirect: "/"
-    })
-);
+router.post("/login", function(req, res, next) {
+
+    passport.authenticate("local", { failureMessage: true }, (err, user, info) => {
+
+        // auth failed
+        if (err || !user) {
+            return res.status(401).json({ message: info.message });
+        }
+
+        req.logIn(user, function(error) {
+            return res.redirect("/");
+        });
+        return info;
+    })(req, res, next);
+});
 
 
 

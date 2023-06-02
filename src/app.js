@@ -5,6 +5,10 @@ const express = require("express");
 const session = require("./configs/session");
 const passport = require("./configs/passport.js");
 const database = require("./configs/database.js");
+
+
+
+// routers
 const authRouter = require("./routes/auth.js");
 
 

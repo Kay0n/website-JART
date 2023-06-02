@@ -10,7 +10,10 @@ const sessionMiddleware = session({
     name: "wdcproject", // name of session
     secret: "secretKey5", // key used to authenticate session cookie
     saveUninitialized: false, // save if not yet initialized
-    cookie: { maxAge: dayInMilliseconds }, // settings for cookie created on client
+    cookie: { // settings for cookie created on client
+        maxAge: dayInMilliseconds,
+        sameSite: "lax"
+    },
     resave: false // save even if never modified
 });
 

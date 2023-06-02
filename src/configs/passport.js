@@ -27,7 +27,6 @@ const googleOptions = {
 
 // verify if local user is valid
 const authLocal = async (email, password, done) => {
-    // TODO: use connect-flash for user feedback
 
     const user = await database.getUserFromEmail(email);
 
@@ -42,12 +41,10 @@ const authLocal = async (email, password, done) => {
     const passwordsMatch = await passwordUtils.comparePasswords(password, user.password);
 
     if (passwordsMatch) {
+
         return done(null, user);
     }
-
     return done(null, false, { message: "Incorrect Password" });
-
-
 };
 
 
