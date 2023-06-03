@@ -7,7 +7,7 @@
     "prestart": "service mysql start",
     "start": "node src/app.js",
     "predev": "service mysql start",
-    "dev": "nodemon --watch src src/app.js",
+    "dev": "nodemon --watch src -e '*' src/app.js",
     "presetup": "service mysql start",
     "setup": "mysql < schema.sql;"
   },

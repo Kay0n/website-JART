@@ -89,5 +89,33 @@ database.createUser = async (email, pass, given_name, family_name, is_admin = 0)
 };
 
 
+database.addMember = async (name, user_id) => {
+    const club_query = "SELECT club_id FROM clubs WHERE name = ?;";
+    let get_club_id = await database.query(club_query, [name]);
+    let clubs_id = get_club_id[0][0].club_id;
+
+    const sql = "INSERT INTO club_memberships (email_notify_posts, email_notify_events, is_manager, user_id, club_id) VALUES (?, ?, ?, ?, ?);";
+    await database.query(sql, [false, false, false, user_id, clubs_id]);
+};
+
+
+database.addManager = async (name, user_id) => {
+    const club_query = "SELECT club_id FROM clubs WHERE name = ?;";
+    let get_club_id = await database.query(club_query, [name]);
+    let clubs_id = get_club_id[0][0].club_id;
+
+
+    const membership_query = "SELECT * FROM club_memberships WHERE user_id = ? AND club_id = ?;";
+    let has_membership = (await database.query(membership_query, [user_id, clubs_id]))[0][0];
+
+    if(has_membership){
+        const sql = "UPDATE club_memberships SET is_manager = TRUE WHERE user_id = ? AND club_id = ?;";
+        await database.query(sql, [user_id, clubs_id]);
+    } else {
+        const sql = "INSERT INTO club_memberships (email_notify_posts, email_notify_events, is_manager, user_id, club_id) VALUES (?, ?, ?, ?, ?);";
+        await database.query(sql, [false, false, true, user_id, clubs_id]);
+    }
+};
+
 
 module.exports = database;

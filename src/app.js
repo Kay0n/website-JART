@@ -5,7 +5,10 @@ const express = require("express");
 const session = require("./configs/session");
 const passport = require("./configs/passport.js");
 const database = require("./configs/database.js");
+
+
 const authRouter = require("./routes/auth.js");
+const queryRouter = require("./routes/query.js");
 
 
 
@@ -32,6 +35,7 @@ app.get("/", (req,res) => {
     if(req.isAuthenticated()){
         authMessage = `
             <h2>Authenticated! Welcome ${req.user.given_name}</h2>
+            <a href="/query">Query tester</a><br>
             <a href="/auth/logout">Logout</a>
         `;
     } else {
@@ -49,6 +53,7 @@ app.get("/", (req,res) => {
 
 // load routers
 app.use("/auth", authRouter);
+app.use("/query", queryRouter);
 
 
 
