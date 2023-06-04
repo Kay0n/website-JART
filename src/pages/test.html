@@ -19,6 +19,13 @@
                     method: 'POST'
                 });
             }
+
+            function rsvp(){
+                console.log("test complete");
+                fetch("/query/rsvp", {
+                    method: 'POST'
+                });
+            }
         </script>
     </head>
     <body>
@@ -31,33 +38,94 @@
                         <form action="/query/addClub" method="post">
                             <div class="form-group mb-3">
                                 <label for="postTitle3">Title</label>
-                                <input type="text" class="form-control" id="postTitle3" name="title" placeholder="Enter title">
+                                <input type="text" class="form-control" id="postTitle3" name="title" placeholder="Enter title" required>
                             </div>
                             <div class="form-group mb-3">
                                 <label for="postContent3">Club Description</label>
-                                <textarea class="form-control" id="postContent3" rows="6" name="description" placeholder="Enter description"></textarea>
+                                <textarea class="form-control" id="postContent3" rows="6" name="description" placeholder="Enter description" required></textarea>
                             </div>
                             <button type="submit" class="btn btn-primary">Create New Club</button>
                         </form>
                     </div>
                 </div>
-            </div>
-        </div>
-        <br>
-        <button type="button" onclick="manager()">Add manager</button>
-        <br>
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-body">
-                    <!-- club-name is vue var??? -->
-                    <h5 class="card-title">Test</h5>
-                    <p class="card-text"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras eget arcu ac libero varius
-                        pharetra ullamcorper vel leo. Ut nibh magna...
-                    </p>
-                    <button type="button" onclick="member()">Join club</button>
+                <br>
+                <button type="button" onclick="manager()">Add manager</button>
+                <br>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <!-- club-name is vue var??? -->
+                            <h5 class="card-title">Test</h5>
+                            <p class="card-text"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras eget arcu ac libero varius
+                                pharetra ullamcorper vel leo. Ut nibh magna...
+                            </p>
+                            <button type="button" onclick="member()">Join club</button>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="col-md-4">
+                    <div class="box border p-3 rounded">
+                        <span class="close float-end me-2" aria-hidden="true" style="color:#888;font-size: x-large;">&times;</span>
+                        <h1>Create Post</h1>
+                        <form action="/query/addPost" method="post">
+                            <div class="form-group mb-3">
+                                <label for="postTitle1">Title</label>
+                                <input type="text" class="form-control" id="postTitle1" name="title" placeholder="Enter title" required>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="postContent1">Post Content</label>
+                                <textarea class="form-control" id="postContent1" rows="6" name="content" placeholder="Enter post content" required></textarea>
+                            </div>
+                            <div class="form-check form-switch mt-3 mb-3">
+                                <input class="form-check-input" type="checkbox" name="private" id="privatePost">
+                                <label class="form-check-label" for="privatePost">Private</label>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Create Post</button>
+                        </form>
+                    </div>
+                </div>
+                <br>
+                <div class="col-md-4">
+                    <div class="box border p-3 rounded">
+                        <span class="close float-end me-2" aria-hidden="true" style="color:#888;font-size: x-large;">&times;</span>
+                        <h1>Create Event</h1>
+                        <form action="/query/addEvent" method="post">
+                            <div class="form-group mb-3">
+                                <label for="postTitle2">Title</label>
+                                <input type="text" class="form-control" id="postTitle2" name="title" placeholder="Enter title" required>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="postContent2">Event Description</label>
+                                <textarea class="form-control" id="postContent2" rows="6" name="description" placeholder="Enter description" required></textarea>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="postContent2">Event Location</label>
+                                <textarea class="form-control" id="postLocation" rows="6" name="location" placeholder="Enter location"></textarea>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="postDate2">Choose Date</label>
+                                <input type="date" class="form-control" name="date" id="postDate2" required>
+                            </div>
+                            <div class="form-check form-switch mt-3 mb-3">
+                                <input class="form-check-input" type="checkbox" name="private" id="privateEvent">
+                                <label class="form-check-label" for="privateEvent">Private</label>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Create Event</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <h3>Upcoming Events</h3>
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title">Event Title</h5>
+                            <p class="card-text">Event Description</p>
+                            <button type="button" onclick="rsvp()">RSVP</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <br>
     </body>
 </html>
