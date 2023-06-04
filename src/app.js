@@ -9,7 +9,9 @@ const database = require("./configs/database.js");
 
 
 // routers
-const authRouter = require("./routes/auth.js");
+const loginRouter = require("./routes/login.js");
+const registerRouter = require("./routes/register");
+
 
 
 
@@ -36,13 +38,13 @@ app.get("/", (req,res) => {
     if(req.isAuthenticated()){
         authMessage = `
             <h2>Authenticated! Welcome ${req.user.given_name}</h2>
-            <a href="/auth/logout">Logout</a>
+            <a href="/logout">Logout</a>
         `;
     } else {
         authMessage = `
             <h2>Not Authenticated.</h2>
-            <a href="/auth/login">Sign in</a><br>
-            <a href="/auth/register">Register</a>
+            <a href="/login">Sign in</a><br>
+            <a href="/register">Register</a>
         `;
     }
 
@@ -52,7 +54,8 @@ app.get("/", (req,res) => {
 
 
 // load routers
-app.use("/auth", authRouter);
+app.use(loginRouter);
+app.use(registerRouter);
 
 
 

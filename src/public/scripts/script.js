@@ -1,32 +1,108 @@
 
 
-async function handleLoginSubmit(event){
+// @ts-ignore
+// eslint-disable-next-line , no-undef
+const VueInstance = Vue;
 
-    event.preventDefault();
-    const form = document.getElementById("login-form");
 
-    const formData = {
-        // @ts-ignore
-        email: form.elements.email.value,
-        // @ts-ignore
-        password: form.elements.password.value
-    };
 
-    const response = await fetch("/auth/login", {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
+const loginApp = VueInstance.createApp({
+    data() {
+        return {
+            email: "",
+            password: "",
+            errorMessages: []
+        };
+    },
+    methods: {
+        hasError(field) {
+            return this.errorMessages.some((msg) => msg[field]);
         },
-        body: JSON.stringify(formData)
-    });
 
-    if(response.ok){
-        window.location.href = "/";
-        return;
+        getErrorMessage(field) {
+            const errorObj = this.errorMessages.find((msg) => msg[field]);
+            return errorObj ? errorObj[field] : "";
+        },
+
+        async submitForm() {
+
+            const formBody = {
+                email: this.email,
+                password: this.password
+            };
+
+            const response = await fetch("/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(formBody)
+            });
+
+            if(response.ok){
+                window.location.href = "/";
+                return;
+            }
+
+            const errorMessagesArray = (await response.json()).errorMessages;
+            this.errorMessages = errorMessagesArray;
+        }
     }
+});
 
-    const responseJSON = await response.json();
-    const errorElement = document.getElementById("form-error");
-    // @ts-ignore
-    errorElement.textContent = responseJSON.message;
-}
+
+
+const registerApp = VueInstance.createApp({
+    data() {
+        return {
+            given_name: "",
+            family_name: "",
+            email: "",
+            password: "",
+            confirmPassword: "",
+            errorMessages: []
+        };
+    },
+    methods: {
+        hasError(field) {
+            return this.errorMessages.some((msg) => msg[field]);
+        },
+
+        getErrorMessage(field) {
+            const errorObj = this.errorMessages.find((msg) => msg[field]);
+            return errorObj ? errorObj[field] : "";
+        },
+
+        async submitForm() {
+
+
+            const response = await fetch("/register", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    given_name: this.given_name,
+                    family_name: this.family_name,
+                    email: this.email,
+                    password: this.password,
+                    confirmPassword: this.confirmPassword
+                })
+            });
+
+            if(response.ok){
+                window.location.href = "/";
+                return;
+            }
+
+            const errorMessagesArray = (await response.json()).errorMessages;
+            this.errorMessages = errorMessagesArray;
+
+        }
+    }
+});
+
+
+
+loginApp.mount("#login-form");
+registerApp.mount("#register-form");

@@ -31,20 +31,20 @@ const authLocal = async (email, password, done) => {
     const user = await database.getUserFromEmail(email);
 
     if (!user) {
-        return done(null, false, { message: "User Not Found" });
+        return done(null, false, { errorMessages: [{ email: "User Not Found" }] });
     }
 
     if(user.password === null){
-        return done(null, false, { message: "Incorrect Password" });
+        return done(null, false, { errorMessages: [{ password: "Invalid password" }] });
     }
 
     const passwordsMatch = await passwordUtils.comparePasswords(password, user.password);
 
     if (passwordsMatch) {
-
         return done(null, user);
     }
-    return done(null, false, { message: "Incorrect Password" });
+
+    return done(null, false, { errorMessages: [{ password: "Invalid password" }] });
 };
 
 
