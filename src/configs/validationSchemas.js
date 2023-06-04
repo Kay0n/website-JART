@@ -1,5 +1,3 @@
-const expressValidator = require("express-validator");
-
 
 
 const loginSchema = {

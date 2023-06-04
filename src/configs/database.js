@@ -5,7 +5,7 @@
  *
  */
 
-const mysql = require('mysql2/promise');
+const mysql = require("mysql2/promise");
 const database = {};
 
 // create pool of connections for app use

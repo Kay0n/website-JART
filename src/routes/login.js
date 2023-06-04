@@ -39,10 +39,10 @@ router.post("/login", validator.checkSchema(schemas.loginSchema), (req, res, nex
 
 
 // google login and register
-const googleAuthCB = passport.authenticate('google', {
-    scope: ['profile', 'email'],
-    successRedirect: '/',
-    failureRedirect: '/'
+const googleAuthCB = passport.authenticate("google", {
+    scope: ["profile", "email"],
+    successRedirect: "/",
+    failureRedirect: "/"
 });
 router.get("/auth/google",googleAuthCB);
 router.post("/auth/google",googleAuthCB);
@@ -53,7 +53,7 @@ router.post("/auth/google",googleAuthCB);
 router.get("/logout", (req, res, next) => {
     req.logout((err) => {});
     res.clearCookie("wdcproject");
-    res.redirect('/');
+    res.redirect("/");
 });
 
 
