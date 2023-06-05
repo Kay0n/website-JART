@@ -118,4 +118,15 @@ database.addManager = async (name, user_id) => {
 };
 
 
+
+database.removeMember = async (name, user_id) => {
+    const club_query = "SELECT club_id FROM clubs WHERE name = ?;";
+    let get_club_id = await database.query(club_query, [name]);
+    let clubs_id = get_club_id[0][0].club_id;
+
+    const sql = "DELETE FROM club_memberships WHERE user_id = ? AND club_id = ?;";
+    await database.query(sql, [user_id, clubs_id]);
+};
+
+
 module.exports = database;

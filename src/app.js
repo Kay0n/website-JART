@@ -35,7 +35,8 @@ app.get("/", (req,res) => {
     if(req.isAuthenticated()){
         authMessage = `
             <h2>Authenticated! Welcome ${req.user.given_name}</h2>
-            <a href="/query">Query tester</a><br>
+            <a href="/query/user">User query tester</a><br>
+            <a href="/query/manager">Manager query tester</a><br>
             <a href="/auth/logout">Logout</a>
         `;
     } else {
