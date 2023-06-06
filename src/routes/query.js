@@ -188,6 +188,7 @@ router.post("/deletePost", async (req, res, next) => {
     let get_club_id = await database.query(club_query, ["g"]);
     let clubs_id = get_club_id[0][0].club_id;
 
+    // check if manager
     const manager_query = "SELECT is_manager FROM club_memberships WHERE user_id = ? AND club_id = ?;";
     let manager_check = (await database.query(manager_query, [req.user.user_id, clubs_id]))[0][0];
 
@@ -206,6 +207,45 @@ router.post("/deletePost", async (req, res, next) => {
     return res.redirect("/query/manager");
 });
 
+// delete manager
+router.post("/deleteManager", async (req, res, next) => {
+    // need to make dynamic
+    const club_query = "SELECT club_id FROM clubs WHERE name = ?;";
+    let get_club_id = await database.query(club_query, ["g"]);
+    let clubs_id = get_club_id[0][0].club_id;
+
+    // need to make dynamic
+    // check if manager
+    const manager_query = "SELECT is_manager FROM club_memberships WHERE user_id = ? AND club_id = ?;";
+    let manager_check = (await database.query(manager_query, [4, clubs_id]))[0][0];
+
+    if(manager_check){
+        if(manager_check.is_manager){
+            // need to make dynamic
+            const membership_query = "SELECT * FROM club_memberships WHERE user_id = ? AND club_id = ?;";
+            let has_membership = (await database.query(membership_query, [4, clubs_id]))[0][0];
+
+            if(has_membership){
+                // need to make dynamic
+                const sql = "UPDATE club_memberships SET is_manager = FALSE WHERE user_id = ? AND club_id = ?;";
+                await database.query(sql, [4, clubs_id]);
+            } else {
+                console.log("The user is not a manager");
+            }
+        } else {
+            console.log("You are not a manager");
+        }
+    } else {
+        console.log("You are not a member");
+    }
+
+    return res.redirect("/query/manager");
+});
+
+
+
+// eslint-disable-next-line max-len
+// delete rsvp, delete event,
 
 // set routes and export
 module.exports = router;

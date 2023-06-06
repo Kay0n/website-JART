@@ -128,3 +128,5 @@ CREATE TABLE event_rsvps (
     FOREIGN KEY (event_id) REFERENCES club_events(event_id) ON DELETE CASCADE,
     FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
+
+-- create test queries
