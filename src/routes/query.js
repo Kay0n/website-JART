@@ -32,19 +32,7 @@ router.get("/manager", (req, res) => {
 
 
 
-
-
-// === get requests ===
-// get clubs
-router.get("/getClubs", async (req, res, next) => {
-    let sql = `SELECT * FROM clubs ORDER BY number_members;`;
-
-    const result = await database.query(sql, []);
-    const rows = result[0];
-
-    res.json(rows);
-});
-
+// === Multiple person routes (Manager, user and potentially non-user) ===
 // get club posts
 router.get("/getPosts", async (req, res, next) => {
     let sql = `SELECT * FROM club_posts ORDER BY creation_time DESC;`;
@@ -67,9 +55,20 @@ router.get("/getEvents", async (req, res, next) => {
 
 
 
+// === User and non-user routes ===
+// get clubs
+router.get("/getClubs", async (req, res, next) => {
+    let sql = `SELECT * FROM clubs ORDER BY number_members;`;
+
+    const result = await database.query(sql, []);
+    const rows = result[0];
+
+    res.json(rows);
+});
 
 
-// === post requests ===
+
+// === User routes ===
 // add club
 router.post("/addClub", async (req, res, next) => {
     const sql = "INSERT INTO clubs (name, description, number_members) VALUES (?, ?, ?);";
@@ -88,6 +87,33 @@ router.post("/addMember", async (req, res, next) => {
     return res.redirect("/query/user");
 });
 
+// rsvp for event
+router.post("/rsvp", async (req, res, next) => {
+    // need to make dynamic
+    const sql = "INSERT INTO event_rsvps (event_id, user_id) VALUES (?, ?);";
+    await database.query(sql,
+        [1, req.user.user_id]
+    );
+    console.log("RSVP");
+
+    return res.redirect("/query/user");
+});
+
+
+
+// === User and manager routes ===
+// delete user from club
+router.post("/deleteMember", async (req, res, next) => {
+    // will need to get the user_id via first name look up for club manager
+    // need to make dynamic
+    database.removeMember("j", req.user.user_id);
+
+    return res.redirect("/");
+});
+
+
+
+// === Manager routes ===
 // add club manager
 router.post("/addManager", async (req, res, next) => {
     // need to make dynamic
@@ -127,29 +153,6 @@ router.post("/addEvent", async (req, res, next) => {
     );
 
     return res.redirect("/query/manager");
-});
-
-// rsvp for event
-router.post("/rsvp", async (req, res, next) => {
-    // need to make dynamic
-    const sql = "INSERT INTO event_rsvps (event_id, user_id) VALUES (?, ?);";
-    await database.query(sql,
-        [1, req.user.user_id]
-    );
-    console.log("RSVP");
-
-    return res.redirect("/query/user");
-});
-
-
-
-// delete user from club
-router.post("/deleteMember", async (req, res, next) => {
-    // will need to get the user_id via first name look up for club manager
-    // need to make dynamic
-    database.removeMember("j", req.user.user_id);
-
-    return res.redirect("/");
 });
 
 // delete club
