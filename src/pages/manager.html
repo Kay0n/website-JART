@@ -13,6 +13,12 @@
                 });
             }
 
+            function deleteManager(){
+                fetch("/query/deleteManager", {
+                    method: 'POST'
+                });
+            }
+
             function deleteMember(){
                 fetch("/query/deleteMember", {
                     method: 'POST'
@@ -101,6 +107,8 @@
                 </div>
                 <br>
                 <button type="button" onclick="addManager()">Add manager</button>
+                <br>
+                <button type="button" onclick="deleteManager()">Delete manager</button>
                 <br>
                 <button type="button" onclick="deleteMember()">Delete member</button>
                 <br>

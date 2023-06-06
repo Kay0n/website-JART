@@ -217,18 +217,18 @@ router.post("/deleteManager", async (req, res, next) => {
     // need to make dynamic
     // check if manager
     const manager_query = "SELECT is_manager FROM club_memberships WHERE user_id = ? AND club_id = ?;";
-    let manager_check = (await database.query(manager_query, [4, clubs_id]))[0][0];
+    let manager_check = (await database.query(manager_query, [3, clubs_id]))[0][0];
 
     if(manager_check){
         if(manager_check.is_manager){
             // need to make dynamic
             const membership_query = "SELECT * FROM club_memberships WHERE user_id = ? AND club_id = ?;";
-            let has_membership = (await database.query(membership_query, [4, clubs_id]))[0][0];
+            let has_membership = (await database.query(membership_query, [3, clubs_id]))[0][0];
 
             if(has_membership){
                 // need to make dynamic
                 const sql = "UPDATE club_memberships SET is_manager = FALSE WHERE user_id = ? AND club_id = ?;";
-                await database.query(sql, [4, clubs_id]);
+                await database.query(sql, [3, clubs_id]);
             } else {
                 console.log("The user is not a manager");
             }
@@ -245,7 +245,8 @@ router.post("/deleteManager", async (req, res, next) => {
 
 
 // eslint-disable-next-line max-len
-// delete rsvp, delete event,
+// delete rsvp, delete event, test delete manager button, get posts for a club, get events for a club
+// get rsvps???
 
 // set routes and export
 module.exports = router;
