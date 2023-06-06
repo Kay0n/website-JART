@@ -2,7 +2,7 @@
 
 // imports
 const express = require("express");
-const session = require("./configs/session");
+const session = require("./configs/session.js");
 const passport = require("./configs/passport.js");
 const database = require("./configs/database.js");
 

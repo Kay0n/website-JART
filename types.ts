@@ -14,7 +14,4 @@ declare global {
             is_admin: boolean;
         }
     }
-    interface database{
-        test: string;
-    }
 }

@@ -7,7 +7,7 @@
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const GoogleStrategy = require("passport-google-oauth2").Strategy;
-const database = require("./database");
+const database = require("./database.js");
 const passwordUtils = require("./bcrypt.js");
 
 
