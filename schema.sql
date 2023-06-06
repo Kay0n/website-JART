@@ -123,4 +123,3 @@ INSERT INTO event_rsvps (event_id, user_id) VALUES
 (6, 2),
 (6, 3),
 (6, 5);
->>>>>>> 5663091 (feat: mock data created)
