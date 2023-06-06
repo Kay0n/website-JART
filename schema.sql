@@ -74,7 +74,6 @@ CREATE TABLE users (
     given_name VARCHAR(255) NOT NULL,
     family_name VARCHAR(255),
     is_admin BOOLEAN NOT NULL,
-    -- alt_signin_id VARCHAR(255) UNIQUE -- dont think this is necessary, will investigate in future
     PRIMARY KEY (user_id)
 );
 
@@ -82,7 +81,6 @@ CREATE TABLE clubs (
     club_id INT AUTO_INCREMENT,
     name VARCHAR(255) NOT NULL UNIQUE,
     description VARCHAR(1500) NOT NULL,
-    number_members INT NOT NULL,
     PRIMARY KEY (club_id)
 );
 

@@ -89,18 +89,18 @@ database.createUser = async (email, pass, given_name, family_name, is_admin = 0)
 };
 
 
-database.addMember = async (name, user_id) => {
+database.addMember = async (club_name, user_id) => {
     const club_query = "SELECT club_id FROM clubs WHERE name = ?;";
-    let get_club_id = await database.query(club_query, [name]);
+    let get_club_id = await database.query(club_query, [club_name]);
     let clubs_id = get_club_id[0][0].club_id;
 
     const sql = "INSERT INTO club_memberships (email_notify_posts, email_notify_events, is_manager, user_id, club_id) VALUES (?, ?, ?, ?, ?);";
     await database.query(sql, [false, false, false, user_id, clubs_id]);
 };
 
-database.removeMember = async (name, user_id) => {
+database.removeMember = async (club_name, user_id) => {
     const club_query = "SELECT club_id FROM clubs WHERE name = ?;";
-    let get_club_id = await database.query(club_query, [name]);
+    let get_club_id = await database.query(club_query, [club_name]);
     let clubs_id = get_club_id[0][0].club_id;
 
     const sql = "DELETE FROM club_memberships WHERE user_id = ? AND club_id = ?;";
@@ -109,9 +109,9 @@ database.removeMember = async (name, user_id) => {
 
 
 
-database.addManager = async (name, user_id) => {
+database.addManager = async (club_name, user_id) => {
     const club_query = "SELECT club_id FROM clubs WHERE name = ?;";
-    let get_club_id = await database.query(club_query, [name]);
+    let get_club_id = await database.query(club_query, [club_name]);
     let clubs_id = get_club_id[0][0].club_id;
 
 

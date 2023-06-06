@@ -71,8 +71,8 @@ router.get("/getClubs", async (req, res, next) => {
 // === User routes ===
 // add club
 router.post("/addClub", async (req, res, next) => {
-    const sql = "INSERT INTO clubs (name, description, number_members) VALUES (?, ?, ?);";
-    await database.query(sql, [req.body.title, req.body.description, 0]);
+    const sql = "INSERT INTO clubs (name, description) VALUES (?, ?);";
+    await database.query(sql, [req.body.title, req.body.description]);
 
     database.addManager(req.body.title, req.user.user_id);
 
