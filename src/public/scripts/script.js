@@ -102,7 +102,25 @@ const registerApp = VueInstance.createApp({
     }
 });
 
+function redirectToLoginPage() {
+    window.location.href = "/login";
+}
 
+function goToSettingsPage() {
+    window.location.href = "/pages/userSettings";
+}
+
+function goToExplorePage() {
+    window.location.href = "/pages/explore";
+}
+
+function goToMyClubs() {
+    window.location.href = "/pages/myClubs";
+}
+
+function goToClubSettings() {
+    window.location.href = "/pages/clubSettings";
+}
 
 loginApp.mount("#login-form");
 registerApp.mount("#register-form");
