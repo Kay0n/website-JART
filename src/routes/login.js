@@ -1,7 +1,7 @@
 const express = require("express");
-const validator = require("express-validator");
+const validator = require("../configs/validator");
 const passport = require("../configs/passport.js");
-const schemas = require("../configs/validationSchemas.js");
+const schemas = require("../configs/schemas.js");
 const router = express.Router();
 
 
@@ -20,10 +20,9 @@ router.get("/login", (req, res) => {
 // return: JSON = errorMessages: [{"<field_name>": "<error_message"}...]
 router.post("/login", validator.checkSchema(schemas.loginSchema), (req, res, next) => {
 
-    const errors = validator.validationResult(req);
-    if (!errors.isEmpty()) {
-        const errorMessages = errors.array().map((error) => error.msg);
-        return res.status(400).json({ errorMessages: errorMessages });
+    const errorMessages = validator.getSchemaErrors(req);
+    if (errorMessages.length) {
+        return res.status(400).json({ errorMessages });
     }
 
     passport.authenticate("local", { failureMessage: true }, (err, user, info) => {
