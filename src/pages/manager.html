@@ -36,6 +36,13 @@
                     method: 'POST'
                 });
             }
+
+
+            function deleteEvent(){
+                fetch("/query/deleteEvent", {
+                    method: 'POST'
+                });
+            }
         </script>
     </head>
     <body>
@@ -113,6 +120,8 @@
                 <button type="button" onclick="deleteMember()">Delete member</button>
                 <br>
                 <button type="button" onclick="deleteClub()">Delete club</button>
+                <br>
+                <button type="button" onclick="deleteEvent()">Delete event</button>
                 <br>
             </div>
         </div>

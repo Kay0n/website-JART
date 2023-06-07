@@ -25,17 +25,14 @@ router.get("/manager", (req, res) => {
     res.sendFile("manager.html", { root: "src/pages" });
 });
 
-// only keeping for testing purposes
-// router.get("/addClub", (req, res) => {
-//     res.sendFile("addClub.html", { root: "src/pages" });
-// });
+
 
 
 
 // === Multiple person routes (Manager, user and potentially non-user) ===
-// get club posts
-router.get("/getPosts", async (req, res, next) => {
-    let sql = `SELECT * FROM club_posts ORDER BY creation_time DESC;`;
+// get all posts from all clubs that aren't private
+router.get("/getAllPosts", async (req, res, next) => {
+    let sql = `SELECT * FROM club_posts WHERE is_private = 0 ORDER BY creation_time DESC;`;
 
     const result = await database.query(sql, []);
     const rows = result[0];
@@ -43,11 +40,36 @@ router.get("/getPosts", async (req, res, next) => {
     res.json(rows);
 });
 
-// get club events
-router.get("/getEvents", async (req, res, next) => {
-    let sql = `SELECT * FROM club_events ORDER BY creation_time DESC;`;
+// get all events from all clubs that aren't private
+router.get("/getAllEvents", async (req, res, next) => {
+    let sql = `SELECT * FROM club_events WHERE is_private = 0 ORDER BY creation_time DESC;`;
 
     const result = await database.query(sql, []);
+    const rows = result[0];
+
+    res.json(rows);
+});
+
+
+
+// === Non-user routes ===
+// get all non-private posts for a club
+router.get("/getPubPosts", async (req, res, next) => {
+    let sql = `SELECT * FROM club_posts WHERE is_private = 0 AND club_id = ? ORDER BY creation_time DESC;`;
+
+    // need to make dynamic
+    const result = await database.query(sql, [1]);
+    const rows = result[0];
+
+    res.json(rows);
+});
+
+// get all non-private events for a club
+router.get("/getPubEvents", async (req, res, next) => {
+    let sql = `SELECT * FROM club_events WHERE is_private = 0 AND club_id = ? ORDER BY creation_time DESC;`;
+
+    // need to make dynamic
+    const result = await database.query(sql, [1]);
     const rows = result[0];
 
     res.json(rows);
@@ -64,11 +86,34 @@ router.get("/getClubs", async (req, res, next) => {
     const rows = result[0];
 
     res.json(rows);
+    res.sendStatus(200);
 });
 
 
 
 // === User routes ===
+// get users subscribed clubs posts
+router.get("/getSubPosts", async (req, res, next) => {
+    let sql = `SELECT * FROM club_posts INNER JOIN club_memberships ON club_posts.club_id = club_memberships.club_id WHERE user_id = ? ORDER BY creation_time DESC;`;
+
+    // need to make dynamic
+    const result = await database.query(sql, [2]);
+    const rows = result[0];
+
+    res.json(rows);
+});
+
+// get users subscribed clubs events
+router.get("/getSubEvents", async (req, res, next) => {
+    let sql = `SELECT * FROM club_events INNER JOIN club_memberships ON club_events.club_id = club_memberships.club_id WHERE user_id = ? ORDER BY creation_time DESC;`;
+
+    // need to make dynamic
+    const result = await database.query(sql, [2]);
+    const rows = result[0];
+
+    res.json(rows);
+});
+
 // add club
 router.post("/addClub", async (req, res, next) => {
     const sql = "INSERT INTO clubs (name, description) VALUES (?, ?);";
@@ -76,7 +121,7 @@ router.post("/addClub", async (req, res, next) => {
 
     database.addManager(req.body.title, req.user.user_id);
 
-    return res.redirect("/query/user");
+    res.sendStatus(200);
 });
 
 // add club member, needs to only be present if not a member
@@ -84,19 +129,29 @@ router.post("/addMember", async (req, res, next) => {
     // need to make dynamic
     database.addMember("j", req.user.user_id);
 
-    return res.redirect("/query/user");
+    res.sendStatus(200);
 });
 
 // rsvp for event
-router.post("/rsvp", async (req, res, next) => {
+router.post("/addRSVP", async (req, res, next) => {
     // need to make dynamic
     const sql = "INSERT INTO event_rsvps (event_id, user_id) VALUES (?, ?);";
     await database.query(sql,
         [1, req.user.user_id]
     );
-    console.log("RSVP");
 
-    return res.redirect("/query/user");
+    res.sendStatus(200);
+});
+
+// delete an rsvp
+router.post("/deleteRSVP", async (req, res, next) => {
+    // need to make dynamic
+    const sql = "DELETE FROM event_rsvps WHERE event_id = ? AND user_id = ?;";
+    await database.query(sql,
+        [1, req.user.user_id]
+    );
+
+    res.sendStatus(200);
 });
 
 
@@ -108,7 +163,29 @@ router.post("/deleteMember", async (req, res, next) => {
     // need to make dynamic
     database.removeMember("j", req.user.user_id);
 
-    return res.redirect("/");
+    res.sendStatus(200);
+});
+
+// get all posts for a specific club
+router.get("/getClubPosts", async (req, res, next) => {
+    let sql = `SELECT * FROM club_posts WHERE club_id = ? ORDER BY creation_time DESC;`;
+
+    // need to make dynamic
+    const result = await database.query(sql, [1]);
+    const rows = result[0];
+
+    res.json(rows);
+});
+
+// get all events for a specific club
+router.get("/getClubEvents", async (req, res, next) => {
+    let sql = `SELECT * FROM club_events WHERE club_id = ? ORDER BY creation_time DESC;`;
+
+    // need to make dynamic
+    const result = await database.query(sql, [1]);
+    const rows = result[0];
+
+    res.json(rows);
 });
 
 
@@ -119,7 +196,7 @@ router.post("/addManager", async (req, res, next) => {
     // need to make dynamic
     database.addManager("testing", req.user.user_id);
 
-    return res.redirect("/query/manager");
+    res.sendStatus(200);
 });
 
 // add post
@@ -135,7 +212,7 @@ router.post("/addPost", async (req, res, next) => {
         [req.body.title, req.body.content, is_private, clubs_id]
     );
 
-    return res.redirect("/query/manager");
+    res.sendStatus(200);
 });
 
 // add event
@@ -152,7 +229,7 @@ router.post("/addEvent", async (req, res, next) => {
         [req.body.title, req.body.description, req.body.date, req.body.location, is_private, clubs_id]
     );
 
-    return res.redirect("/query/manager");
+    res.sendStatus(200);
 });
 
 // delete club
@@ -178,14 +255,14 @@ router.post("/deleteClub", async (req, res, next) => {
         console.log("Not a member");
     }
 
-    return res.redirect("/query/manager");
+    res.sendStatus(200);
 });
 
 // delete post
 router.post("/deletePost", async (req, res, next) => {
     // need to make dynamic
     const club_query = "SELECT club_id FROM clubs WHERE name = ?;";
-    let get_club_id = await database.query(club_query, ["g"]);
+    let get_club_id = await database.query(club_query, ["Book Club"]);
     let clubs_id = get_club_id[0][0].club_id;
 
     // check if manager
@@ -204,7 +281,7 @@ router.post("/deletePost", async (req, res, next) => {
         console.log("Not a member");
     }
 
-    return res.redirect("/query/manager");
+    res.sendStatus(200);
 });
 
 // delete manager
@@ -239,14 +316,37 @@ router.post("/deleteManager", async (req, res, next) => {
         console.log("You are not a member");
     }
 
-    return res.redirect("/query/manager");
+    res.sendStatus(200);
 });
 
+// delete event
+router.post("/deleteEvent", async (req, res, next) => {
+    // need to make dynamic
+    const club_query = "SELECT club_id FROM clubs WHERE name = ?;";
+    let get_club_id = await database.query(club_query, ["Book Club"]);
+    let clubs_id = get_club_id[0][0].club_id;
 
+    // check if manager
+    const manager_query = "SELECT is_manager FROM club_memberships WHERE user_id = ? AND club_id = ?;";
+    let manager_check = (await database.query(manager_query, [req.user.user_id, clubs_id]))[0][0];
 
-// eslint-disable-next-line max-len
-// delete rsvp, delete event, test delete manager button, get posts for a club, get events for a club
+    if(manager_check){
+        if(manager_check.is_manager){
+            // need to make dynamic
+            const sql = "DELETE FROM club_events WHERE event_id = ?;";
+            await database.query(sql, [1]);
+        } else {
+            console.log("Not a manager");
+        }
+    } else {
+        console.log("Not a member");
+    }
+
+    res.sendStatus(200);
+});
+
 // get rsvps???
+
 
 // set routes and export
 module.exports = router;

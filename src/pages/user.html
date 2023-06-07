@@ -13,14 +13,20 @@
                 });
             }
 
-            function rsvp(){
-                fetch("/query/rsvp", {
+            function addRSVP(){
+                fetch("/query/addRSVP", {
                     method: 'POST'
                 });
             }
 
             function deleteMember(){
                 fetch("/query/deleteMember", {
+                    method: 'POST'
+                });
+            }
+
+            function deleteRSVP(){
+                fetch("/query/deleteRSVP", {
                     method: 'POST'
                 });
             }
@@ -66,12 +72,23 @@
                         <div class="card-body">
                             <h5 class="card-title">Event Title</h5>
                             <p class="card-text">Event Description</p>
-                            <button type="button" onclick="rsvp()">RSVP</button>
+                            <button type="button" onclick="addRSVP()">RSVP</button>
                         </div>
                     </div>
                 </div>
                 <br>
                 <button type="button" onclick="deleteMember()">Unsubscribe</button>
+                <br>
+                <div class="col-lg-4">
+                    <h3>Upcoming Events</h3>
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title">Event Title</h5>
+                            <p class="card-text">Event Description</p>
+                            <button type="button" onclick="deleteRSVP()">Un-RSVP</button>
+                        </div>
+                    </div>
+                </div>
                 <br>
             </div>
         </div>
