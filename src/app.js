@@ -7,12 +7,11 @@ const passport = require("./configs/passport.js");
 const database = require("./configs/database.js");
 
 
-const authRouter = require("./routes/auth.js");
-const queryRouter = require("./routes/query.js");
 
 // routers
 const loginRouter = require("./routes/login.js");
 const registerRouter = require("./routes/register");
+const queryRouter = require("./routes/query.js");
 
 
 
@@ -58,7 +57,6 @@ app.get("/", (req,res) => {
 
 
 // load routers
-app.use("/auth", authRouter);
 app.use("/query", queryRouter);
 app.use(loginRouter);
 app.use(registerRouter);
