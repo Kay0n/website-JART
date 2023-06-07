@@ -50,29 +50,35 @@ app.get("/", (req,res) => {
 
     res.send(authMessage);
 });
+
+app.get('/pages/Club', (req, res) => {
+    if (req.isAuthenticated()) {
+        res.sendFile("Club.html", { root: "src/pages" });
+    } else {
+    res.sendFile("NVclub.html", { root: "src/pages" });
+    }
+});
+
+app.get('/pages/explore', (req, res) => {
+    if (req.isAuthenticated()) {
+        res.sendFile("explore.html", { root: "src/pages" });
+    } else {
+    res.sendFile("NVexplore.html", { root: "src/pages" });
+}
+});
+
 app.get('/pages/userSettings', (req, res) => {
     res.sendFile("userSettings.html", { root: "src/pages" });
+});
+
+app.get('/pages/clubSettings', (req, res) => {
+    res.sendFile("clubSettings.html", { root: "src/pages" });
 });
 
 app.get('/pages/myClubs', (req, res) => {
     res.sendFile("myClubs.html", { root: "src/pages" });
 });
 
-app.get('/pages/club', (req, res) => {
-    if (req.isAuthenticated()){
-        res.sendFile("Club.html", { root: "src/pages" });
-    }
-
-    res.sendFile("NVclub.html", { root: "src/pages" });
-});
-
-app.get('/pages/explore', (req, res) => {
-    if (req.isAuthenticated()){
-        res.sendFile("explore.html", { root: "src/pages" });
-    }
-
-    res.sendFile("NVexplore.html", { root: "src/pages" });
-});
 // load routers
 app.use(loginRouter);
 app.use(registerRouter);

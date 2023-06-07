@@ -44,11 +44,7 @@
 				<div class="ms-auto">
 						<ul class="navbar-nav w-100">
 								<li class="nav-item">
-										<a class="nav-link" href="#"><span class="fas fa-cog fa-lg"></span></a>
-								</li>
-
-								<li class="nav-item">
-										<a class="nav-link" href="#">
+										<a class="nav-link" href="#" onclick="goToSettingsPage()">
 										<i class="fas fa-user-circle fa-2xl"></i>
 										</a>
 								</li>
@@ -58,6 +54,9 @@
 	</nav>
 
 	<div id="main-content">
+		<div class="container mt-4 text-center">
+			<h1>Club Name</h1>
+		</div>
 		<div class="container mt-4">
 			<div class="row">
 				<div class="col-lg-6">
@@ -67,35 +66,6 @@
 							<h5 class="card-title">Unsubscribe from the club</h5>
 							<p class="card-text">Click the button below to unsubscribe from the club.</p>
 							<button type="button" class="btn btn-danger">Unsubscribe</button>
-						</div>
-					</div>
-					<h2>Subscribed Users</h2>
-					<div class="list-group" >
-						<div class="list-group-item" >
-							<div class="d-flex justify-content-between" style="height: 80%">
-								<div>
-									<h5 class="mb-0">User Name</h5>
-									<p class="mb-0">user@example.com</p>
-									<small class="text-muted">Manager</small>
-								</div>
-								<div>
-									<button type="button" class="btn btn-danger btn-sm">Remove</button>
-									<button type="button" class="btn btn-primary btn-sm">Remove Manager</button>
-								</div>
-							</div>
-						</div>
-						<div class="list-group-item">
-							<div class="d-flex justify-content-between">
-								<div>
-									<h5 class="mb-0">User Name</h5>
-									<p class="mb-0">user@example.com</p>
-									<small class="text-muted">Member</small>
-								</div>
-								<div>
-									<button type="button" class="btn btn-danger btn-sm">Remove</button>
-									<button type="button" class="btn btn-primary btn-sm">Make Manager</button>
-								</div>
-							</div>
 						</div>
 					</div>
 				</div>
@@ -120,12 +90,8 @@
 				</div>
 			</div>
 			<div class="row mt-4">
-				<div class="col-lg-12 text-center">
-					<button type="button" class="btn btn-danger">Delete Club</button>
-				</div>
 			</div>
 		</div>
 	</div>
 </body>
-
 </html>

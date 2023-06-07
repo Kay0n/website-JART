@@ -118,5 +118,9 @@ function goToMyClubs() {
     window.location.href = "/pages/myClubs";
 }
 
+function goToClubSettings() {
+    window.location.href = "/pages/clubSettings";
+}
+
 loginApp.mount("#login-form");
 registerApp.mount("#register-form");
