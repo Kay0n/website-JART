@@ -1,27 +1,11 @@
 const database = require("../configs/database.js");
 const passwordUtils = require("../configs/bcrypt.js");
-const schemas = require("../configs/validationSchemas.js");
-const validator = require("express-validator");
+const validator = require("../configs/validator.js");
+const schemas = require("../configs/schemas.js");
 const express = require("express");
 const router = express.Router();
 
 
-
-// collect validation error messages
-function getValidationErrors(req) {
-    const errorMessages = [];
-    const errors = validator.validationResult(req);
-
-    if (!errors.isEmpty()) {
-        errors.array().forEach((error) => errorMessages.push(error.msg));
-    }
-
-    if (req.body.password !== req.body.confirmPassword) {
-        errorMessages.push({ confirmPassword: "Passwords do not match" });
-    }
-
-    return errorMessages;
-}
 
 
 
@@ -36,7 +20,7 @@ router.get("/register", (req, res) => {
 // return: JSON = errorMessages: [{"<field_name>": "<error_message"}...]
 router.post("/register", validator.checkSchema(schemas.registerSchema), async (req, res, next) => {
 
-    const errorMessages = getValidationErrors(req);
+    const errorMessages = validator.getSchemaErrors(req);
     if (errorMessages.length) {
         return res.status(400).json({ errorMessages });
     }
