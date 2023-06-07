@@ -7,7 +7,7 @@
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const GoogleStrategy = require("passport-google-oauth2").Strategy;
-const database = require("./database");
+const database = require("./database.js");
 const passwordUtils = require("./bcrypt.js");
 
 
@@ -27,16 +27,15 @@ const googleOptions = {
 
 // verify if local user is valid
 const authLocal = async (email, password, done) => {
-    // TODO: use connect-flash for user feedback
 
     const user = await database.getUserFromEmail(email);
 
     if (!user) {
-        return done(null, false, { message: "User Not Found" });
+        return done(null, false, { errorMessages: [{ email: "User Not Found" }] });
     }
 
     if(user.password === null){
-        return done(null, false, { message: "Incorrect Password" });
+        return done(null, false, { errorMessages: [{ password: "Invalid password" }] });
     }
 
     const passwordsMatch = await passwordUtils.comparePasswords(password, user.password);
@@ -45,9 +44,7 @@ const authLocal = async (email, password, done) => {
         return done(null, user);
     }
 
-    return done(null, false, { message: "Incorrect Password" });
-
-
+    return done(null, false, { errorMessages: [{ password: "Invalid password" }] });
 };
 
 

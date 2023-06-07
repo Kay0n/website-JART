@@ -2,13 +2,18 @@
 
 // imports
 const express = require("express");
-const session = require("./configs/session");
+const session = require("./configs/session.js");
 const passport = require("./configs/passport.js");
 const database = require("./configs/database.js");
 
 
 const authRouter = require("./routes/auth.js");
 const queryRouter = require("./routes/query.js");
+
+// routers
+const loginRouter = require("./routes/login.js");
+const registerRouter = require("./routes/register");
+
 
 
 
@@ -42,8 +47,8 @@ app.get("/", (req,res) => {
     } else {
         authMessage = `
             <h2>Not Authenticated.</h2>
-            <a href="/auth/login">Sign in</a><br>
-            <a href="/auth/register">Register</a>
+            <a href="/login">Sign in</a><br>
+            <a href="/register">Register</a>
         `;
     }
 
@@ -55,6 +60,8 @@ app.get("/", (req,res) => {
 // load routers
 app.use("/auth", authRouter);
 app.use("/query", queryRouter);
+app.use(loginRouter);
+app.use(registerRouter);
 
 
 
