@@ -36,6 +36,17 @@ const password = {
         }
     }
 };
+const passwordOptional = {
+    optional: true,
+    trim: true,
+    escape: true,
+    isLength: {
+        options: { min: 8 },
+        errorMessage: {
+            password: "Password must have at least eight chars"
+        }
+    }
+};
 const passwordNoLength = {
     trim: true,
     escape: true,
@@ -96,11 +107,11 @@ const notificationSchema = {
     new_notification_state
 };
 
-const userSchema = {
+const userSettingsSchema = {
     given_name,
     family_name,
     email,
-    password
+    password: passwordOptional
 };
 
 
@@ -110,5 +121,5 @@ module.exports = {
     loginSchema,
     registerSchema,
     notificationSchema,
-    userSchema
+    userSettingsSchema
 };
