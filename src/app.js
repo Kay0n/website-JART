@@ -12,6 +12,10 @@ const database = require("./configs/database.js");
 const loginRouter = require("./routes/login.js");
 const registerRouter = require("./routes/register");
 const queryRouter = require("./routes/query.js");
+const clubRouter = require("./routes/clubs.js");
+const eventRouter = require("./routes/events.js");
+const userRouter = require("./routes/users.js");
+const postRouter = require("./routes/posts.js");
 
 
 
@@ -84,6 +88,10 @@ app.get('/pages/myClubs', (req, res) => {
 
 // load routers
 app.use("/query", queryRouter);
+app.use("/query", userRouter);
+app.use("/query", postRouter);
+app.use("/query", eventRouter);
+app.use("/query", clubRouter);
 app.use(loginRouter);
 app.use(registerRouter);
 

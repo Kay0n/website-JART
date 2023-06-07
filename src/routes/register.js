@@ -6,14 +6,10 @@ const express = require("express");
 const router = express.Router();
 
 
-
-
-
 // page serve
 router.get("/register", (req, res) => {
     res.sendFile("register.html", { root: "src/pages" });
 });
-
 
 
 // create and autheticate user
@@ -43,7 +39,6 @@ router.post("/register", validator.checkSchema(schemas.registerSchema), async (r
     return req.logIn(newUser,() => res.status(201).end());
 
 });
-
 
 
 module.exports = router;

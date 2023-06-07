@@ -76,12 +76,10 @@ const club_id = {
 const user_id = {
     isNumeric: true
 };
-const notification_type = {
-    isIn: {
-        options: [["event"],["post"]]
-    }
+const email_notify_posts = {
+    isBoolean: true
 };
-const new_notification_state = {
+const email_notify_events = {
     isBoolean: true
 };
 
@@ -102,9 +100,10 @@ const registerSchema = {
 };
 
 const notificationSchema = {
-    club_id,
-    notification_type,
-    new_notification_state
+    email_notify_posts,
+    email_notify_events,
+    user_id,
+    club_id
 };
 
 const userSettingsSchema = {
