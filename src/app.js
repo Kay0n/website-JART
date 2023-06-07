@@ -51,7 +51,31 @@ app.get("/", (req,res) => {
     res.send(authMessage);
 });
 
+ /* function checkVerification(req) {
+    const verified = req.isAuthenticated();
+    return verified === true;
+}
 
+
+app.get('/club.html', (req, res) => {
+    const isVerified = checkVerification(req); // Corrected variable name
+
+    if (isVerified === true) {
+        res.sendFile('/workspaces/23S1_WDC_UG068_JART-3/src/public/pages/club.html');
+    } else {
+        res.sendFile('/workspaces/23S1_WDC_UG068_JART-3/src/public/pages/NVclub.html');
+    }
+});
+
+
+app.get('/pages/club.html', (req, res) => {
+    if (req.isAuthenticated()){
+        res.sendFile('/pages/authenticatedClub.html');
+    } else {
+        res.redirect("/pages/NVclub.html");
+    }
+});
+*/
 
 // load routers
 app.use(loginRouter);

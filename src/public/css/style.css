@@ -49,3 +49,7 @@
     position: relative;
     right: 1000px;
 }
+
+#loginButton {
+    position: relative;
+}
