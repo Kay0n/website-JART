@@ -50,33 +50,29 @@ app.get("/", (req,res) => {
 
     res.send(authMessage);
 });
-
- /* function checkVerification(req) {
-    const verified = req.isAuthenticated();
-    return verified === true;
-}
-
-
-app.get('/club.html', (req, res) => {
-    const isVerified = checkVerification(req); // Corrected variable name
-
-    if (isVerified === true) {
-        res.sendFile('/workspaces/23S1_WDC_UG068_JART-3/src/public/pages/club.html');
-    } else {
-        res.sendFile('/workspaces/23S1_WDC_UG068_JART-3/src/public/pages/NVclub.html');
-    }
+app.get('/pages/userSettings', (req, res) => {
+    res.sendFile("userSettings.html", { root: "src/pages" });
 });
 
+app.get('/pages/myClubs', (req, res) => {
+    res.sendFile("myClubs.html", { root: "src/pages" });
+});
 
-app.get('/pages/club.html', (req, res) => {
+app.get('/pages/club', (req, res) => {
     if (req.isAuthenticated()){
-        res.sendFile('/pages/authenticatedClub.html');
-    } else {
-        res.redirect("/pages/NVclub.html");
+        res.sendFile("Club.html", { root: "src/pages" });
     }
-});
-*/
 
+    res.sendFile("NVclub.html", { root: "src/pages" });
+});
+
+app.get('/pages/explore', (req, res) => {
+    if (req.isAuthenticated()){
+        res.sendFile("explore.html", { root: "src/pages" });
+    }
+
+    res.sendFile("NVexplore.html", { root: "src/pages" });
+});
 // load routers
 app.use(loginRouter);
 app.use(registerRouter);

@@ -107,15 +107,15 @@ function redirectToLoginPage() {
 }
 
 function goToSettingsPage() {
-    window.location.href = "/pages/user-settings.html";
+    window.location.href = "/pages/userSettings";
 }
 
 function goToExplorePage() {
-    window.location.href = "/pages/explore.html";
+    window.location.href = "/pages/explore";
 }
 
 function goToMyClubs() {
-    window.location.href = "/pages/myClubs.html";
+    window.location.href = "/pages/myClubs";
 }
 
 loginApp.mount("#login-form");
