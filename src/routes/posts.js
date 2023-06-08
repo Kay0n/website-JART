@@ -5,7 +5,7 @@ const router = express.Router();
 
 // get all posts from all clubs that aren't private
 router.get("/get_all_public_posts", async (req, res, next) => {
-    let sql = `SELECT * FROM club_posts WHERE is_private = 0 ORDER BY creation_time DESC;`;
+    let sql = `SELECT * FROM club_posts WHERE is_private = 0 ORDER BY creation_time DESC LIMIT 6;`;
 
     const result = await database.query(sql, [])
     .catch(() => res.send(500));
@@ -19,8 +19,7 @@ router.get("/get_all_public_posts", async (req, res, next) => {
 router.get("/get_public_posts", async (req, res, next) => {
     let sql = `SELECT * FROM club_posts WHERE is_private = 0 AND club_id = ? ORDER BY creation_time DESC;`;
 
-    // need to make dynamic
-    const result = await database.query(sql, [1]);
+    const result = await database.query(sql, [req.query.club_id]);
     const rows = result[0];
 
     res.json(rows);
@@ -31,8 +30,7 @@ router.get("/get_public_posts", async (req, res, next) => {
 router.get("/get_subscribed_club_posts", async (req, res, next) => {
     let sql = `SELECT * FROM club_posts INNER JOIN club_memberships ON club_posts.club_id = club_memberships.club_id WHERE user_id = ? ORDER BY creation_time DESC;`;
 
-    // need to make dynamic
-    const result = await database.query(sql, [2]);
+    const result = await database.query(sql, [req.user.user_id]);
     const rows = result[0];
 
     res.json(rows);
@@ -43,8 +41,7 @@ router.get("/get_subscribed_club_posts", async (req, res, next) => {
 router.get("/get_club_posts", async (req, res, next) => {
     let sql = `SELECT * FROM club_posts WHERE club_id = ? ORDER BY creation_time DESC;`;
 
-    // need to make dynamic
-    const result = await database.query(sql, [1]);
+    const result = await database.query(sql, [req.query.club_id]);
     const rows = result[0];
 
     res.json(rows);

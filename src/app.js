@@ -45,13 +45,15 @@ app.get("/", (req,res) => {
             <h2>Authenticated! Welcome ${req.user.given_name}</h2>
             <a href="/query/user">User query tester</a><br>
             <a href="/query/manager">Manager query tester</a><br>
+            <a href="/pages/explore">Explore page</a><br>
             <a href="/auth/logout">Logout</a>
         `;
     } else {
         authMessage = `
             <h2>Not Authenticated.</h2>
             <a href="/login">Sign in</a><br>
-            <a href="/register">Register</a>
+            <a href="/register">Register</a><br>
+            <a href="/pages/explore">Explore page</a>
         `;
     }
 

@@ -53,3 +53,11 @@
 #loginButton {
     position: relative;
 }
+
+[v-cloak] {
+    display: none;
+}
+
+.date, .location {
+    font-weight: 200;
+}

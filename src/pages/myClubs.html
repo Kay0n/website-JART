@@ -2,18 +2,18 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Club Name</title>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="../css/style.css">
-  <script src="../scripts/script.js"></script>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Club Name</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="../scripts/script.js" defer></script>
 </head>
 
 <body>
@@ -40,21 +40,21 @@
                     <img src="../images/site-icon.png" alt="Site Icon" width="30" class="img-fluid">
                 </a>
                 <h2 style="color: white;">Adelaide Uni Clubs</h2>
-                    <form class="d-flex mx-auto w-75">
-                        <input class="form-control me-2" type="search" placeholder="Search Clubs" aria-label="Search" style="width: 400px;">
-                        <button class="btn btn-outline-primary" type="submit">
-                            <span class="fas fa-search"></span>
-                        </button>
-                    </form>
-                    <div class="ms-auto">
-                            <ul class="navbar-nav w-100">
-                                    <li class="nav-item">
-                                            <a class="nav-link" href="#" onclick="goToSettingsPage()">
-                                            <i class="fas fa-user-circle fa-2xl"></i>
-                                            </a>
-                                    </li>
-                            </ul>
-                    </div>
+                <form class="d-flex mx-auto w-75">
+                    <input class="form-control me-2" type="search" placeholder="Search Clubs" aria-label="Search" style="width: 400px;">
+                    <button class="btn btn-outline-primary" type="submit">
+                        <span class="fas fa-search"></span>
+                    </button>
+                </form>
+                <div class="ms-auto">
+                    <ul class="navbar-nav w-100">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" onclick="goToSettingsPage()">
+                                <i class="fas fa-user-circle fa-2xl"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </nav>
 
@@ -66,18 +66,16 @@
                 <div class="row">
                     <div class="col-lg-8">
                         <div class="d-flex align-items-center">
-                        <h3 class="me-3" >Latest Posts</h3>
-                      </div>
-                        <div class="card mb-3">
-                            <div class="card-body">
-                                <h5 class="card-title">Post Title</h5>
-                                <p class="card-text">Post Description</p>
-                            </div>
+                            <h3 class="me-3" >Latest Posts</h3>
                         </div>
-                        <div class="card mb-3">
-                            <div class="card-body">
-                                <h5 class="card-title">Post Title</h5>
-                                <p class="card-text">Post Description</p>
+                        <div class="container" id="subscribed-posts">
+                            <div v-for="(subscribed_post, itemIndex) in subscribed_posts" :key="itemIndex">
+                                <div class="card mb-3">
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{ subscribed_post.title }}</h5>
+                                        <p class="card-text">{{ subscribed_post.content }}</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -85,16 +83,15 @@
                         <div class="d-flex align-items-center">
                             <h3 class="me-3" >Upcoming Events</h3>
                         </div>
-                        <div class="card mb-3">
-                            <div class="card-body">
-                                <h5 class="card-title">Event Title</h5>
-                                <p class="card-text">Event Description</p>
-                            </div>
-                        </div>
-                        <div class="card mb-3">
-                            <div class="card-body">
-                                <h5 class="card-title">Event Title</h5>
-                                <p class="card-text">Event Description</p>
+                        <div class="container" id="subscribed-events">
+                            <div v-for="(subscribed_event, itemIndex) in subscribed_events" :key="itemIndex">
+                                <div class="card mb-3">
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{ subscribed_event.title }}</h5>
+                                        <p class="card-text">{{ subscribed_event.description }}</p>
+                                        <a href="#" class="btn btn-primary">RSVP</a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

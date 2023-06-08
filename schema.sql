@@ -103,7 +103,7 @@ INSERT INTO club_posts (title, content, creation_time, is_private, club_id) VALU
 
 INSERT INTO club_events (title, description, date, location, creation_time, is_private, club_id) VALUES
 ("Book Discussion", "Join us for a discussion on 'To Kill a Mockingbird'.", "2023-06-10 18:00:00", "Library", NOW(), 0, 1),
-("Photography Walk", "Let""s explore the city and capture some amazing photographs.", "2023-06-15 10:00:00", "Downtown", NOW(), 0, 2),
+("Photography Walk", "Let's explore the city and capture some amazing photographs.", "2023-06-15 10:00:00", "Downtown", NOW(), 0, 2),
 ("Chess Simultaneous Exhibition", "Test your skills against a master chess player.", "2023-06-20 15:00:00", "Community Center", NOW(), 0, 3),
 ("Book Signing Event", "Meet the author of 'The Great Gatsby' and get your book signed.", "2023-06-12 14:00:00", "Bookstore", NOW(), 1, 1),
 ("Photography Competition", "Submit your best photographs for a chance to win exciting prizes.", "2023-06-25 09:00:00", "Online", NOW(), 0, 2),

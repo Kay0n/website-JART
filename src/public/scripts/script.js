@@ -102,6 +102,193 @@ const registerApp = VueInstance.createApp({
     }
 });
 
+
+
+
+const allClubsApp = VueInstance.createApp({
+    data() {
+        return {
+            clubs: [],
+            clubsPerRow: 3
+        };
+    },
+    computed: {
+        dividedObjects() {
+          const chunks = [];
+          for (let i = 0; i < this.clubs.length; i += this.clubsPerRow) {
+            chunks.push(this.clubs.slice(i, i + this.clubsPerRow));
+          }
+          return chunks;
+        }
+    },
+    async mounted() {
+        const response = await fetch("/query/get_clubs", {});
+        this.clubs = await response.json();
+    }
+});
+
+const clubNameApp = VueInstance.createApp({
+    data() {
+        return {
+            club_name: ""
+        };
+    },
+    async mounted() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const queryData = urlParams.get('club_id');
+        const response = await fetch("/query/get_club_name?club_id=" + queryData, {});
+        const clubData = await response.json();
+        this.club_name = clubData[0].name;
+
+    }
+});
+
+
+
+
+const allPublicPostsApp = VueInstance.createApp({
+    data() {
+        return {
+            all_public_posts: [],
+            postsPerRow: 3
+        };
+    },
+    computed: {
+        dividedObjects() {
+          const chunks = [];
+          for (let i = 0; i < this.all_public_posts.length; i += this.postsPerRow) {
+            chunks.push(this.all_public_posts.slice(i, i + this.postsPerRow));
+          }
+          return chunks;
+        }
+    },
+    async mounted() {
+        const response = await fetch("/query/get_all_public_posts", {});
+        this.all_public_posts = await response.json();
+    }
+});
+
+const publicPostsApp = VueInstance.createApp({
+    data() {
+        return {
+            public_posts: []
+        };
+    },
+    async mounted() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const queryData = urlParams.get('club_id');
+        const response = await fetch("/query/get_public_posts?club_id=" + queryData, {});
+        this.public_posts = await response.json();
+    }
+});
+
+const subscribedPostsApp = VueInstance.createApp({
+    data() {
+        return {
+            subscribed_posts: []
+        };
+    },
+    async mounted() {
+        const response = await fetch("/query/get_subscribed_club_posts", {});
+        this.subscribed_posts = await response.json();
+    }
+});
+
+const clubPostsApp = VueInstance.createApp({
+    data() {
+        return {
+            club_posts: []
+        };
+    },
+    async mounted() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const queryData = urlParams.get('club_id');
+        const response = await fetch("/query/get_club_posts?club_id=" + queryData, {});
+        this.club_posts = await response.json();
+    }
+});
+
+
+
+const allPublicEventsApp = VueInstance.createApp({
+    data() {
+        return {
+            all_public_events: [],
+            eventsPerRow: 3
+        };
+    },
+    computed: {
+        dividedObjects() {
+          const chunks = [];
+          for (let i = 0; i < this.all_public_events.length; i += this.eventsPerRow) {
+            chunks.push(this.all_public_events.slice(i, i + this.eventsPerRow));
+          }
+          return chunks;
+        }
+    },
+    async mounted() {
+        const response = await fetch("/query/get_all_public_events", {});
+        this.all_public_events = await response.json();
+    },
+    methods: {
+        addRSVP(event_id){
+            console.log(event_id);
+            fetch("/query/add_RSVP", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    id: event_id,
+                })
+            });
+        }
+    }
+});
+
+const publicEventsApp = VueInstance.createApp({
+    data() {
+        return {
+            public_events: []
+        };
+    },
+    async mounted() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const queryData = urlParams.get('club_id');
+        const response = await fetch("/query/get_public_events?club_id=" + queryData, {});
+        this.public_events = await response.json();
+    }
+});
+
+const subscribedEventsApp = VueInstance.createApp({
+    data() {
+        return {
+            subscribed_events: []
+        };
+    },
+    async mounted() {
+        const response = await fetch("/query/get_subscribed_club_events", {});
+        this.subscribed_events = await response.json();
+    }
+});
+
+const clubEventsApp = VueInstance.createApp({
+    data() {
+        return {
+            club_events: []
+        };
+    },
+    async mounted() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const queryData = urlParams.get('club_id');
+        const response = await fetch("/query/get_club_events?club_id=" + queryData, {});
+        this.club_events = await response.json();
+    }
+});
+
+
+
+
 function redirectToLoginPage() {
     window.location.href = "/login";
 }
@@ -124,3 +311,16 @@ function goToClubSettings() {
 
 loginApp.mount("#login-form");
 registerApp.mount("#register-form");
+
+allClubsApp.mount("#all-clubs");
+clubNameApp.mount("#club-name");
+
+allPublicPostsApp.mount("#all-public-posts");
+publicPostsApp.mount("#public-posts");
+subscribedPostsApp.mount("#subscribed-posts");
+clubPostsApp.mount("#club-posts");
+
+allPublicEventsApp.mount("#all-public-events");
+publicEventsApp.mount("#public-events");
+subscribedEventsApp.mount("#subscribed-events");
+clubEventsApp.mount("#club-events");

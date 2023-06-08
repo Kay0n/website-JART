@@ -5,13 +5,23 @@ const router = express.Router();
 
 // get clubs
 router.get("/get_clubs", async (req, res, next) => {
-    let sql = `SELECT * FROM clubs ORDER BY number_members;`;
+    let sql = `SELECT * FROM clubs ORDER BY name LIMIT 6;`;
 
     const result = await database.query(sql, []);
     const rows = result[0];
 
     res.json(rows);
-    res.sendStatus(200);
+});
+
+
+// get club name
+router.get("/get_club_name", async (req, res, next) => {
+    let sql = `SELECT name FROM clubs WHERE club_id = ?;`;
+
+    const result = await database.query(sql, [req.query.club_id]);
+    const rows = result[0];
+
+    res.json(rows);
 });
 
 

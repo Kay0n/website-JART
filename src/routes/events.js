@@ -5,7 +5,7 @@ const router = express.Router();
 
 // get all events from all clubs that aren't private
 router.get("/get_all_public_events", async (req, res, next) => {
-    let sql = `SELECT * FROM club_events WHERE is_private = 0 ORDER BY creation_time DESC;`;
+    let sql = `SELECT * FROM club_events WHERE is_private = 0 ORDER BY creation_time DESC LIMIT 6;`;
 
     const result = await database.query(sql, []);
     const rows = result[0];
@@ -18,8 +18,7 @@ router.get("/get_all_public_events", async (req, res, next) => {
 router.get("/get_public_events", async (req, res, next) => {
     let sql = `SELECT * FROM club_events WHERE is_private = 0 AND club_id = ? ORDER BY creation_time DESC;`;
 
-    // need to make dynamic
-    const result = await database.query(sql, [1]);
+    const result = await database.query(sql, [req.query.club_id]);
     const rows = result[0];
 
     res.json(rows);
@@ -30,8 +29,7 @@ router.get("/get_public_events", async (req, res, next) => {
 router.get("/get_subscribed_club_events", async (req, res, next) => {
     let sql = `SELECT * FROM club_events INNER JOIN club_memberships ON club_events.club_id = club_memberships.club_id WHERE user_id = ? ORDER BY creation_time DESC;`;
 
-    // need to make dynamic
-    const result = await database.query(sql, [2]);
+    const result = await database.query(sql, [req.user.user_id]);
     const rows = result[0];
 
     res.json(rows);
@@ -42,8 +40,7 @@ router.get("/get_subscribed_club_events", async (req, res, next) => {
 router.get("/get_club_events", async (req, res, next) => {
     let sql = `SELECT * FROM club_events WHERE club_id = ? ORDER BY creation_time DESC;`;
 
-    // need to make dynamic
-    const result = await database.query(sql, [1]);
+    const result = await database.query(sql, [req.query.club_id]);
     const rows = result[0];
 
     res.json(rows);
@@ -127,22 +124,20 @@ router.get("/get_RSVP", async (req, res, next) => {
 
 // rsvp for event
 router.post("/add_RSVP", async (req, res, next) => {
-    // need to make dynamic
     const sql = "INSERT INTO event_rsvps (event_id, user_id) VALUES (?, ?);";
     await database.query(sql,
-        [1, req.user.user_id]
+        [req.body.id, req.user.user_id]
     );
 
     res.sendStatus(200);
 });
-
 
 // delete an rsvp
 router.post("/delete_RSVP", async (req, res, next) => {
     // need to make dynamic
     const sql = "DELETE FROM event_rsvps WHERE event_id = ? AND user_id = ?;";
     await database.query(sql,
-        [1, req.user.user_id]
+        [req.body.id, req.user.user_id]
     );
 
     res.sendStatus(200);
