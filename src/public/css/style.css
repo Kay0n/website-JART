@@ -68,3 +68,16 @@
     top: 240px;
     z-index: 9999;
 }
+.table-compact {
+    border-collapse: collapse;
+}
+
+.table-compact th,
+.table-compact td {
+    padding: 8px;
+}
+
+.table-size {
+    width: 85em;
+    margin: 0 auto;
+}
