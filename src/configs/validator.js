@@ -18,9 +18,11 @@ const getSchemaErrors = (req) => {
     return errorMessages;
 };
 
+
 const returnSchemaErrors = (req, res) => {
     const errorMessages = getSchemaErrors(req);
     if (errorMessages.length) {
+        console.error(errorMessages);
         res.status(400).json({ errorMessages });
         return true;
     }
