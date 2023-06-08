@@ -165,6 +165,13 @@ const allPublicPostsApp = VueInstance.createApp({
     async mounted() {
         const response = await fetch("/query/get_all_public_posts", {});
         this.all_public_posts = await response.json();
+    },
+    methods: {
+        redirectToClub(item){
+            var clubId = item.club_id;
+            var url = '/pages/club?club_id=' + clubId;
+            window.location.href = url;
+        }
     }
 });
 
