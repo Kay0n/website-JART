@@ -84,7 +84,25 @@ passport.deserializeUser(async (user_id, done) => {
 });
 
 
+const notAuthSend401 = (req, res, next) => {
+    console.log("middleware");
+    if(!req.isAuthenticated()){
+        console.log("not auth");
+        return res.sendStatus(401);
+    }
+    console.log("auth");
+    next();
+};
+const notAuthRedirectIndex = (req, res, next) => {
+    if(!req.isAuthenticated()){
+        return res.redirect("/");
+    }
+    next();
+};
+
 
 passport.use(new LocalStrategy(localOptions, authLocal));
 passport.use(new GoogleStrategy(googleOptions, authGoogle));
 module.exports = passport;
+module.exports.notAuthSend401 = notAuthSend401;
+module.exports.notAuthRedirectIndex = notAuthRedirectIndex;
