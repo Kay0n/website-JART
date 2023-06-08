@@ -102,6 +102,120 @@ const registerApp = VueInstance.createApp({
     }
 });
 
+
+
+const postApp = VueInstance.createApp({
+    data() {
+        return {
+            title: "",
+            content: "",
+            is_private: ""
+        };
+    },
+    methods: {
+        async submitForm() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const queryData = urlParams.get('club_id');
+            const postData = await fetch("/query/add_post?club_id=" + queryData, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    title: this.title,
+                    content: this.content,
+                    is_private: this.is_private
+                })
+            });
+            console.log(postData);
+        }
+    }
+});
+
+const eventAPP = VueInstance.createApp({
+    data() {
+        return {
+            title: "",
+            description: "",
+            date: "",
+            location: "",
+            is_private: ""
+        };
+    },
+    methods: {
+        async submitForm() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const queryData = urlParams.get('club_id');
+            const eventData = await fetch("/query/add_event?club_id=" + queryData, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    title: this.title,
+                    description: this.description,
+                    date: this.date,
+                    location: this.location,
+                    is_private: this.is_private
+                })
+            });
+            console.log(eventData);
+        }
+    }
+});
+
+const addClubApp = VueInstance.createApp({
+    data() {
+        return {
+            name: "",
+            description: ""
+        };
+    },
+    methods: {
+        async submitForm() {
+            const clubData = await fetch("/query/add_club", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    title: this.name,
+                    description: this.description
+                })
+            });
+            console.log(clubData);
+        }
+    }
+});
+
+const deleteClubApp = VueInstance.createApp({
+    methods: {
+        async deleteClub() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const queryData = urlParams.get('club_id');
+            const response = await fetch("/query/delete_club?club_id=" + queryData, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                })
+            });
+
+            if (response.ok) {
+                // Club deletion was successful
+                console.log("Club deleted successfully.");
+            } else {
+                // Handle any errors or unsuccessful deletion
+                console.error("Failed to delete club.");
+        }
+    }}
+});
+
+const userSettingsApp = VueInstance.createApp({
+    
+})
+
 function redirectToLoginPage() {
     window.location.href = "/login";
 }
@@ -124,3 +238,10 @@ function goToClubSettings() {
 
 loginApp.mount("#login-form");
 registerApp.mount("#register-form");
+
+
+
+eventAPP.mount("#add-event");
+postApp.mount("#add-post");
+addClubApp.mount("#add-club");
+deleteClubApp.mount("#delete-club");

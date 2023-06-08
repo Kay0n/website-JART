@@ -58,18 +58,20 @@ router.post("/add_manager", async (req, res, next) => {
 router.post("/delete_club", async (req, res, next) => {
     // need to make dynamic
     // check if club manager
-    const club_query = "SELECT club_id FROM clubs WHERE name = ?;";
-    let get_club_id = await database.query(club_query, ["g"]);
-    let clubs_id = get_club_id[0][0].club_id;
+    // const club_query = "SELECT club_id FROM clubs WHERE club_id = ?;";
+    // let get_club_id = await database.query(club_query, [req.body.club_id]);
+    // let clubs_id = get_club_id[0][0].club_id;
+    var id = Number(req.query.club_id);
+    console.log(id);
 
     const manager_query = "SELECT is_manager FROM club_memberships WHERE user_id = ? AND club_id = ?;";
-    let manager_check = (await database.query(manager_query, [req.user.user_id, clubs_id]))[0][0];
+    let manager_check = (await database.query(manager_query, [req.user.user_id, id]))[0][0];
 
     if(manager_check){
         if(manager_check.is_manager){
             // need to make dynamic
-            const sql = "DELETE FROM clubs WHERE name = ?;";
-            await database.query(sql, ["g"]);
+            const sql = "DELETE FROM clubs WHERE club_id = ?;";
+            await database.query(sql, [id]);
         } else {
             console.log("Not a manager");
         }

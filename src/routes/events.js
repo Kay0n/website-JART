@@ -52,16 +52,21 @@ router.get("/get_club_events", async (req, res, next) => {
 
 // add event
 router.post("/add_event", async (req, res, next) => {
-    let is_private = (req.body.private === "on" ? 1 : 0);
+    let is_private = (req.body.private === "on" ? true : false);
 
-    const club_query = "SELECT club_id FROM clubs WHERE name = ?;";
-    let get_club_id = await database.query(club_query, ["g"]);
-    let clubs_id = get_club_id[0][0].club_id;
+    // const club_query = "SELECT club_id FROM clubs WHERE name = ?;";
+    // let get_club_id = await database.query(club_query, ["g"]);
+    // let clubs_id = get_club_id[0][0].club_id;
+
+    console.log(req.query.club_id);
+    console.log(req.body);
+    var id = Number(req.query.club_id);
+    console.log(id);
 
     const sql = "INSERT INTO club_events (title, description, date, location, creation_time, is_private, club_id) VALUES (?, ?, ?, ?, NOW(), ?, ?);";
     await database.query(sql,
         // eslint-disable-next-line max-len
-        [req.body.title, req.body.description, req.body.date, req.body.location, is_private, clubs_id]
+        [req.body.title, req.body.description, req.body.date, req.body.location, is_private, id]
     );
 
     res.sendStatus(200);
