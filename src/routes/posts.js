@@ -44,7 +44,7 @@ router.get(
             res.json(rows);
         } catch (err) {
             console.error(err);
-            return res.sendStatus(500);
+            res.sendStatus(500);
         }
     }
 );
@@ -100,6 +100,7 @@ router.get(
                 const result = await database.query(sql, req.query.club_id);
                 const rows = result[0];
                 res.status(200).json(rows);
+                return;
             }
 
             res.sendStatus(401);

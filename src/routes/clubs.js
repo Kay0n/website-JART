@@ -19,7 +19,7 @@ router.get(
     "/get_clubs",
     async (req, res, next) => {
         try{
-            let sql = `SELECT * FROM clubs ORDER BY number_members;`;
+            let sql = `SELECT * FROM clubs ORDER BY name;`;
             const result = await database.query(sql, []);
             const rows = result[0];
             return res.status(200).json(rows);
