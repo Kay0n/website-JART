@@ -84,7 +84,7 @@
                                     <div class="card-body">
                                         <h5 class="card-title">{{ public_event.title }}</h5>
                                         <p class="card-text">{{ public_event.description }}</p>
-                                        <p class="date">Date: {{ public_event.date }}</p>
+                                        <p class="date">Date: {{ new Date(public_event.date).toLocaleString() }}</p>
                                         <p class="location">Location: {{ public_event.location }}</p>
                                     </div>
                                 </div>
