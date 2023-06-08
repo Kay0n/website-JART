@@ -14,7 +14,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../css/style.css">
     <script src="../scripts/script.js" defer></script>
-
 </head>
 
 <body>
@@ -151,7 +150,9 @@
                                     <div class="card-body">
                                         <h5 class="card-title">{{ club_event.title }}</h5>
                                         <p class="card-text">{{ club_event.description }}</p>
-                                        <a href="#" class="btn btn-primary">RSVP</a>
+                                        <p class="date">Date: {{ item.date }}</p>
+                                        <p class="location">Location: {{ item.location }}</p>
+                                        <button type="button" @click="addRSVP(club_event.event_id)" class="btn btn-primary">RSVP</button>
                                     </div>
                                 </div>
                             </div>

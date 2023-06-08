@@ -89,7 +89,7 @@
                                     <div class="card-body">
                                         <h5 class="card-title">{{ subscribed_event.title }}</h5>
                                         <p class="card-text">{{ subscribed_event.description }}</p>
-                                        <a href="#" class="btn btn-primary">RSVP</a>
+                                        <button type="button" @click="addRSVP(subscribed_event.event_id)" class="btn btn-primary">RSVP</button>
                                     </div>
                                 </div>
                             </div>

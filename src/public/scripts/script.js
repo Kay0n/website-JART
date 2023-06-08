@@ -232,7 +232,6 @@ const allPublicEventsApp = VueInstance.createApp({
     },
     methods: {
         addRSVP(event_id){
-            console.log(event_id);
             fetch("/query/add_RSVP", {
                 method: "POST",
                 headers: {
@@ -269,6 +268,19 @@ const subscribedEventsApp = VueInstance.createApp({
     async mounted() {
         const response = await fetch("/query/get_subscribed_club_events", {});
         this.subscribed_events = await response.json();
+    },
+    methods: {
+        addRSVP(event_id){
+            fetch("/query/add_RSVP", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    id: event_id,
+                })
+            });
+        }
     }
 });
 
@@ -283,6 +295,19 @@ const clubEventsApp = VueInstance.createApp({
         const queryData = urlParams.get('club_id');
         const response = await fetch("/query/get_club_events?club_id=" + queryData, {});
         this.club_events = await response.json();
+    },
+    methods: {
+        addRSVP(event_id){
+            fetch("/query/add_RSVP", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    id: event_id,
+                })
+            });
+        }
     }
 });
 
