@@ -1,124 +1,120 @@
 
 
 // pieces of schema that can be reused
-const given_name = {
-    trim: true,
-    escape: true,
-    notEmpty: true,
-    errorMessage: {
-        given_name: "Enter first name"
-    }
-};
-const family_name = {
-    trim: true,
-    escape: true,
-    notEmpty: true,
-    errorMessage: {
-        family_name: "Enter last name"
-    }
-};
-const email = {
-    trim: true,
-    escape: true,
-    normalizeEmail: true,
-    isEmail: true,
-    errorMessage: {
-        email: "Email must be valid"
-    }
-};
-const password = {
-    trim: true,
-    escape: true,
-    isLength: {
-        options: { min: 8 },
+const schemas = {
+    given_name: {
+        trim: true,
+        escape: true,
+        notEmpty: true,
         errorMessage: {
-            password: "Password must have at least eight chars"
+            given_name: "Enter first name"
         }
-    }
-};
-const passwordOptional = {
-    optional: true,
-    trim: true,
-    escape: true,
-    isLength: {
-        options: { min: 8 },
-        errorMessage: {
-            password: "Password must have at least eight chars"
-        }
-    }
-};
-const passwordNoLength = {
-    trim: true,
-    escape: true,
-    notEmpty: {
-        errorMessage: {
-            password: "Enter a password"
-        }
-    }
-};
-const confirmPassword = {
-    trim: true,
-    escape: true,
-    notEmpty: true,
-    errorMessage: {
-        confirmPassword: "Confirm password"
     },
-    custom: {
-        options: (value, { req }) => (req.body.password === value),
+    family_name: {
+        trim: true,
+        escape: true,
+        notEmpty: true,
         errorMessage: {
-            confirmPassword: "Passwords do not match"
+            family_name: "Enter last name"
         }
-      }
-};
-const club_id = {
-    isNumeric: true
-};
-const user_id = {
-    isNumeric: true
-};
-const email_notify_posts = {
-    isBoolean: true
-};
-const email_notify_events = {
-    isBoolean: true
-};
+    },
+    email: {
+        trim: true,
+        escape: true,
+        normalizeEmail: true,
+        isEmail: true,
+        errorMessage: {
+            email: "Email must be valid"
+        }
+    },
+    password: {
+        trim: true,
+        escape: true,
+        isLength: {
+            options: { min: 8 },
+            errorMessage: {
+                password: "Password must have at least eight chars"
+            }
+        }
+    },
+    passwordOptional: {
+        optional: true,
+        trim: true,
+        escape: true,
+        isLength: {
+            options: { min: 8 },
+            errorMessage: {
+                password: "Password must have at least eight chars"
+            }
+        }
+    },
+    passwordNoLength: {
+        trim: true,
+        escape: true,
+        notEmpty: {
+            errorMessage: {
+                password: "Enter a password"
+            }
+        }
+    },
+    confirmPassword: {
+        trim: true,
+        escape: true,
+        notEmpty: true,
+        errorMessage: {
+            confirmPassword: "Confirm password"
+        },
+        custom: {
+            options: (value, { req }) => (req.body.password === value),
+            errorMessage: {
+                confirmPassword: "Passwords do not match"
+            }
+        }
+    },
+    club_id: {
+        isNumeric: true
+    },
+    user_id: {
+        isNumeric: true
+    },
+    email_notify_posts: {
+        isBoolean: true
+    },
+    email_notify_events: {
+        isBoolean: true
+    },
+    title: {
+        trim: true,
+        escape: true,
+        notEmpty: true,
+        errorMessage: {
+            title: "This field is required"
+        }
+    },
+    description: {
+        trim: true,
+        escape: true,
+        notEmpty: true,
+        errorMessage: {
+            description: "This field is required"
+        }
+    },
+    date: {
+        toDate: true,
+        errorMessage: {
+            title: "A date is required"
+        }
+    },
+    is_private: {
+        isBoolean: true
+    },
+    location: {
+        isString: true
+    }
 
-
-
-// schemas
-const loginSchema = {
-    email,
-    password: passwordNoLength
-};
-
-const registerSchema = {
-    given_name,
-    family_name,
-    email,
-    password,
-    confirmPassword
-};
-
-const notificationSchema = {
-    email_notify_posts,
-    email_notify_events,
-    user_id,
-    club_id
-};
-
-const userSettingsSchema = {
-    given_name,
-    family_name,
-    email,
-    password: passwordOptional
 };
 
 
 
 // schema exports
-module.exports = {
-    loginSchema,
-    registerSchema,
-    notificationSchema,
-    userSettingsSchema
-};
+module.exports = schemas;

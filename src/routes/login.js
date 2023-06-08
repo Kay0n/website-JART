@@ -18,22 +18,29 @@ router.get("/login", (req, res) => {
 
 // login user
 // return: JSON = errorMessages: [{"<field_name>": "<error_message"}...]
-router.post("/login", validator.checkSchema(schemas.loginSchema), (req, res, next) => {
+router.post(
+    "/login",
+    validator.checkSchema({
+        email: schemas.email,
+        password: schemas.passwordNoLength
+    }),
+    (req, res, next) => {
 
-    const errorMessages = validator.getSchemaErrors(req);
-    if (errorMessages.length) {
-        return res.status(400).json({ errorMessages });
-    }
-
-    passport.authenticate("local", { failureMessage: true }, (err, user, info) => {
-        if (err || !user) {
-            return res.status(401).json({ errorMessages: info.errorMessages });
+        const errorMessages = validator.getSchemaErrors(req);
+        if (errorMessages.length) {
+            return res.status(400).json({ errorMessages });
         }
-        return req.logIn(user,() => res.status(200).end());
-    })(req, res, next);
 
-    return 0;
-});
+        passport.authenticate("local", { failureMessage: true }, (err, user, info) => {
+            if (err || !user) {
+                return res.status(401).json({ errorMessages: info.errorMessages });
+            }
+            return req.logIn(user,() => res.status(200).end());
+        })(req, res, next);
+
+        return 0;
+    }
+);
 
 
 

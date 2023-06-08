@@ -18,8 +18,18 @@ const getSchemaErrors = (req) => {
     return errorMessages;
 };
 
+const returnSchemaErrors = (req, res) => {
+    const errorMessages = getSchemaErrors(req);
+    if (errorMessages.length) {
+        res.status(400).json({ errorMessages });
+        return true;
+    }
+    return false;
+};
+
 
 module.exports = {
     checkSchema,
-    getSchemaErrors
+    getSchemaErrors,
+    returnSchemaErrors
 };

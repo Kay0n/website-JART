@@ -89,42 +89,70 @@ database.createUser = async (email, pass, given_name, family_name, is_admin = 0)
 };
 
 
-database.addMember = async (club_name, user_id) => {
-    const club_query = "SELECT club_id FROM clubs WHERE name = ?;";
-    let get_club_id = await database.query(club_query, [club_name]);
-    let clubs_id = get_club_id[0][0].club_id;
+database.addMember = async (club_id, user_id) => {
+    const checkDuplicateSql = "SELECT COUNT(*) AS count FROM club_memberships WHERE user_id = ? AND club_id = ?;";
+    const duplicateCheckResult = await database.query(checkDuplicateSql, [user_id, club_id]);
 
-    const sql = "INSERT INTO club_memberships (email_notify_posts, email_notify_events, is_manager, user_id, club_id) VALUES (?, ?, ?, ?, ?);";
-    await database.query(sql, [false, false, false, user_id, clubs_id]);
+    if (duplicateCheckResult[0].count === 0) {
+        const insertSql = "INSERT INTO club_memberships (email_notify_posts, email_notify_events, is_manager, user_id, club_id) VALUES (?, ?, ?, ?, ?);";
+        await database.query(insertSql, [false, false, false, user_id, club_id]);
+    }
 };
 
-database.removeMember = async (club_name, user_id) => {
-    const club_query = "SELECT club_id FROM clubs WHERE name = ?;";
-    let get_club_id = await database.query(club_query, [club_name]);
-    let clubs_id = get_club_id[0][0].club_id;
-
+database.removeMember = async (club_id, user_id) => {
     const sql = "DELETE FROM club_memberships WHERE user_id = ? AND club_id = ?;";
-    await database.query(sql, [user_id, clubs_id]);
+    await database.query(sql, [user_id, club_id]);
 };
 
 
 
-database.addManager = async (club_name, user_id) => {
-    const club_query = "SELECT club_id FROM clubs WHERE name = ?;";
-    let get_club_id = await database.query(club_query, [club_name]);
-    let clubs_id = get_club_id[0][0].club_id;
-
+database.addManager = async (club_id, user_id) => {
 
     const membership_query = "SELECT * FROM club_memberships WHERE user_id = ? AND club_id = ?;";
-    let has_membership = (await database.query(membership_query, [user_id, clubs_id]))[0][0];
+    let has_membership = (await database.query(membership_query, [user_id, club_id]))[0][0];
 
     if(has_membership){
         const sql = "UPDATE club_memberships SET is_manager = TRUE WHERE user_id = ? AND club_id = ?;";
-        await database.query(sql, [user_id, clubs_id]);
+        await database.query(sql, [user_id, club_id]);
     } else {
         const sql = "INSERT INTO club_memberships (email_notify_posts, email_notify_events, is_manager, user_id, club_id) VALUES (?, ?, ?, ?, ?);";
-        await database.query(sql, [false, false, true, user_id, clubs_id]);
+        await database.query(sql, [false, false, true, user_id, club_id]);
     }
 };
+
+
+database.userIsManagerOrAdmin = async (club_id, user_id) => {
+    const sql = `
+            SELECT *
+            FROM users
+            LEFT JOIN club_memberships ON users.user_id = club_memberships.user_id
+            WHERE (users.user_id = ? AND users.is_admin = TRUE)
+                OR (users.user_id = ? AND club_memberships.club_id = ? AND club_memberships.is_manager = TRUE);
+        `;
+
+    const userIsAuthorized = (await database.query(
+        sql,
+        [
+            user_id,
+            user_id,
+            club_id
+        ]
+    ))[0][0];
+
+    return userIsAuthorized;
+};
+
+
+database.userIsMember = async (club_id, user_id) => {
+    const sql = `
+        SELECT *
+        FROM users
+        INNER JOIN club_memberships ON users.user_id = club_memberships.user_id
+        WHERE club_memberships.club_id = ? AND users.user_id = ?;
+    `;
+    const userIsMember = (await database.query( sql, [club_id, user_id]))[0][0];
+    return userIsMember;
+};
+
 
 module.exports = database;
