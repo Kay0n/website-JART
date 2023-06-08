@@ -91,13 +91,9 @@ const schemas = {
             title: "This field is required"
         }
     },
-    description: {
+    text: {
         trim: true,
         escape: true,
-        notEmpty: true,
-        errorMessage: {
-            description: "This field is required"
-        }
     },
     date: {
         toDate: true,

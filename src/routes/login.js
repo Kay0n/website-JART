@@ -26,10 +26,7 @@ router.post(
     }),
     (req, res, next) => {
 
-        const errorMessages = validator.getSchemaErrors(req);
-        if (errorMessages.length) {
-            return res.status(400).json({ errorMessages });
-        }
+        if(validator.returnSchemaErrors(req,res)){ return; }
 
         passport.authenticate("local", { failureMessage: true }, (err, user, info) => {
             if (err || !user) {
@@ -38,7 +35,6 @@ router.post(
             return req.logIn(user,() => res.status(200).end());
         })(req, res, next);
 
-        return 0;
     }
 );
 

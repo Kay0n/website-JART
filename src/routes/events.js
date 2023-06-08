@@ -18,7 +18,7 @@ router.get(
         const result = await database.query(sql, []);
         const rows = result[0];
 
-        res.json(rows);
+        res.status(200).json(rows);
     }
 );
 
@@ -27,13 +27,9 @@ router.get(
 // returns array of events
 router.get(
     "/get_public_events",
-    validator.checkSchema({
-
-    }),
     async (req, res, next) => {
         let sql = `SELECT * FROM club_events WHERE is_private = 0 AND club_id = ? ORDER BY creation_time DESC;`;
 
-        // need to make dynamic
         const result = await database.query(sql, [1]);
         const rows = result[0];
 
@@ -43,8 +39,8 @@ router.get(
 
 
 // === get events from user subscribed clubs ===
-// assumes authenticated
-// assumes member
+// permission isAuthenticated
+// permission isMember
 // returns array of events
 router.get(
     "/get_subscribed_club_events",
@@ -56,16 +52,18 @@ router.get(
             WHERE user_id = ?
             ORDER BY creation_time DESC;
         `;
+
         const result = await database.query(sql, req.user.user_id);
         const rows = result[0];
+
         res.status(200).json(rows);
     }
 );
 
 
 // === get all events for club ===
-// assumes authenticated
-// assumes member
+// permission isAuthenticated
+// permission isMember
 // requires QUERY club_id
 // returns array of events
 router.get(
@@ -91,8 +89,8 @@ router.get(
 
 
 // === add club event ===
-// assumes authenticated
-// assumes authorized
+// permission isAuthenticated
+// permission isManager || isAdmin
 // requires title
 // requires description
 // requires date
@@ -103,7 +101,7 @@ router.post(
     "/add_event",
     validator.checkSchema({
         title: schemas.title,
-        description: schemas.description,
+        description: schemas.text,
         date: schemas.date,
         location: schemas.location,
         is_private: schemas.club_id,
@@ -141,8 +139,8 @@ router.post(
 
 
 // === delete club event ===
-// assumes authenticated
-// assumes authorized
+// permission isAuthenticated
+// permission isManager || isAdmin
 // requires club_id
 // requires event_id
 router.post(
@@ -168,9 +166,10 @@ router.post(
 
 
 // === get event RSVPS for a club ===
-// assumes authenticated
-// assumes member
+// permission isAuthenticated
+// permission isMember
 // requires QUERY club_id
+// returns RSVP array
 router.get(
     "/get_RSVP",
     async (req, res, next) => {
@@ -188,42 +187,76 @@ router.get(
             return res.status(200).json(rows);
         }
 
+        return res.status(401);
+    }
+);
+
+
+// === rsvp for event ===
+// permission isAuthenticated
+// permission isMember
+// requires club_id
+// requires event_id
+router.post(
+    "/add_RSVP",
+    async (req, res, next) => {
+
+        const userIsMember = await database.userIsMember(
+            req.body.club_id,
+            req.user.user_id
+        );
+
+        if(userIsMember){
+            const sql = "INSERT INTO event_rsvps (event_id, user_id) VALUES (?, ?);";
+            await database.query(
+                sql,
+                [
+                    req.body.event_id,
+                    req.user.user_id
+                ]
+            );
+
+            res.status(201);
+            return;
+        }
+
         res.status(401);
     }
 );
 
 
-// rsvp for event
-router.post(
-    "/add_RSVP",
-    validator.checkSchema({
-
-    }),
-    async (req, res, next) => {
-        // need to make dynamic
-        const sql = "INSERT INTO event_rsvps (event_id, user_id) VALUES (?, ?);";
-        await database.query(sql,
-            [1, req.user.user_id]
-        );
-
-        res.sendStatus(200);
-    }
-);
-
-// delete an rsvp
+// === delete RSVP for event ===
+// permission isAuthenticated
+// permission isMember
+// requires club_id
+// requires event_id
 router.post(
     "/delete_RSVP",
     validator.checkSchema({
 
     }),
     async (req, res, next) => {
-        // need to make dynamic
-        const sql = "DELETE FROM event_rsvps WHERE event_id = ? AND user_id = ?;";
-        await database.query(sql,
-            [1, req.user.user_id]
+        const userIsMember = await database.userIsMember(
+            req.body.club_id,
+            req.user.user_id
         );
 
-        res.sendStatus(200);
+        if(userIsMember){
+            const sql = "DELETE FROM event_rsvps WHERE event_id = ? AND user_id = ?;";
+            await database.query(
+                sql,
+                [
+                    req.body.event_id,
+                    req.user.user_id
+                ]
+            );
+
+            res.status(201);
+            return;
+        }
+
+        res.status(401);
+
     }
 );
 

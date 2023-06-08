@@ -24,10 +24,7 @@ router.post(
     }),
     async (req, res, next) => {
 
-        const errorMessages = validator.getSchemaErrors(req);
-        if (errorMessages.length) {
-            return res.status(400).json({ errorMessages });
-        }
+        if(validator.returnSchemaErrors(req,res)){ return; }
 
         const user = await database.getUserFromEmail(req.body.email);
 

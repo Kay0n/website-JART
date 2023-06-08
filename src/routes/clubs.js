@@ -41,7 +41,7 @@ router.post(
     "/add_club",
     validator.checkSchema({
         tite: schemas.title,
-        description: schemas.description
+        description: schemas.text
     }),
     async (req, res) => {
         try {

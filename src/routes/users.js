@@ -20,10 +20,8 @@ router.post(
         password: schemas.passwordOptional
     }),
     async (req, res) => {
-        const errorMessages = validator.getSchemaErrors(req);
-        if (errorMessages.length) {
-            return res.status(400).json({ errorMessages });
-        }
+
+        if(validator.returnSchemaErrors(req,res)){ return; }
 
         let hashedPassword;
         if(req.body.password){
