@@ -63,7 +63,7 @@ router.post(
 
             const sql = "INSERT INTO clubs (name, description) VALUES (?, ?);";
             await database.query(sql, [req.body.title, req.body.description]);
-            database.addManager(req.body.title, req.user.user_id);
+            database.makeManager(req.body.title, req.user.user_id);
 
             res.sendStatus(200);
 
@@ -140,7 +140,7 @@ router.post(
             );
 
             if(user_is_authorized) {
-                database.addManager(req.body.club_id, req.body.user_id);
+                database.makeManager(req.body.club_id, req.body.user_id);
                 res.sendStatus(200);
                 return;
             }
