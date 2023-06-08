@@ -53,3 +53,10 @@
 #loginButton {
     position: relative;
 }
+
+.fixed-button {
+    position: fixed;
+    left: 1px;
+    top: 240px;
+    z-index: 9999;
+}
