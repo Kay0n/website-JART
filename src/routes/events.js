@@ -137,6 +137,8 @@ router.post(
     async (req, res, next) => {
         try {
 
+            if(validator.returnSchemaErrors(req, res)){ return; }
+
             const userIsAuthorized = await database.userIsManagerOrAdmin(
                 req.body.club_id,
                 req.user.user_id
