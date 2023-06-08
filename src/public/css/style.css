@@ -61,3 +61,10 @@
 .date, .location {
     font-weight: 200;
 }
+
+.fixed-button {
+    position: fixed;
+    left: 1px;
+    top: 240px;
+    z-index: 9999;
+}

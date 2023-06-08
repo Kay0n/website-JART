@@ -13,9 +13,26 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../css/style.css">
     <script src="../scripts/script.js" defer></script>
+    <style>
+        @media (max-width: 991.98px) {
+            .sidebar {
+                display:block;
+            }
+
+            .navbar-collapse.collapse.show {
+                display: flex !important;
+            }
+        }
+
+        @media (min-width: 992px) {
+            .navbar .search-bar {
+                width: 400px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <div class="sidebar d-none d-lg-block">
+    <div class="sidebar d-lg-block">
         <ul class="nav flex-column">
             <li class="nav-item">
                 <a class="nav-link" href="#" onclick="goToExplorePage()"><span class="fas fa-compass me-2"></span>Explore</a>
@@ -37,14 +54,18 @@
                 <img src="../images/site-icon.png" alt="Site Icon" width="30" class="img-fluid">
             </a>
             <h2 style="color: white;">Adelaide Uni Clubs</h2>
-            <form class="d-flex mx-auto w-75">
-                <input class="form-control me-2" type="search" placeholder="Search Clubs" aria-label="Search" style="width: 400px;">
-                <button class="btn btn-outline-primary" type="submit">
-                    <span class="fas fa-search"></span>
-                </button>
-            </form>
-            <div class="ms-auto">
-                <ul class="navbar-nav w-100">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <form class="d-flex mx-auto search-bar">
+                    <input class="form-control me-2" type="search" placeholder="Search Clubs" aria-label="Search">
+                    <button class="btn btn-outline-primary" type="submit">
+                        <span class="fas fa-search"></span>
+                    </button>
+                </form>
+                <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
                         <a class="nav-link" href="#" onclick="goToSettingsPage()">
                             <i class="fas fa-user-circle fa-2xl"></i>
@@ -144,4 +165,3 @@
     </div>
 </body>
 </html>
-
