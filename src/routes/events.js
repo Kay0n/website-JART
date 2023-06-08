@@ -50,25 +50,15 @@ router.get(
     "/get_subscribed_club_events",
     async (req, res, next) => {
 
-        const userIsMember = await database.userIsMember(
-            req.query.club_id,
-            req.user.user_id
-        );
-
-        if(userIsMember) {
-            let sql = `
-                SELECT * FROM club_events
-                INNER JOIN club_memberships ON club_events.club_id = club_memberships.club_id
-                WHERE user_id = ?
-                ORDER BY creation_time DESC;
-            `;
-            const result = await database.query(sql, req.query.user_id);
-            const rows = result[0];
-            res.status(200).json(rows);
-        }
-
-        res.status(401);
-
+        let sql = `
+            SELECT * FROM club_events
+            INNER JOIN club_memberships ON club_events.club_id = club_memberships.club_id
+            WHERE user_id = ?
+            ORDER BY creation_time DESC;
+        `;
+        const result = await database.query(sql, req.user.user_id);
+        const rows = result[0];
+        res.status(200).json(rows);
     }
 );
 
@@ -177,38 +167,28 @@ router.post(
 );
 
 
-// get RSVPS for a given club
+// === get event RSVPS for a club ===
+// assumes authenticated
+// assumes member
+// requires QUERY club_id
 router.get(
     "/get_RSVP",
-    validator.checkSchema({
-
-    }),
     async (req, res, next) => {
-        // need to make dynamic
-        const club_query = "SELECT club_id FROM clubs WHERE name = ?;";
-        let get_club_id = await database.query(club_query, ["Book Club"]);
-        let clubs_id = get_club_id[0][0].club_id;
 
-        // check if manager
-        const manager_query = "SELECT is_manager FROM club_memberships WHERE user_id = ? AND club_id = ?;";
-        let manager_check = (await database.query(manager_query, [1, clubs_id]))[0][0];
+        const userIsMember = await database.userIsMember(
+            req.query.club_id,
+            req.user.user_id
+        );
 
-        if(manager_check){
-            if(manager_check.is_manager){
-                // need to make dynamic
-                const sql = "SELECT * FROM event_rsvps INNER JOIN club_events ON event_rsvps.event_id = club_events.event_id WHERE club_events.club_id = ?;";
-                const result = await database.query(sql, [1]);
-                const rows = result[0];
-                return res.status(200).json(rows);
-            // eslint-disable-next-line no-else-return
-            } else {
-                console.log("Not a manager");
-            }
-        } else {
-            console.log("Not a member");
+        if(userIsMember){
+
+            const sql = "SELECT * FROM event_rsvps INNER JOIN club_events ON event_rsvps.event_id = club_events.event_id WHERE club_events.club_id = ?;";
+            const result = await database.query(sql, req.query.club_id);
+            const rows = result[0];
+            return res.status(200).json(rows);
         }
 
-        return res.sendStatus(400);
+        res.status(401);
     }
 );
 
