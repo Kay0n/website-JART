@@ -213,8 +213,13 @@ const deleteClubApp = VueInstance.createApp({
 });
 
 const userSettingsApp = VueInstance.createApp({
-    
-})
+    data() {
+        return {
+            name: "",
+            email: "",
+        };
+    }
+});
 
 function redirectToLoginPage() {
     window.location.href = "/login";
