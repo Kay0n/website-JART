@@ -274,46 +274,5 @@ router.post(
 );
 
 
-// === delete RSVP for event ===
-// permission isAuthenticated
-// permission isMember
-// requires club_id
-// requires event_id
-router.post(
-    "/delete_RSVP",
-    notAuthSend401,
-    validator.checkSchema({
-
-    }),
-    async (req, res, next) => {
-        try {
-            const userIsMember = await database.userIsMember(
-                req.body.club_id,
-                req.user.user_id
-            );
-
-            if(userIsMember){
-                const sql = "DELETE FROM event_rsvps WHERE event_id = ? AND user_id = ?;";
-                await database.query(
-                    sql,
-                    [
-                        req.body.event_id,
-                        req.user.user_id
-                    ]
-                );
-
-                res.sendStatus(201);
-                return;
-            }
-
-            res.sendStatus(401);
-        } catch (err) {
-            console.error(err);
-            return res.sendStatus(500);
-        }
-
-    }
-);
-
 
 module.exports = router;
