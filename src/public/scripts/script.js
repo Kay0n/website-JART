@@ -344,7 +344,8 @@ const postApp = VueInstance.createApp({
         async submitForm() {
             const urlParams = new URLSearchParams(window.location.search);
             const queryData = urlParams.get('club_id');
-            const postData = await fetch("/query/add_post?club_id=" + queryData, {
+            console.log("club id: "+ queryData);
+            const postData = await fetch("/query/add_post", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -352,7 +353,8 @@ const postApp = VueInstance.createApp({
                 body: JSON.stringify({
                     title: this.title,
                     content: this.content,
-                    is_private: this.is_private
+                    is_private: (this.is_private === "on"),
+                    club_id: queryData
                 })
             });
             console.log(postData);
@@ -374,7 +376,7 @@ const eventAPP = VueInstance.createApp({
         async submitForm() {
             const urlParams = new URLSearchParams(window.location.search);
             const queryData = urlParams.get('club_id');
-            const eventData = await fetch("/query/add_event?club_id=" + queryData, {
+            const eventData = await fetch("/query/add_event", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -382,9 +384,10 @@ const eventAPP = VueInstance.createApp({
                 body: JSON.stringify({
                     title: this.title,
                     description: this.description,
-                    date: this.date,
+                    date: new Date(this.date),
                     location: this.location,
-                    is_private: this.is_private
+                    is_private: (this.is_private === "on"),
+                    club_id: queryData
                 })
             });
             console.log(eventData);
@@ -401,6 +404,7 @@ const addClubApp = VueInstance.createApp({
     },
     methods: {
         async submitForm() {
+            console.log("creating club");
             const clubData = await fetch("/query/add_club", {
                 method: "POST",
                 headers: {

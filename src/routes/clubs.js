@@ -75,7 +75,25 @@ router.get(
     }
 );
 
+// === get club name ===
+// requires QUERY club_id
+// returns array containing name of club
+router.get(
+    "/get_club_name",
+    async (req, res, next) => {
+        try{
+            let sql = `SELECT name FROM clubs WHERE club_id = ?;`;
 
+            const result = await database.query(sql, [req.query.club_id]);
+            const rows = result[0];
+
+            res.json(rows);
+        } catch (err) {
+            console.error(err);
+            res.sendStatus(500);
+        }
+    }
+);
 
 // === add club ===
 // permission isAuthenticated
@@ -94,70 +112,65 @@ router.post(
             if(validator.returnSchemaErrors(req, res)){ return; }
 
             // check if club name exists
-            const clubs_matching_name = await database.query(
+            const clubs_matching_name = (await database.query(
                 "SELECT * FROM clubs WHERE name = ?",
                 [req.body.title]
-            )[0];
-            if(clubs_matching_name){
+            ))[0];
+            if(clubs_matching_name.length){
                 res.status(400).json({ errorMessages: [{ title: "This title is already in use" }] });
                 return;
             }
 
+            // create club
             const sql = "INSERT INTO clubs (name, description) VALUES (?, ?);";
             await database.query(sql, [req.body.title, req.body.description]);
-            database.makeManager(req.body.title, req.user.user_id);
+
+            // make user manager of club
+            const new_club_id = (await database.query(
+                "SELECT * FROM clubs WHERE name = ?",
+                [req.body.title]
+            ))[0][0].club_id;
+            database.makeManager(new_club_id, req.user.user_id);
 
             res.sendStatus(200);
 
         } catch (err) {
             console.error(err);
-            return res.sendStatus(500);
+            res.sendStatus(500);
         }
     }
 
 );
 
 
-// === add club member ===
-// permission isAuthenticated
-// requires club_id
-router.post(
-    "/add_member",
-    notAuthSend401,
-    async (req, res, next) => {
-        try{
-            await database.addMember(req.body.club_id, req.user.user_id);
-            return res.sendStatus(200);
-        } catch (err) {
-            console.error(err);
-            return res.sendStatus(500);
-        }
-    }
-);
-
-
-// === remove club member ===
+// === set club member state ===
 // permission isAuthenticated
 // permission isManager
-// requires club_id - club to remove from
-// requires user_id - user to remove
+// requires club_id
+// requires user_id
+// requires new_state
 router.post(
-    "/remove_member",
+    "/set_member",
     notAuthSend401,
     async (req, res, next) => {
         try {
+
+            if(req.body.new_state){
+                await database.setMemberState(req.body.club_id, req.user.user_id, true);
+                return res.sendStatus(200);
+            }
+
             const user_is_authorized = await database.userIsManagerOrAdmin(
                 req.body.club_id,
                 req.user.user_id
             );
 
             if(user_is_authorized || req.user.user_id === req.body.user_id) {
-                database.removeMember(req.body.club_id, req.body.user_id);
-                res.sendStatus(200);
-                return;
+                database.setMemberState(req.body.club_id, req.body.user_id, false);
+                return res.sendStatus(200);
             }
 
-            res.sendStatus(401);
+            return res.sendStatus(401);
         } catch (err) {
             console.error(err);
             return res.sendStatus(500);
@@ -166,13 +179,15 @@ router.post(
 );
 
 
-// === add club manager ===
+
+// === set club manager sate ===
 // permission isAuthenticated
 // permission isManager
 // requires club_id
 // requires user_id
+// requires new_state
 router.post(
-    "/add_manager",
+    "/set_manager",
     notAuthSend401,
     async (req, res, next) => {
         try {
@@ -182,7 +197,22 @@ router.post(
             );
 
             if(user_is_authorized) {
-                database.makeManager(req.body.club_id, req.body.user_id);
+
+                // make user if setting
+                if(req.body.new_state){
+                    await database.setMemberState(
+                        req.body.club_id,
+                        req.body.user_id,
+                        true
+                    );
+                }
+
+                // set state
+                await database.setManagerState(
+                    req.body.club_id,
+                    req.body.user_id,
+                    req.body.new_state
+                );
                 res.sendStatus(200);
                 return;
             }
@@ -225,36 +255,6 @@ router.post(
     }
 );
 
-
-// === delete manager ===
-// permission isAuthenticated
-// permission isManager
-// requires user_id
-// requires club_id
-router.post(
-    "/remove_manager",
-    notAuthSend401,
-    async (req, res, next) => {
-        try {
-            const user_is_authorized = await database.userIsManagerOrAdmin(
-                req.body.club_id,
-                req.user.user_id
-            );
-
-            if(user_is_authorized) {
-                const sql = "UPDATE club_memberships SET is_manager = FALSE WHERE user_id = ? AND club_id = ?;";
-                await database.query(sql, [req.body.user_id, req.body.club_id]);
-                res.sendStatus(200);
-                return;
-            }
-
-            res.sendStatus(401);
-        } catch (err) {
-            console.error(err);
-            return res.sendStatus(500);
-        }
-    }
-);
 
 
 module.exports = router;

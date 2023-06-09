@@ -30,7 +30,7 @@ router.get(
 
 
 //  === get public events from a clubs ===
-// requires QUERY club_id
+// requires QUERY club_id: int
 // returns array of events
 router.get(
     "/get_public_events",
@@ -44,7 +44,7 @@ router.get(
             res.json(rows);
         } catch (err) {
             console.error(err);
-            return res.sendStatus(500);
+            res.sendStatus(500);
         }
     }
 );
@@ -116,12 +116,12 @@ router.get(
 // === add club event ===
 // permission isAuthenticated
 // permission isManager || isAdmin
-// requires title
-// requires description
-// requires date
-// requires location
-// requires is_private
-// requires club_id
+// requires title: string
+// requires description: string
+// requires date: date string
+// requires location: string
+// requires is_private: int
+// requires club_id: int
 router.post(
     "/add_event",
     notAuthSend401,
@@ -130,7 +130,7 @@ router.post(
         description: schemas.text,
         date: schemas.date,
         location: schemas.location,
-        is_private: schemas.club_id,
+        is_private: schemas.is_private,
         club_id: schemas.club_id
 
     }),
