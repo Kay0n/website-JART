@@ -442,7 +442,7 @@ const userSettingsApp = VueInstance.createApp({
     },
     methods: {
         getUserData() {
-            fetch('query/get_user', {
+            fetch("/query/get_user", {
                 method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -450,8 +450,11 @@ const userSettingsApp = VueInstance.createApp({
         })
         .then(response => response.json())
         .then(data => {
-            this.user_object = data;
             console.log(data);
+            this.user_object = data;
+            this.given_name = data.given_name;
+            this.family_name = data.family_name;
+            this.email = data.email;
         });
         },
         async submitForm() {
