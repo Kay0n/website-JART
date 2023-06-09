@@ -437,7 +437,8 @@ const deleteClubApp = VueInstance.createApp({
                 // Handle any errors or unsuccessful deletion
                 console.error("Failed to delete club.");
         }
-    }}
+    }
+}
 });
 
 
@@ -505,6 +506,35 @@ const userSettingsApp = VueInstance.createApp({
     }
 });
 
+const notificationsApp = VueInstance.createApp({
+    data() {
+        return {
+            email_notify_posts: "",
+            email_notify_events: ""
+        };
+    },
+    methods: {
+        async submitForm() {
+            console.log(this.email_notify_posts);
+            const urlParams = new URLSearchParams(window.location.search);
+            const queryData = urlParams.get('club_id');
+            const notificationData = await fetch("/query/update_club_notifications", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    email_notify_posts: this.email_notify_posts,
+                    email_notify_events: this.email_notify_events,
+                    club_id: queryData
+                })
+            });
+            console.log(notificationData);
+        }
+    }
+});
+
+
 
 function redirectToLoginPage() {
     window.location.href = "/login";
@@ -548,5 +578,8 @@ postApp.mount("#add-post");
 addClubApp.mount("#add-club");
 deleteClubApp.mount("#delete-club");
 userSettingsApp.mount("#user-settings");
+notificationsApp.mount("#notification-settings");
+
+
 
 RSVPApp.mount("#RSVPs");
