@@ -60,21 +60,21 @@
 				<form>
 					<div class="mb-3">
 						<label for="given_name" class="form-label">First Name</label>
-						<input v-model="given_name" type="text" class="form-control" id="given_name" required placeholder="Change your First name">
+						<input v-model="given_name" type="text" class="form-control" id="given_name" placeholder="Change your First name">
 					</div>
 					<div class="mb-3">
 						<label for="family_name" class="form-label">Family name</label>
-						<input v-model="family_name" type="text" class="form-control" id="family_name" required placeholder="Change your Family name">
+						<input v-model="family_name" type="text" class="form-control" id="family_name" placeholder="Change your Family name">
 					</div>
 					<div class="mb-3">
 						<label for="email" class="form-label">Email</label>
-						<input v-model="email" type="email" class="form-control" id="email" required placeholder="Change your email">
+						<input v-model="email" type="email" class="form-control" id="email" placeholder="Change your email">
 					</div>
 					<div class="mb-3">
 						<label for="password" class="form-label">Password</label>
-						<input v-model="password" type="password" class="form-control" id="password" required placeholder="Change your password">
+						<input v-model="password" type="password" class="form-control" id="password" placeholder="Change your password">
 					</div>
-					<button type="submit" class="btn btn-success" @click="submitForm()">Save</button>
+					<button type="submit" class="btn btn-success" @click="submitForm">Save</button>
 				</form>
 			</div>
 			<hr>
