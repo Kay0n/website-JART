@@ -154,6 +154,21 @@ const clubNameApp = VueInstance.createApp({
     }
 });
 
+const clubIDApp = VueInstance.createApp({
+    data() {
+        return {
+            club_id: 0
+        };
+    },
+    async mounted() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const queryData = urlParams.get('club_id');
+        const response = await fetch("/query/get_club_id?club_id=" + queryData, {});
+        const clubData = await response.json();
+        this.club_id = clubData[0].club_id;
+    }
+});
+
 const clubMembersApp = VueInstance.createApp({
     data() {
         return {
@@ -593,6 +608,7 @@ allUsersApp.mount("#all-users");
 
 allClubsApp.mount("#all-clubs");
 clubNameApp.mount("#club-name");
+clubIDApp.mount("#club-id");
 clubMembersApp.mount("#club-members");
 subscribedClubsApp.mount("#subscribed-clubs");
 
