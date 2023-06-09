@@ -223,6 +223,22 @@ const subscribedClubsApp = VueInstance.createApp({
         const queryData = urlParams.get('club_id');
         const response = await fetch("/query/get_subscribed_clubs?club_id=" + queryData, {});
         this.subscribed_clubs = await response.json();
+    },
+    methods: {
+        deleteMember() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const queryData = urlParams.get('club_id');
+            fetch("/query/set_member", {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    new_state: false,
+                    club_id: queryData
+                })
+            });
+        }
     }
 });
 
@@ -657,29 +673,28 @@ const isAdminCheckApp = VueInstance.createApp({
     }
 });
 
-const unsubscribeClubApp = VueInstance.createApp({
-    data() {
-        return {
-            isMember: false
-        };
-    },
-    methods: {
-        async submitForm() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const queryData = urlParams.get('club_id');
-            const response = await fetch("/query/set_member", {
-                method: 'POST',
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    new_state: false,
-                    club_id: queryData
-                })
-            });
-        }
-    }
-});
+// const unsubscribeClubApp = VueInstance.createApp({
+//     data() {
+//         return {
+//         };
+//     },
+//     methods: {
+//         deleteMember() {
+//             const urlParams = new URLSearchParams(window.location.search);
+//             const queryData = urlParams.get('club_id');
+//             fetch("/query/set_member", {
+//                 method: 'POST',
+//                 headers: {
+//                     "Content-Type": "application/json"
+//                 },
+//                 body: JSON.stringify({
+//                     new_state: false,
+//                     club_id: queryData
+//                 })
+//             });
+//         }
+//     }
+// });
 
 function logout() {
     window.location.href = "/logout";
@@ -732,7 +747,7 @@ deleteClubApp.mount("#delete-club");
 userSettingsApp.mount("#user-settings");
 notificationsApp.mount("#notification-settings");
 isAdminCheckApp.mount("#admin-button");
-unsubscribeClubApp.mount("#unsubscribe-button");
+// unsubscribeClubApp.mount("#unsubscribe-button");
 
 
 RSVPApp.mount("#RSVPs");

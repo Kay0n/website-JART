@@ -87,9 +87,7 @@
 				<ul class="list-group" v-for="subscribed_club in subscribed_clubs">
 					<li class="list-group-item d-flex justify-content-between">
 						<span>{{ subscribed_club.name }}</span>
-						<div id="unsubscribe-button">
-							<button type="button" class="btn btn-sm btn-danger" @click="submitForm">Unsubscribe</button>
-						</div>
+						<button type="submit" class="btn btn-sm btn-danger" @click="deleteMember()">Unsubscribe</button>
 					</li>
 				</ul>
 			</div>
