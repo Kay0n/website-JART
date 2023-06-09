@@ -67,7 +67,7 @@
         <div id="main-content">
             <div class="container mt-4 text-center" id="club-name">
                 <h1>{{ club_name }}</h1>
-                <button type="submit" class="btn btn-success" v-on:click="submitForm">Join!</button>
+                <button type="button" class="btn btn-success" @click="addMember()">Join!</button>
             </div>
             <div class="container mt-4">
                 <div class="row">

@@ -163,7 +163,23 @@ const clubNameApp = VueInstance.createApp({
         const response = await fetch("/query/get_club_name?club_id=" + queryData, {});
         const clubData = await response.json();
         this.club_name = clubData[0].name;
+    },
+    methods: {
+        addMember(){
+            const urlParams = new URLSearchParams(window.location.search);
+            const queryData = urlParams.get('club_id');
 
+            fetch("/query/set_member", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    new_state: true,
+                    club_id: queryData
+                })
+            });
+        }
     }
 });
 
@@ -311,7 +327,7 @@ const allPublicEventsApp = VueInstance.createApp({
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                    id: event_id,
+                    id: event_id
                 })
             });
         }
