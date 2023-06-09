@@ -66,6 +66,7 @@
     position: fixed;
     left: 1px;
     top: 240px;
+    margin-top: 20px;
     z-index: 9999;
 }
 .table-compact {
