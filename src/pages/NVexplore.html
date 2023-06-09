@@ -18,13 +18,13 @@
         <div class="sidebar d-none d-lg-block">
             <ul class="nav flex-column">
                 <li class="nav-item">
-                    <a class="nav-link" href="#" onclick="goToExplorePage()"><span class="fas fa-compass me-2"></span>Explore</a>
+                    <a class="nav-link" href="/pages/explore"><span class="fas fa-compass me-2"></span>Explore</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#" onclick="redirectToLoginPage()"><span class="fas fa-users me-2"></span>My Clubs</a>
+                    <a class="nav-link" href="/login"><span class="fas fa-users me-2"></span>My Clubs</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#" onclick="redirectToLoginPage()"><span class="fas fa-cog me-2"></span>Settings</a>
+                    <a class="nav-link" href="/login"><span class="fas fa-cog me-2"></span>Settings</a>
                 </li>
             </ul>
         </div>
@@ -41,7 +41,7 @@
                     </button>
                 </form>
                 <div id="loginButton">
-                <button type="button" class="btn btn-primary" onclick="redirectToLoginPage()">Login</button>
+                <button type="button" class="btn btn-primary" href="/login">Login</button>
                 </div>
             </div>
         </nav>
@@ -69,7 +69,7 @@
                             <div class="card-body">
                                 <h5 class="card-title">{{ item.title }}</h5>
                                 <p class="card-text"> {{ item.content }}</p>
-                                <button class="btn btn-primary" type="button" onclick="redirectToLoginPage()">Join</button>
+                                <button class="btn btn-primary" type="button" href="/login">Join</button>
                             </div>
                         </div>
                     </div>
