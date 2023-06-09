@@ -9,7 +9,6 @@ const database = require("./configs/database.js");
 // routers
 const loginRouter = require("./routes/login.js");
 const registerRouter = require("./routes/register");
-const queryRouter = require("./routes/query.js");
 const clubRouter = require("./routes/clubs.js");
 const eventRouter = require("./routes/events.js");
 const userRouter = require("./routes/users.js");
@@ -32,7 +31,6 @@ app.use(passport.session());
 
 
 // load routers
-app.use("/query", queryRouter);
 app.use("/query", userRouter);
 app.use("/query", postRouter);
 app.use("/query", eventRouter);
