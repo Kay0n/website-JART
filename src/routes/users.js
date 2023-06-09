@@ -153,5 +153,31 @@ router.get(
     }
 );
 
+// === adds the user as an admin ===
+// requires user_id as id
+router.post(
+    '/add_admin',
+    notAuthSend401,
+    async (req, res) => {
+        try {
+            let sql = `UPDATE users SET is_admin = TRUE WHERE user_id = ?;`;
+
+            await database.query(sql, [
+                req.body.id
+            ]);
+
+            res.sendStatus(201);
+            return;
+        } catch (err) {
+            console.error(err);
+            return res.sendStatus(500);
+        }
+
+    }
+);
+
+
+
+
 module.exports = router;
 

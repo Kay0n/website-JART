@@ -111,6 +111,19 @@ const allUsersApp = VueInstance.createApp({
     async mounted() {
         const response = await fetch("/query/get_all_users", {});
         this.users = await response.json();
+    },
+    methods: {
+        promoteToAdmin(user_id){
+            fetch("/query/add_admin", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    id: user_id
+                })
+            });
+        }
     }
 });
 
