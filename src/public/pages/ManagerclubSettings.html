@@ -55,19 +55,19 @@
 	</nav>
 
 	<div id="main-content">
-		<div class="container mt-4 text-center">
-			<h1>Club Name</h1>
+		<div class="container mt-4 text-center" id="club-name">
+			<h1>{{ club_name }}</h1>
 		</div>
 		<div class="container mt-4">
 			<div class="row">
 				<div class="col-lg-6">
 					<h2>Subscribed Users</h2>
-					<div class="list-group" >
-						<div class="list-group-item" >
-							<div class="d-flex justify-content-between" style="height: 80%">
+					<div class="list-group" id="club-members">
+						<div class="list-group-item" v-for="club_member in club_members">
+							<div class="d-flex justify-content-between" style="height: 80%" v-if="club_member.is_manager">
 								<div>
-									<h5 class="mb-0">User Name</h5>
-									<p class="mb-0">user@example.com</p>
+									<h5 class="mb-0">{{ club_member.given_name }} {{ club_member.family_name }}</h5>
+									<p class="mb-0">{{ club_member.email }}</p>
 									<small class="text-muted">Manager</small>
 								</div>
 								<div>
@@ -75,12 +75,10 @@
 									<button type="button" class="btn btn-primary btn-sm">Remove Manager</button>
 								</div>
 							</div>
-						</div>
-						<div class="list-group-item">
-							<div class="d-flex justify-content-between">
+							<div class="d-flex justify-content-between" v-else>
 								<div>
-									<h5 class="mb-0">User Name</h5>
-									<p class="mb-0">user@example.com</p>
+									<h5 class="mb-0">{{ club_member.given_name }} {{ club_member.family_name }}</h5>
+									<p class="mb-0">{{ club_member.email }}</p>
 									<small class="text-muted">Member</small>
 								</div>
 								<div>
@@ -89,6 +87,28 @@
 								</div>
 							</div>
 						</div>
+					</div>
+					<br>
+					<div class="container" id="RSVPs">
+						<h2>RSVPs</h2>
+						<table class="table">
+							<thead>
+								<tr>
+									<th scope="col">Given name</th>
+									<th scope="col">Family Name</th>
+									<th scope="col">Event name</th>
+									<th scope="col">Event date</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr v-for="RSVP in RSVPs">
+									<td>{{ RSVP.given_name }}</td>
+									<td>{{ RSVP.family_name }}</td>
+									<td>{{ RSVP.title }}</td>
+									<td>{{ new Date(RSVP.date).toLocaleString() }}</td>
+								</tr>
+							</tbody>
+						</table>
 					</div>
 				</div>
 				<div class="col-lg-6">

@@ -79,7 +79,7 @@ router.get(
 );
 
 
-// === get all events for club ===
+// === get all events for a club ===
 // permission isAuthenticated
 // permission isMember
 // requires QUERY club_id
@@ -219,7 +219,10 @@ router.get(
 
             if(userIsMember){
 
-                const sql = "SELECT * FROM event_rsvps INNER JOIN club_events ON event_rsvps.event_id = club_events.event_id WHERE club_events.club_id = ?;";
+                const sql = `SELECT users.given_name, users.family_name, club_events.title, club_events.date FROM event_rsvps
+                            INNER JOIN club_events ON event_rsvps.event_id = club_events.event_id
+                            INNER JOIN users ON event_rsvps.user_id = users.user_id
+                            WHERE club_events.club_id = ?;`;
                 const result = await database.query(sql, req.query.club_id);
                 const rows = result[0];
                 return res.status(200).json(rows);

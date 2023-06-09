@@ -87,7 +87,7 @@
                             <div class="card-body">
                                 <h5 class="card-title">{{ item.title }}</h5>
                                 <p class="card-text">{{ item.description }}</p>
-                                <p class="date">Date: {{ item.date }}</p>
+                                <p class="date">Date: {{ new Date(item.date).toLocaleString() }}</p>
                                 <p class="location">Location: {{ item.location }}</p>
                             </div>
                         </div>
