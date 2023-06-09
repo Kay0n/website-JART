@@ -638,7 +638,31 @@ const isAdminCheckApp = VueInstance.createApp({
                 this.isAdmin = data.is_admin;
             }
         }
+    }
+});
+
+const unsubscribeClubApp = VueInstance.createApp({
+    data() {
+        return {
+            isMember: false
+        };
     },
+    methods: {
+        async submitForm() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const queryData = urlParams.get('club_id');
+            const response = await fetch("/query/set_member", {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    new_state: false,
+                    club_id: queryData
+                })
+            });
+        }
+    }
 });
 
 function logout() {
@@ -692,6 +716,7 @@ deleteClubApp.mount("#delete-club");
 userSettingsApp.mount("#user-settings");
 notificationsApp.mount("#notification-settings");
 isAdminCheckApp.mount("#admin-button");
+unsubscribeClubApp.mount("#unsubscribe-button");
 
 
 RSVPApp.mount("#RSVPs");
