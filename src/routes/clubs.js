@@ -176,7 +176,6 @@ router.post(
     notAuthSend401,
     async (req, res, next) => {
         try {
-
             if(req.body.new_state){
                 await database.setMemberState(req.body.club_id, req.user.user_id, true);
                 return res.sendStatus(200);
