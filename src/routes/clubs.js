@@ -152,7 +152,8 @@ router.post(
                 "SELECT * FROM clubs WHERE name = ?",
                 [req.body.title]
             ))[0][0].club_id;
-            database.makeManager(new_club_id, req.user.user_id);
+            database.setMemberState(new_club_id, req.user.user_id, true);
+            database.setManagerState(new_club_id, req.user.user_id, true);
 
             res.sendStatus(200);
 

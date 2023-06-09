@@ -479,22 +479,16 @@ const deleteClubApp = VueInstance.createApp({
         async deleteClub() {
             const urlParams = new URLSearchParams(window.location.search);
             const queryData = urlParams.get('club_id');
-            const response = await fetch("/query/delete_club?club_id=" + queryData, {
+            const response = await fetch("/query/delete_club?club_id=", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
+                    club_id: queryData
                 })
             });
-
-            if (response.ok) {
-                // Club deletion was successful
-                console.log("Club deleted successfully.");
-            } else {
-                // Handle any errors or unsuccessful deletion
-                console.error("Failed to delete club.");
-            }
+            window.location.href ='/';
         }
     }
 });
