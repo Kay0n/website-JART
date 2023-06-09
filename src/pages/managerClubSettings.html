@@ -71,8 +71,7 @@
 									<small class="text-muted">Manager</small>
 								</div>
 								<div>
-									<button type="button" class="btn btn-danger btn-sm">Remove</button>
-									<button type="button" class="btn btn-primary btn-sm">Remove Manager</button>
+									<button type="button" @click="setManager(club_member.user_id, false)" class="btn btn-primary btn-sm">Remove Manager</button>
 								</div>
 							</div>
 							<div class="d-flex justify-content-between" v-else>
@@ -82,8 +81,7 @@
 									<small class="text-muted">Member</small>
 								</div>
 								<div>
-									<button type="button" class="btn btn-danger btn-sm">Remove</button>
-									<button type="button" class="btn btn-primary btn-sm">Make Manager</button>
+									<button type="button" @click="setManager(club_member.user_id, true)" class="btn btn-primary btn-sm">Make Manager</button>
 								</div>
 							</div>
 						</div>

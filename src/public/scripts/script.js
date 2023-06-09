@@ -1,6 +1,8 @@
 
 
 // @ts-ignore
+
+
 // eslint-disable-next-line , no-undef
 const VueInstance = Vue;
 
@@ -209,6 +211,27 @@ const clubMembersApp = VueInstance.createApp({
         const queryData = urlParams.get('club_id');
         const response = await fetch("/query/get_club_members?club_id=" + queryData, {});
         this.club_members = await response.json();
+    },
+    methods: {
+        async setManager(user_id, new_state) {
+            console.log("RUN!");
+            console.log(user_id);
+            const urlParams = new URLSearchParams(window.location.search);
+            const queryData = urlParams.get('club_id');
+            const response = await fetch("/query/set_manager", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    user_id: user_id,
+                    club_id: queryData,
+                    new_state: new_state
+                })
+            });
+            console.log(response);
+            // window.location.reload();
+        }
     }
 });
 

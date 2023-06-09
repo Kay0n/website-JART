@@ -59,7 +59,7 @@ router.get(
     "/get_club_members",
     async (req, res, next) => {
         try{
-            let sql = `SELECT users.given_name, users.family_name, users.email, club_memberships.is_manager FROM club_memberships
+            let sql = `SELECT users.user_id, users.given_name, users.family_name, users.email, club_memberships.is_manager FROM club_memberships
             INNER JOIN users ON club_memberships.user_id = users.user_id
             WHERE club_id = ?
             ORDER BY is_manager DESC, users.given_name;`;
@@ -170,15 +170,20 @@ router.post(
 // permission isAuthenticated
 // permission isManager
 // requires club_id
-// requires user_id
+// requires OPTIONAL user_id - user to set
 // requires new_state
 router.post(
     "/set_member",
     notAuthSend401,
     async (req, res, next) => {
         try {
+
+            if(req.body.user_id){
+                database.setMemberState(req.body.club_id, req.body.user_id, req.body.new_state);
+                return;
+            }
             database.setMemberState(req.body.club_id, req.user.user_id, req.body.new_state);
-            return res.sendStatus(200);
+            res.sendStatus(200);
         } catch (err) {
             console.error(err);
             return res.sendStatus(500);
@@ -205,7 +210,6 @@ router.post(
             );
 
             if(user_is_authorized) {
-
                 // make user if setting
                 if(req.body.new_state){
                     await database.setMemberState(
