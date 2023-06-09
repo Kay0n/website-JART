@@ -102,6 +102,18 @@ const registerApp = VueInstance.createApp({
     }
 });
 
+const allUsersApp = VueInstance.createApp({
+    data() {
+        return {
+            users: []
+        };
+    },
+    async mounted() {
+        const response = await fetch("/query/get_all_users", {});
+        this.users = await response.json();
+    }
+});
+
 
 
 const allClubsApp = VueInstance.createApp({
@@ -576,6 +588,7 @@ function goToClubSettings() {
 
 loginApp.mount("#login-form");
 registerApp.mount("#register-form");
+allUsersApp.mount("#all-users");
 
 allClubsApp.mount("#all-clubs");
 clubNameApp.mount("#club-name");
