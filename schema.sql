@@ -73,7 +73,9 @@ INSERT INTO users (email, password, given_name, family_name, is_admin) VALUES
 ("jane@example.com", "$2b$10$NO3UoxWhB.6RlNt8.g6GcuTX2RN7dNMNAVdT78LZ9rnKkmyn3j0KK", "Jane", "Smith", 0),      -- PASS: password456
 ("mike@example.com", "$2b$10$djQH9FryzdAnQEA9kQ4XgeMDal2EW5I1dAyDI2QtWb8HvEwk.Bhg6", "Mike", "Johnson", 0),    -- PASS: password789
 ("sarah@example.com", "$2b$10$goWZwmG6vHktWMJmVzIvsepdHzwCnCp7MKV2cuvZ6CE7/0Z6II87m", "Sarah", "Davis", 0),    -- PASS: password321
-("alex@example.com", "$2b$10$SvNpqDKbI3BpmbOI2.K/WOfT9Zy24rSMezjWu1MDJ/kv9RMQYCYIO", "Alex", "Brown", 0);      -- PASS: password654
+("alex@example.com", "$2b$10$SvNpqDKbI3BpmbOI2.K/WOfT9Zy24rSMezjWu1MDJ/kv9RMQYCYIO", "Alex", "Brown", 0),      -- PASS: password654
+("kayon5555@gmail.com", "$2b$10$VmaE9OETU3k5NrD0gOvGx./qlxhyUclDOLeJVhCcXV84NGgfirS6u", "Jdy", "Test", 0);      -- PASS: password123
+
 
 INSERT INTO clubs (name, description) VALUES
 ("Book Club", "A club for book enthusiasts"),
@@ -91,7 +93,8 @@ INSERT INTO club_memberships (email_notify_posts, email_notify_events, is_manage
 (1, 1, 0, 5, 2),
 (1, 1, 1, 1, 3),
 (1, 0, 0, 3, 3),
-(0, 1, 0, 4, 3);
+(0, 1, 0, 4, 3),
+(1, 1, 0, 6, 1);
 
 INSERT INTO club_posts (title, content, creation_time, is_private, club_id) VALUES
 ("Book Recommendation", "I highly recommend reading 'The Great Gatsby' by F. Scott Fitzgerald.", NOW(), 0, 1),
