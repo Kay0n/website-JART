@@ -4,6 +4,7 @@ const validator = require("../configs/validator.js");
 const schemas = require("../configs/schemas.js");
 const { notAuthSend401 } = require("../configs/passport.js");
 const router = express.Router();
+const mailer = require("../configs/mail.js");
 
 
 //  === get public events from all clubs ===
@@ -158,6 +159,29 @@ router.post(
                     ]
                 );
                 res.sendStatus(201);
+                console.log("post created");
+
+                const club = (await database.query("SELECT * FROM clubs WHERE club_id = ?", [req.body.club_id]))[0][0];
+                const email_sql = `
+                    SELECT u.user_id, u.email, u.password, u.given_name, u.family_name, u.is_admin
+                    FROM users u
+                    JOIN club_memberships cm ON u.user_id = cm.user_id
+                    WHERE cm.club_id = ? AND cm.email_notify_events = true;
+                `;
+                const notified_users = (await database.query(email_sql, [req.body.club_id]))[0];
+                console.log(notified_users);
+                const emailContent = `
+                    <h2><h2>
+                    <p>Check out the new event from ${club.name}:</p>
+                    <p>${req.body.title}</p>
+                    <p>${req.body.description}</p>
+                    <p>At ${req.body.location}, On date: ${new Date(req.body.date)}</p>
+                    <a href="http://localhost:8080/pages/club?club_id=${req.body.club_id}">Click here to view</a>
+                `;
+                for(const user of notified_users){
+                    console.log("mailLoop:" + user.email);
+                    mailer.sendMail(user.email, "New Event!", emailContent);
+                }
                 return;
             }
 
