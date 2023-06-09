@@ -31,6 +31,30 @@ router.get(
 );
 
 
+// === get club members ===
+// requires QUERY club_id
+// returns array containing members of club
+router.get(
+    "/get_club_members",
+    async (req, res, next) => {
+        try{
+            let sql = `SELECT users.given_name, users.family_name, users.email, club_memberships.is_manager FROM club_memberships
+            INNER JOIN users ON club_memberships.user_id = users.user_id
+            WHERE club_id = ?
+            ORDER BY is_manager DESC, users.given_name;`;
+
+            const result = await database.query(sql, [req.query.club_id]);
+            const rows = result[0];
+
+            res.json(rows);
+        } catch (err) {
+            console.error(err);
+            res.sendStatus(500);
+        }
+    }
+);
+
+
 // === get club name ===
 // requires QUERY club_id
 // returns array containing name of club

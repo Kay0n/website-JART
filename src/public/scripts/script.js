@@ -104,7 +104,6 @@ const registerApp = VueInstance.createApp({
 
 
 
-
 const allClubsApp = VueInstance.createApp({
     data() {
         return {
@@ -143,6 +142,19 @@ const clubNameApp = VueInstance.createApp({
     }
 });
 
+const clubMembersApp = VueInstance.createApp({
+    data() {
+        return {
+            club_members: []
+        };
+    },
+    async mounted() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const queryData = urlParams.get('club_id');
+        const response = await fetch("/query/get_club_members?club_id=" + queryData, {});
+        this.club_members = await response.json();
+    }
+});
 
 
 
@@ -319,6 +331,7 @@ const clubEventsApp = VueInstance.createApp({
 });
 
 
+
 const postApp = VueInstance.createApp({
     data() {
         return {
@@ -427,6 +440,24 @@ const deleteClubApp = VueInstance.createApp({
     }}
 });
 
+
+
+const RSVPApp = VueInstance.createApp({
+    data() {
+        return {
+            RSVPs: []
+        };
+    },
+    async mounted() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const queryData = urlParams.get('club_id');
+        const response = await fetch("/query/get_RSVP?club_id=" + queryData, {});
+        this.RSVPs = await response.json();
+    }
+});
+
+
+
 const userSettingsApp = VueInstance.createApp({
     data() {
         return {
@@ -500,6 +531,7 @@ registerApp.mount("#register-form");
 
 allClubsApp.mount("#all-clubs");
 clubNameApp.mount("#club-name");
+clubMembersApp.mount("#club-members");
 
 allPublicPostsApp.mount("#all-public-posts");
 publicPostsApp.mount("#public-posts");
@@ -516,3 +548,5 @@ postApp.mount("#add-post");
 addClubApp.mount("#add-club");
 deleteClubApp.mount("#delete-club");
 userSettingsApp.mount("#user-settings");
+
+RSVPApp.mount("#RSVPs");
