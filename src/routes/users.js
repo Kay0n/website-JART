@@ -115,6 +115,24 @@ router.post(
     }
 );
 
+// === get user object ===
+// permission isAuthenticated
+// returns user object
+router.post(
+    '/get_user',
+    notAuthSend401,
+    async (req, res) => {
+        try {
+            const response = await database.getUserFromID(req.user.user_id);
+            const user_object = response[0][0];
+            res.status(200).json(user_object);
+        } catch (err) {
+            console.error(err);
+            return res.sendStatus(500);
+        }
+
+    }
+);
 
 module.exports = router;
 

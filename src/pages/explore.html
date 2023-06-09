@@ -74,30 +74,32 @@
             </ul>
         </div>
         <div class="centerPlease">
-            <button type="button" class="btn btn-primary ml-3" id="ModalCheck1" data-bs-toggle="modal" data-bs-target="#createClubModal">
+            <button type="button" class="btn btn-primary ml-3" id="ModalCheck1" data-bs-toggle="modal" data-bs-target="#createClubModal" @click="openModal">
                 Create Club
             </button>
         </div>
-    </div>
-    <div class="modal fade" id="createClubModal" tabindex="-1" role="dialog" aria-labelledby="createClubModalTitle" aria-hidden="true">
-        <!-- CREATE CLUB MODAL -->
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <h1>Create Club</h1>
-                <form>
-                    <label for="createClubModalTitle">Title</label>
-                    <div class="modal-header">
-                        <input type="text" class="form-control" placeholder="Enter Club name">
+        <div id="add-club">
+            <div class="modal fade" id="createClubModal" tabindex="-1" role="dialog" aria-labelledby="createClubModalTitle" aria-hidden="true">
+                <!-- CREATE CLUB MODAL -->
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <h1>Create Club</h1>
+                        <form @submit.prevent="submitForm">
+                            <label for="createClubModalTitle">Title</label>
+                            <div class="modal-header">
+                                <input v-model="name" type="text" class="form-control" required placeholder="Enter Club name">
+                            </div>
+                            <label for="createClubModalDescriptionTextarea">Club Description</label>
+                            <div class="modal-body">
+                                <textarea v-model="description" class="form-control" rows="4" required placeholder="Enter Club description"></textarea>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary" @click="submitForm" data-bs-dismiss="modal">Create Club</button>
+                            </div>
+                        </form>
                     </div>
-                    <label for="createClubModalDescriptionTextarea">Club Description</label>
-                    <div class="modal-body">
-                        <textarea class="form-control" rows="4" placeholder="Enter Club description"></textarea>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Create Club</button>
-                    </div>
-                </form>
+                </div>
             </div>
         </div>
         <div class="ms-auto">

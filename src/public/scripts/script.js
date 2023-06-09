@@ -430,9 +430,44 @@ const deleteClubApp = VueInstance.createApp({
 const userSettingsApp = VueInstance.createApp({
     data() {
         return {
-            name: "",
+            given_name: "",
+            family_name: "",
             email: "",
+            password: "",
+            user_object: {}
         };
+    },
+    mounted() {
+        this.getUserData();
+    },
+    methods: {
+        getUserData() {
+            fetch('query/get_user', {
+                method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            this.user_object = data;
+            console.log(data);
+        });
+        },
+        async submitForm() {
+            const userSettings = await fetch("/query/update_user_settings", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    given_name: this.given_name,
+                    family_name: this.family_name,
+                    email: this.email,
+                    password: this.password,
+                })
+            });
+        }
     }
 });
 
@@ -477,3 +512,4 @@ eventAPP.mount("#add-event");
 postApp.mount("#add-post");
 addClubApp.mount("#add-club");
 deleteClubApp.mount("#delete-club");
+userSettingsApp.mount("#user-settings");
