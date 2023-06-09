@@ -556,9 +556,6 @@ eventAPP.mount("#add-event");
 postApp.mount("#add-post");
 addClubApp.mount("#add-club");
 deleteClubApp.mount("#delete-club");
-<<<<<<< Updated upstream
 userSettingsApp.mount("#user-settings");
-=======
 
 RSVPApp.mount("#RSVPs");
->>>>>>> Stashed changes
