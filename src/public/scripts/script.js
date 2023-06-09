@@ -469,6 +469,15 @@ const userSettingsApp = VueInstance.createApp({
                     email: this.email,
                     password: this.password,
                 })
+            })
+            .then(response => {
+                if (response.ok) {
+                    // The request was successful
+                    // Perform any necessary actions or show a success message
+                } else {
+                    // The request failed
+                    // Perform any necessary error handling or show an error message
+                }
             });
         }
     }
