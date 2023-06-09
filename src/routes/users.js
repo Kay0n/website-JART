@@ -49,10 +49,9 @@ router.post(
                 req.user.user_id
             ]);
 
-            return res.sendStatus(201);
+            res.sendStatus(201);
         } catch (err) {
-            console.error(err);
-            return res.sendStatus(500);
+            res.sendStatus(500);
         }
     }
 );
@@ -102,8 +101,7 @@ router.post(
 
             res.sendStatus(401);
         } catch (err) {
-            console.error(err);
-            return res.sendStatus(500);
+            res.sendStatus(500);
         }
 
     }
@@ -118,9 +116,8 @@ router.post(
     async (req, res) => {
         try {
             const user_object = await database.getUserFromID(req.user.user_id);
-            res.status(200).json(user_object);
+            return res.status(200).json(user_object);
         } catch (err) {
-            console.error(err);
             return res.sendStatus(500);
         }
 
@@ -141,7 +138,6 @@ router.get(
             const rows = result[0];
             return res.status(200).json(rows);
         } catch (err) {
-            console.error(err);
             return res.sendStatus(500);
         }
 
@@ -164,8 +160,7 @@ router.post(
             res.sendStatus(201);
             return;
         } catch (err) {
-            console.error(err);
-            return res.sendStatus(500);
+            res.sendStatus(500);
         }
 
     }

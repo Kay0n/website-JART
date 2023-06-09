@@ -143,7 +143,7 @@ database.userIsMember = async (club_id, user_id) => {
         INNER JOIN club_memberships ON users.user_id = club_memberships.user_id
         WHERE club_memberships.club_id = ? AND users.user_id = ?;
     `;
-    const userIsMember = (await database.query( sql, [club_id, user_id]))[0][0];
+    const userIsMember = (await database.query(sql, [club_id, user_id]))[0][0];
     return userIsMember;
 };
 

@@ -44,9 +44,7 @@ app.use(pagesRouter);
 
 // start server
 database.checkConnection();
-app.listen(port, () => {
-    console.log(`App listening on port ${port}`);
-});
+app.listen(port);
 
 
 

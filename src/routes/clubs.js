@@ -24,7 +24,6 @@ router.get(
             const rows = result[0];
             return res.status(200).json(rows);
         } catch (err) {
-            console.error(err);
             return res.sendStatus(500);
         }
     }
@@ -45,7 +44,6 @@ router.get(
             const rows = result[0];
             return res.status(200).json(rows);
         } catch (err) {
-            console.error(err);
             return res.sendStatus(500);
         }
     }
@@ -69,7 +67,6 @@ router.get(
 
             res.json(rows);
         } catch (err) {
-            console.error(err);
             res.sendStatus(500);
         }
     }
@@ -90,7 +87,6 @@ router.get(
 
             res.json(rows);
         } catch (err) {
-            console.error(err);
             res.sendStatus(500);
         }
     }
@@ -110,7 +106,6 @@ router.get(
 
             res.json(rows);
         } catch (err) {
-            console.error(err);
             res.sendStatus(500);
         }
     }
@@ -158,7 +153,6 @@ router.post(
             res.sendStatus(200);
 
         } catch (err) {
-            console.error(err);
             res.sendStatus(500);
         }
     }
@@ -185,8 +179,7 @@ router.post(
             database.setMemberState(req.body.club_id, req.user.user_id, req.body.new_state);
             res.sendStatus(200);
         } catch (err) {
-            console.error(err);
-            return res.sendStatus(500);
+            res.sendStatus(500);
         }
     }
 );
@@ -231,8 +224,7 @@ router.post(
 
             res.sendStatus(401);
         } catch (err) {
-            console.error(err);
-            return res.sendStatus(500);
+            res.sendStatus(500);
         }
     }
 );
@@ -261,8 +253,7 @@ router.post(
 
             res.sendStatus(401);
         } catch (err) {
-            console.error(err);
-            return res.sendStatus(500);
+            res.sendStatus(500);
         }
     }
 );

@@ -21,9 +21,10 @@ router.get(
             const rows = result[0];
 
             res.status(200).json(rows);
+            return;
         } catch (err) {
-            console.error(err);
-            return res.sendStatus(500);
+
+            res.sendStatus(500);
         }
     }
 );
@@ -43,7 +44,7 @@ router.get(
 
             res.json(rows);
         } catch (err) {
-            console.error(err);
+
             res.sendStatus(500);
         }
     }
@@ -71,7 +72,7 @@ router.get(
 
             res.json(rows);
         } catch (err) {
-            console.error(err);
+
             res.sendStatus(500);
         }
     }
@@ -109,8 +110,8 @@ router.get(
             return;
 
         } catch (err) {
-            console.error(err);
-            return res.sendStatus(500);
+
+            res.sendStatus(500);
         }
     }
 );
@@ -141,8 +142,8 @@ router.post(
 
             res.sendStatus(401);
         } catch (err) {
-            console.error(err);
-            return res.sendStatus(500);
+
+            res.sendStatus(500);
         }
 
     }
@@ -183,7 +184,6 @@ router.post(
                     ]
                 );
                 res.sendStatus(201);
-                console.log("post created");
 
                 const club = (await database.query("SELECT * FROM clubs WHERE club_id = ?", [req.body.club_id]))[0][0];
                 const email_sql = `
@@ -193,7 +193,6 @@ router.post(
                     WHERE cm.club_id = ? AND cm.email_notify_posts = true;
                 `;
                 const notified_users = (await database.query(email_sql, [req.body.club_id]))[0];
-                console.log(notified_users);
                 const emailContent = `
                     <h2><h2>
                     <p>Check out the new post from ${club.name}:</p>
@@ -202,7 +201,6 @@ router.post(
                     <a href="http://localhost:8080/pages/club?club_id=${req.body.club_id}">Click here to view</a>
                 `;
                 for(const user of notified_users){
-                    console.log("mailLoop:" + user.email);
                     mailer.sendMail(user.email, "New Post!", emailContent);
                 }
                 return;
@@ -210,8 +208,8 @@ router.post(
 
             res.sendStatus(401);
         } catch (err) {
-            console.error(err);
-            return res.sendStatus(500);
+
+            res.sendStatus(500);
         }
 
     }

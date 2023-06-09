@@ -214,11 +214,9 @@ const clubMembersApp = VueInstance.createApp({
     },
     methods: {
         async setManager(user_id, new_state) {
-            console.log("RUN!");
-            console.log(user_id);
             const urlParams = new URLSearchParams(window.location.search);
             const queryData = urlParams.get('club_id');
-            const response = await fetch("/query/set_manager", {
+            await fetch("/query/set_manager", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -229,8 +227,7 @@ const clubMembersApp = VueInstance.createApp({
                     new_state: new_state
                 })
             });
-            console.log(response);
-            // window.location.reload();
+            window.location.reload();
         }
     }
 });
@@ -405,7 +402,7 @@ const subscribedEventsApp = VueInstance.createApp({
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                    id: event_id,
+                    id: event_id
                 })
             });
         }
@@ -432,7 +429,7 @@ const clubEventsApp = VueInstance.createApp({
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                    id: event_id,
+                    id: event_id
                 })
             });
         }
@@ -453,8 +450,7 @@ const postApp = VueInstance.createApp({
         async submitForm() {
             const urlParams = new URLSearchParams(window.location.search);
             const queryData = urlParams.get('club_id');
-            console.log("club id: "+ queryData);
-            const postData = await fetch("/query/add_post", {
+            await fetch("/query/add_post", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -466,7 +462,6 @@ const postApp = VueInstance.createApp({
                     club_id: queryData
                 })
             });
-            console.log(postData);
         }
     }
 });
@@ -485,7 +480,7 @@ const eventAPP = VueInstance.createApp({
         async submitForm() {
             const urlParams = new URLSearchParams(window.location.search);
             const queryData = urlParams.get('club_id');
-            const eventData = await fetch("/query/add_event", {
+            await fetch("/query/add_event", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -499,7 +494,6 @@ const eventAPP = VueInstance.createApp({
                     club_id: queryData
                 })
             });
-            console.log(eventData);
         }
     }
 });
@@ -513,8 +507,7 @@ const addClubApp = VueInstance.createApp({
     },
     methods: {
         async submitForm() {
-            console.log("creating club");
-            const clubData = await fetch("/query/add_club", {
+            await fetch("/query/add_club", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -524,7 +517,6 @@ const addClubApp = VueInstance.createApp({
                     description: this.description
                 })
             });
-            console.log(clubData);
         }
     }
 });
@@ -534,7 +526,7 @@ const deleteClubApp = VueInstance.createApp({
         async deleteClub() {
             const urlParams = new URLSearchParams(window.location.search);
             const queryData = urlParams.get('club_id');
-            const response = await fetch("/query/delete_club?club_id=", {
+            await fetch("/query/delete_club?club_id=", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -598,7 +590,6 @@ const userSettingsApp = VueInstance.createApp({
             })
             .then((response) => response.json())
             .then((data) => {
-                console.log(data);
                 this.user_object = data;
                 this.given_name = data.given_name;
                 this.family_name = data.family_name;
@@ -615,8 +606,6 @@ const userSettingsApp = VueInstance.createApp({
             if(this.password !== ""){
                 routeBody.password = this.password;
             }
-            console.log(this.password);
-            console.log(routeBody);
             const response = await fetch("/query/update_user_settings", {
                 method: "POST",
                 headers: {
@@ -632,7 +621,6 @@ const userSettingsApp = VueInstance.createApp({
             }
 
             const errorMessagesArray = (await response.json()).errorMessages;
-            console.log(errorMessagesArray);
             this.errorMessages = errorMessagesArray;
         }
     }
@@ -647,11 +635,9 @@ const notificationsApp = VueInstance.createApp({
     },
     methods: {
         async submitForm() {
-            console.log(this.email_notify_posts);
-            console.log(this.email_notify_events);
             const urlParams = new URLSearchParams(window.location.search);
             const queryData = urlParams.get('club_id');
-            const notificationData = await fetch("/query/update_club_notifications", {
+            await fetch("/query/update_club_notifications", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -662,7 +648,6 @@ const notificationsApp = VueInstance.createApp({
                     club_id: queryData
                 })
             });
-            console.log(notificationData);
         }
     }
 });

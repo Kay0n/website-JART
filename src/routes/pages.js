@@ -30,7 +30,6 @@ router.get('/pages/Club', async (req, res) => {
 
 
 router.get('/pages/userSettings', (req, res) => {
-    console.log("aaa");
     if (req.isAuthenticated()) {
         res.sendFile("userSettings.html", { root: "src/pages" });
         return;

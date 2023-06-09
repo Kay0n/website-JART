@@ -88,13 +88,13 @@ const notAuthSend401 = (req, res, next) => {
     if(!req.isAuthenticated()){
         return res.sendStatus(401);
     }
-    next();
+    return next();
 };
 const notAuthRedirectIndex = (req, res, next) => {
     if(!req.isAuthenticated()){
         return res.redirect("/");
     }
-    next();
+    return next();
 };
 
 

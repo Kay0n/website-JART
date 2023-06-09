@@ -29,7 +29,7 @@ router.post(
         const user = await database.getUserFromEmail(req.body.email);
 
         if(user){
-            return res.status(400).json({ errorMessages: [{ email: "This email is already in use" }] });
+            res.status(400).json({ errorMessages: [{ email: "This email is already in use" }] });
         }
 
         const hashedPassword = await passwordUtils.hashPassword(req.body.password);
@@ -41,7 +41,7 @@ router.post(
             req.body.family_name
         );
 
-        return req.logIn(newUser,() => res.status(201).end());
+        req.logIn(newUser,() => res.status(201).end());
     }
 );
 

@@ -59,7 +59,6 @@
 		"gitdoc.enabled": false,
 		"gitdoc.pullOnOpen": false,
 		"terminal.integrated.defaultProfile.linux": "bash",
-		"js/ts.implicitProjectConfig.checkJs": true
 	}
 
 }

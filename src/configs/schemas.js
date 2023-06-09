@@ -93,7 +93,7 @@ const schemas = {
     },
     text: {
         trim: true,
-        escape: true,
+        escape: true
     },
     date: {
         toDate: true,
