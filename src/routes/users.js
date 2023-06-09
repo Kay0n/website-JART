@@ -75,7 +75,6 @@ router.post(
     validator.checkSchema({
         email_notify_posts: schemas.email_notify_posts,
         email_notify_events: schemas.email_notify_events,
-        user_id: schemas.user_id,
         club_id: schemas.club_id
     }),
     async (req, res) => {
@@ -134,17 +133,18 @@ router.post(
 );
 
 
-// === get user object ===
+// === get all users ===
 // permission isAuthenticated
-// returns user object
-router.post(
-    '/get_user',
+// returns users array
+router.get(
+    '/get_all_users',
     notAuthSend401,
     async (req, res) => {
         try {
-            const response = await database.getUserFromID(req.user.user_id);
-            const user_object = response[0][0];
-            res.status(200).json(user_object);
+            let sql = `SELECT user_id, given_name, family_name, email, is_admin FROM users ORDER BY is_admin DESC, user_id;`;
+            const result = await database.query(sql, []);
+            const rows = result[0];
+            return res.status(200).json(rows);
         } catch (err) {
             console.error(err);
             return res.sendStatus(500);

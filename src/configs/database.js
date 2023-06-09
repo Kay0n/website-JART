@@ -147,5 +147,10 @@ database.userIsMember = async (club_id, user_id) => {
     return userIsMember;
 };
 
+database.userIsAdmin = async (user_id) => {
+    const user = await database.getUserFromID(user_id);
+    return user.is_admin;
+};
+
 
 module.exports = database;

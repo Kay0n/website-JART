@@ -7,9 +7,6 @@ const router = express.Router();
 
 
 // page serves
-router.get("/", (req, res) => {
-    res.redirect("/login");
-});
 router.get("/login", (req, res) => {
     res.sendFile("login.html", { root: "src/pages" });
 });
