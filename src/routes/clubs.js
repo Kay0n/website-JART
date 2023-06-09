@@ -177,22 +177,8 @@ router.post(
     notAuthSend401,
     async (req, res, next) => {
         try {
-            if(req.body.new_state){
-                await database.setMemberState(req.body.club_id, req.user.user_id, true);
-                return res.sendStatus(200);
-            }
-
-            const user_is_authorized = await database.userIsManagerOrAdmin(
-                req.body.club_id,
-                req.user.user_id
-            );
-
-            if(user_is_authorized || req.user.user_id === req.body.user_id) {
-                database.setMemberState(req.body.club_id, req.body.user_id, false);
-                return res.sendStatus(200);
-            }
-
-            return res.sendStatus(401);
+            database.setMemberState(req.body.club_id, req.user.user_id, req.body.new_state);
+            return res.sendStatus(200);
         } catch (err) {
             console.error(err);
             return res.sendStatus(500);
