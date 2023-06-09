@@ -53,16 +53,6 @@ router.get('/pages/clubSettings', async (req, res) => {
 });
 
 
-
-router.get('/pages/clubSettings', (req, res) => {
-    if (req.isAuthenticated()) {
-        res.sendFile("clubSettings.html", { root: "src/pages" });
-        return;
-    }
-    res.redirect("/");
-});
-
-
 router.get('/pages/myClubs', (req, res) => {
     if (req.isAuthenticated()) {
         res.sendFile("myClubs.html", { root: "src/pages" });
