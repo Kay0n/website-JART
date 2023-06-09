@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Club Name</title>
+    <title>Club Page</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
@@ -48,16 +48,18 @@
                     </button>
                 </form>
                 <div class="ms-auto">
-                    <ul class="navbar-nav w-100">
-                        <li class="nav-item">
-                            <a class="nav-link" href="#" onclick="goToClubSettings()"><span class="fas fa-cog fa-lg"></span></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#" onclick="goToSettingsPage()">
-                                <i class="fas fa-user-circle fa-2xl"></i>
-                            </a>
-                        </li>
-                    </ul>
+                    <div class="container" id="club-id">
+                        <ul class="navbar-nav w-100">
+                            <li class="nav-item">
+                                <a class="nav-link" :href="'/pages/clubSettings?club_id=' + club_id"><span class="fas fa-cog fa-lg"></span></a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#" onclick="goToSettingsPage()">
+                                    <i class="fas fa-user-circle fa-2xl"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </nav>

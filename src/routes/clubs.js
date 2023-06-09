@@ -96,6 +96,26 @@ router.get(
     }
 );
 
+// === get club id ===
+// requires QUERY club_id
+// returns array containing name of club
+router.get(
+    "/get_club_id",
+    async (req, res, next) => {
+        try{
+            let sql = `SELECT club_id FROM clubs WHERE club_id = ?;`;
+
+            const result = await database.query(sql, [req.query.club_id]);
+            const rows = result[0];
+
+            res.json(rows);
+        } catch (err) {
+            console.error(err);
+            res.sendStatus(500);
+        }
+    }
+);
+
 
 // === add club ===
 // permission isAuthenticated

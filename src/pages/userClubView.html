@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Club Name</title>
+    <title>Club Page</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
@@ -48,23 +48,26 @@
                     </button>
                 </form>
                 <div class="ms-auto">
-                    <ul class="navbar-nav w-100">
-                        <li class="nav-item">
-                            <a class="nav-link" href="#" onclick="goToClubSettings()"><span class="fas fa-cog fa-lg"></span></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#" onclick="goToSettingsPage()">
-                                <i class="fas fa-user-circle fa-2xl"></i>
-                            </a>
-                        </li>
-                    </ul>
+                    <div class="container" id="club-id">
+                        <ul class="navbar-nav w-100">
+                            <li class="nav-item">
+                                <a class="nav-link" :href="'/pages/clubSettings?club_id=' + club_id"><span class="fas fa-cog fa-lg"></span></a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#" onclick="goToSettingsPage()">
+                                    <i class="fas fa-user-circle fa-2xl"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </nav>
 
         <div id="main-content">
-            <div class="container mt-4 text-center">
-                <h1>Club Name</h1>
+            <div class="container mt-4 text-center" id="club-name">
+                <h1>{{ club_name }}</h1>
+                <button type="submit" class="btn btn-success" v-on:click="submitForm">Join!</button>
             </div>
             <div class="container mt-4">
                 <div class="row">
@@ -72,35 +75,33 @@
                         <div class="d-flex align-items-center">
                             <h3 class="me-3" >Latest Posts</h3>
                         </div>
-                        <div class="card mb-3">
-                            <div class="card-body">
-                                <h5 class="card-title">Post Title</h5>
-                                <p class="card-text">Post Description</p>
-                            </div>
-                        </div>
-                        <div class="card mb-3">
-                            <div class="card-body">
-                                <h5 class="card-title">Post Title</h5>
-                                <p class="card-text">Post Description</p>
+                        <div class="container" id="club-posts">
+                            <div v-for="(club_post, itemIndex) in club_posts" :key="itemIndex">
+                                <div class="card mb-3">
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{ club_post.title }}</h5>
+                                        <p class="card-text">{{ club_post.content }}</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
+
                     <div class="col-lg-4">
                         <div class="d-flex align-items-center">
                             <h3 class="me-3" >Upcoming Events</h3>
                         </div>
-                        <div class="card mb-3">
-                            <div class="card-body">
-                                <h5 class="card-title">Event Title</h5>
-                                <p class="card-text">Event Description</p>
-                                <a href="#" class="btn btn-primary">RSVP</a>
-                            </div>
-                        </div>
-                        <div class="card mb-3">
-                            <div class="card-body">
-                                <h5 class="card-title">Event Title</h5>
-                                <p class="card-text">Event Description</p>
-                                <a href="#" class="btn btn-primary">RSVP</a>
+                        <div class="container" id="club-events">
+                            <div v-for="(club_event, itemIndex) in club_events" :key="itemIndex">
+                                <div class="card mb-3">
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{ club_event.title }}</h5>
+                                        <p class="card-text">{{ club_event.description }}</p>
+                                        <p class="date">Date: {{ new Date(club_event.date).toLocaleString() }}</p>
+                                        <p class="location">Location: {{ club_event.location }}</p>
+                                        <button type="button" @click="addRSVP(club_event.event_id)" class="btn btn-primary">RSVP</button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -109,4 +110,5 @@
         </div>
     </main>
 </body>
+
 </html>

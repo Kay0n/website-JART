@@ -102,7 +102,12 @@ router.get(
                 return;
             }
 
-            res.sendStatus(401);
+            let sql = `SELECT * FROM club_posts WHERE is_private = 0 AND club_id = ? ORDER BY creation_time DESC;`;
+            const result = await database.query(sql, req.query.club_id);
+            const rows = result[0];
+            res.status(200).json(rows);
+            return;
+
         } catch (err) {
             console.error(err);
             return res.sendStatus(500);
