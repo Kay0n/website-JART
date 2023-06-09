@@ -75,7 +75,6 @@ router.post(
     validator.checkSchema({
         email_notify_posts: schemas.email_notify_posts,
         email_notify_events: schemas.email_notify_events,
-        user_id: schemas.user_id,
         club_id: schemas.club_id
     }),
     async (req, res) => {
