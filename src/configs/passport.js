@@ -11,7 +11,6 @@ const database = require("./database.js");
 const passwordUtils = require("./bcrypt.js");
 
 
-
 // settings for strategies
 const localOptions = {
     usernameField: "email",
@@ -22,7 +21,6 @@ const googleOptions = {
     clientSecret: "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",
     callbackURL: "http://localhost:8080/auth/google"
 };
-
 
 
 // verify if local user is valid
@@ -48,7 +46,6 @@ const authLocal = async (email, password, done) => {
 };
 
 
-
 // verify if google user is valid, will create user if non-existant
 const authGoogle = async (request, accessToken, refreshToken, profile, done) => {
 
@@ -67,7 +64,6 @@ const authGoogle = async (request, accessToken, refreshToken, profile, done) => 
 
     return done(null, newUser);
 };
-
 
 
 // used by passport.js to serealize the user between session and req object
@@ -90,6 +86,8 @@ const notAuthSend401 = (req, res, next) => {
     }
     return next();
 };
+
+
 const notAuthRedirectIndex = (req, res, next) => {
     if(!req.isAuthenticated()){
         return res.redirect("/");

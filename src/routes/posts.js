@@ -7,8 +7,6 @@ const router = express.Router();
 const mailer = require("../configs/mail.js");
 
 
-
-
 //  === get public posts from all clubs ===
 // returns array of posts
 router.get(

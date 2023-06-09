@@ -1,11 +1,7 @@
 
 
-// @ts-ignore
-
-
 // eslint-disable-next-line , no-undef
 const VueInstance = Vue;
-
 
 
 const loginApp = VueInstance.createApp({
@@ -51,7 +47,6 @@ const loginApp = VueInstance.createApp({
         }
     }
 });
-
 
 
 const registerApp = VueInstance.createApp({
@@ -104,6 +99,7 @@ const registerApp = VueInstance.createApp({
     }
 });
 
+
 const allUsersApp = VueInstance.createApp({
     data() {
         return {
@@ -130,7 +126,6 @@ const allUsersApp = VueInstance.createApp({
 });
 
 
-
 const allClubsApp = VueInstance.createApp({
     data() {
         return {
@@ -152,6 +147,7 @@ const allClubsApp = VueInstance.createApp({
         this.clubs = await response.json();
     }
 });
+
 
 const clubNameApp = VueInstance.createApp({
     data() {
@@ -185,6 +181,7 @@ const clubNameApp = VueInstance.createApp({
     }
 });
 
+
 const clubIDApp = VueInstance.createApp({
     data() {
         return {
@@ -199,6 +196,7 @@ const clubIDApp = VueInstance.createApp({
         this.club_id = clubData[0].club_id;
     }
 });
+
 
 const clubMembersApp = VueInstance.createApp({
     data() {
@@ -232,6 +230,7 @@ const clubMembersApp = VueInstance.createApp({
     }
 });
 
+
 const subscribedClubsApp = VueInstance.createApp({
     data() {
         return {
@@ -263,7 +262,6 @@ const subscribedClubsApp = VueInstance.createApp({
 });
 
 
-
 const allPublicPostsApp = VueInstance.createApp({
     data() {
         return {
@@ -293,6 +291,7 @@ const allPublicPostsApp = VueInstance.createApp({
     }
 });
 
+
 const publicPostsApp = VueInstance.createApp({
     data() {
         return {
@@ -307,6 +306,7 @@ const publicPostsApp = VueInstance.createApp({
     }
 });
 
+
 const subscribedPostsApp = VueInstance.createApp({
     data() {
         return {
@@ -318,6 +318,7 @@ const subscribedPostsApp = VueInstance.createApp({
         this.subscribed_posts = await response.json();
     }
 });
+
 
 const clubPostsApp = VueInstance.createApp({
     data() {
@@ -332,7 +333,6 @@ const clubPostsApp = VueInstance.createApp({
         this.club_posts = await response.json();
     }
 });
-
 
 
 const allPublicEventsApp = VueInstance.createApp({
@@ -370,6 +370,7 @@ const allPublicEventsApp = VueInstance.createApp({
     }
 });
 
+
 const publicEventsApp = VueInstance.createApp({
     data() {
         return {
@@ -383,6 +384,7 @@ const publicEventsApp = VueInstance.createApp({
         this.public_events = await response.json();
     }
 });
+
 
 const subscribedEventsApp = VueInstance.createApp({
     data() {
@@ -408,6 +410,7 @@ const subscribedEventsApp = VueInstance.createApp({
         }
     }
 });
+
 
 const clubEventsApp = VueInstance.createApp({
     data() {
@@ -437,7 +440,6 @@ const clubEventsApp = VueInstance.createApp({
 });
 
 
-
 const postApp = VueInstance.createApp({
     data() {
         return {
@@ -465,6 +467,7 @@ const postApp = VueInstance.createApp({
         }
     }
 });
+
 
 const eventAPP = VueInstance.createApp({
     data() {
@@ -498,6 +501,7 @@ const eventAPP = VueInstance.createApp({
     }
 });
 
+
 const addClubApp = VueInstance.createApp({
     data() {
         return {
@@ -521,6 +525,7 @@ const addClubApp = VueInstance.createApp({
     }
 });
 
+
 const deleteClubApp = VueInstance.createApp({
     methods: {
         async deleteClub() {
@@ -541,7 +546,6 @@ const deleteClubApp = VueInstance.createApp({
 });
 
 
-
 const RSVPApp = VueInstance.createApp({
     data() {
         return {
@@ -555,7 +559,6 @@ const RSVPApp = VueInstance.createApp({
         this.RSVPs = await response.json();
     }
 });
-
 
 
 const userSettingsApp = VueInstance.createApp({
@@ -614,7 +617,6 @@ const userSettingsApp = VueInstance.createApp({
                 body: JSON.stringify(routeBody)
             });
 
-
             if(response.ok){
                 window.location.reload();
                 return;
@@ -625,6 +627,7 @@ const userSettingsApp = VueInstance.createApp({
         }
     }
 });
+
 
 const notificationsApp = VueInstance.createApp({
     data() {
@@ -681,56 +684,11 @@ const isAdminCheckApp = VueInstance.createApp({
     }
 });
 
-// const unsubscribeClubApp = VueInstance.createApp({
-//     data() {
-//         return {
-//         };
-//     },
-//     methods: {
-//         deleteMember() {
-//             const urlParams = new URLSearchParams(window.location.search);
-//             const queryData = urlParams.get('club_id');
-//             fetch("/query/set_member", {
-//                 method: 'POST',
-//                 headers: {
-//                     "Content-Type": "application/json"
-//                 },
-//                 body: JSON.stringify({
-//                     new_state: false,
-//                     club_id: queryData
-//                 })
-//             });
-//         }
-//     }
-// });
-
-function logout() {
-    window.location.href = "/logout";
-}
-
-function redirectToLoginPage() {
-    window.location.href = "/login";
-}
-
-function goToSettingsPage() {
-    window.location.href = "/pages/userSettings";
-}
-
-function goToExplorePage() {
-    window.location.href = "/pages/explore";
-}
-
-function goToMyClubs() {
-    window.location.href = "/pages/myClubs";
-}
-
-function goToClubSettings() {
-    window.location.href = "/pages/clubSettings";
-}
 
 loginApp.mount("#login-form");
 registerApp.mount("#register-form");
 allUsersApp.mount("#all-users");
+
 
 allClubsApp.mount("#all-clubs");
 clubNameApp.mount("#club-name");
@@ -738,15 +696,18 @@ clubIDApp.mount("#club-id");
 clubMembersApp.mount("#club-members");
 subscribedClubsApp.mount("#subscribed-clubs");
 
+
 allPublicPostsApp.mount("#all-public-posts");
 publicPostsApp.mount("#public-posts");
 subscribedPostsApp.mount("#subscribed-posts");
 clubPostsApp.mount("#club-posts");
 
+
 allPublicEventsApp.mount("#all-public-events");
 publicEventsApp.mount("#public-events");
 subscribedEventsApp.mount("#subscribed-events");
 clubEventsApp.mount("#club-events");
+
 
 eventAPP.mount("#add-event");
 postApp.mount("#add-post");
@@ -755,7 +716,6 @@ deleteClubApp.mount("#delete-club");
 userSettingsApp.mount("#user-settings");
 notificationsApp.mount("#notification-settings");
 isAdminCheckApp.mount("#admin-button");
-// unsubscribeClubApp.mount("#unsubscribe-button");
 
 
 RSVPApp.mount("#RSVPs");

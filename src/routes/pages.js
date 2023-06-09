@@ -1,6 +1,7 @@
 const database = require("../configs/database");
 const router = require("express").Router();
 
+
 const homeRoute = (req, res) => {
     if(req.isAuthenticated()){
         res.sendFile("explore.html", { root: "src/pages" });
@@ -10,7 +11,6 @@ const homeRoute = (req, res) => {
 };
 router.get("/",homeRoute);
 router.get("/pages/explore",homeRoute);
-
 
 
 router.get('/pages/Club', async (req, res) => {
@@ -60,6 +60,7 @@ router.get('/pages/myClubs', (req, res) => {
     res.redirect("/");
 });
 
+
 router.get('/pages/adminPage', async (req, res) => {
     if (req.isAuthenticated()) {
         const isAdmin = (await database.getUserFromID(req.user.user_id)).is_admin;
@@ -70,5 +71,6 @@ router.get('/pages/adminPage', async (req, res) => {
     }
     res.redirect("/");
 });
+
 
 module.exports = router;

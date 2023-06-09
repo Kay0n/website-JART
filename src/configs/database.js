@@ -16,7 +16,6 @@ const pool = mysql.createPool({
 });
 
 
-
 /**
  * Executes a SQL query and returns the results object or execution result respectivley.
  * See mysql.pool for more information.
@@ -27,7 +26,6 @@ const pool = mysql.createPool({
  */
 database.query = (sql, values) => pool.query(sql, values);
 database.execute = (sql, values) => pool.execute(sql, values);
-
 
 
 /**
@@ -44,7 +42,6 @@ database.checkConnection = async () => {
 };
 
 
-
 /**
  * Retrieves a user from the database based on their user ID.
  * @async
@@ -57,7 +54,6 @@ database.getUserFromID = async (user_id) => {
 };
 
 
-
 /**
  * Retrieves a user from the database based on their email.
  * @async
@@ -68,7 +64,6 @@ database.getUserFromEmail = async (email) => {
     const sql = "SELECT * FROM users WHERE email = ?;";
     return (await database.query(sql, [email]))[0][0];
 };
-
 
 
 /**
@@ -104,8 +99,6 @@ database.setMemberState = async (club_id, user_id, state) => {
     const sql = "DELETE FROM club_memberships WHERE user_id = ? AND club_id = ?;";
     await database.query(sql, [user_id, club_id]);
 };
-
-
 
 
 database.setManagerState = async (club_id, user_id, state) => {
@@ -146,6 +139,7 @@ database.userIsMember = async (club_id, user_id) => {
     const userIsMember = (await database.query(sql, [club_id, user_id]))[0][0];
     return userIsMember;
 };
+
 
 database.userIsAdmin = async (user_id) => {
     const user = await database.getUserFromID(user_id);

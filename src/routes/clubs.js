@@ -6,13 +6,6 @@ const { notAuthSend401 } = require("../configs/passport.js");
 const router = express.Router();
 
 
-
-
-
-
-
-
-
 // === get clubs ===
 // returns array of clubs
 router.get(
@@ -28,6 +21,7 @@ router.get(
         }
     }
 );
+
 
 // === get subscribed clubs ===
 // requires user_id
@@ -91,6 +85,7 @@ router.get(
         }
     }
 );
+
 
 // === get club id ===
 // requires QUERY club_id
@@ -185,7 +180,6 @@ router.post(
 );
 
 
-
 // === set club manager sate ===
 // permission isAuthenticated
 // permission isManager
@@ -257,7 +251,6 @@ router.post(
         }
     }
 );
-
 
 
 module.exports = router;

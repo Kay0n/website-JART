@@ -6,6 +6,7 @@
 const session = require("express-session");
 const dayInMilliseconds = 1000 * 60 * 60 * 24;
 
+
 const sessionMiddleware = session({
     name: "wdcproject", // name of session
     secret: "secretKey5", // key used to authenticate session cookie
@@ -16,5 +17,6 @@ const sessionMiddleware = session({
     },
     resave: false // save even if never modified
 });
+
 
 module.exports = sessionMiddleware;

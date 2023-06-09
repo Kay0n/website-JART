@@ -107,6 +107,7 @@ router.post(
     }
 );
 
+
 // === get user object ===
 // permission isAuthenticated
 // returns user object
@@ -144,6 +145,7 @@ router.get(
     }
 );
 
+
 // === adds the user as an admin ===
 // requires user_id as id
 router.post(
@@ -165,8 +167,6 @@ router.post(
 
     }
 );
-
-
 
 
 module.exports = router;

@@ -3,7 +3,6 @@ const saltRounds = 10;
 const passwordUtils = {};
 
 
-
 /**
  * Retrieves a user from the database based on their email.
  * @async
@@ -17,7 +16,6 @@ passwordUtils.hashPassword = async (plainPassword) => {
     });
     return hashedPassword;
 };
-
 
 
 /**
@@ -34,7 +32,6 @@ passwordUtils.comparePasswords = async (plainPassword, hashedPassword) => {
     });
     return isMatch;
 };
-
 
 
 module.exports = passwordUtils;

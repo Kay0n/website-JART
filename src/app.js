@@ -6,7 +6,7 @@ const passport = require("./configs/passport.js");
 const database = require("./configs/database.js");
 
 
-// routers
+// router imports
 const loginRouter = require("./routes/login.js");
 const registerRouter = require("./routes/register");
 const clubRouter = require("./routes/clubs.js");
@@ -24,7 +24,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 
-// session middleware
+// session and passport middleware
 app.use(session);
 app.use(passport.initialize());
 app.use(passport.session());
