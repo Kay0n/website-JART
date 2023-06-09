@@ -90,15 +90,15 @@ database.createUser = async (email, pass, given_name, family_name, is_admin = 0)
 
 
 database.setMemberState = async (club_id, user_id, state) => {
-
     if(state){
         const duplicateCheckSql = "SELECT COUNT(*) AS count FROM club_memberships WHERE user_id = ? AND club_id = ?;";
         const duplicateCheckResult = await database.query(duplicateCheckSql, [user_id, club_id]);
 
-        if (duplicateCheckResult[0].count === 0) {
+        if (duplicateCheckResult[0][0].count === 0) {
             const insertSql = "INSERT INTO club_memberships (email_notify_posts, email_notify_events, is_manager, user_id, club_id) VALUES (?, ?, ?, ?, ?);";
             await database.query(insertSql, [false, false, false, user_id, club_id]);
         }
+
         return;
     }
     const sql = "DELETE FROM club_memberships WHERE user_id = ? AND club_id = ?;";
