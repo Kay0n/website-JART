@@ -71,5 +71,15 @@ router.get('/pages/myClubs', (req, res) => {
     res.redirect("/");
 });
 
+router.get('/pages/adminPage', async (req, res) => {
+    if (req.isAuthenticated()) {
+        const isAdmin = (await database.getUserFromID(req.user.user_id)).is_admin;
+        if(isAdmin){
+            res.sendFile("adminPage.html", { root: "src/pages" });
+            return;
+        }
+    }
+    res.redirect("/");
+});
 
 module.exports = router;

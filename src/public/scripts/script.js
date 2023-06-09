@@ -125,11 +125,11 @@ const allClubsApp = VueInstance.createApp({
     },
     computed: {
         dividedObjects() {
-          const chunks = [];
-          for (let i = 0; i < this.clubs.length; i += this.clubsPerRow) {
-            chunks.push(this.clubs.slice(i, i + this.clubsPerRow));
-          }
-          return chunks;
+            const chunks = [];
+            for (let i = 0; i < this.clubs.length; i += this.clubsPerRow) {
+                chunks.push(this.clubs.slice(i, i + this.clubsPerRow));
+            }
+            return chunks;
         }
     },
     async mounted() {
@@ -193,11 +193,11 @@ const allPublicPostsApp = VueInstance.createApp({
     },
     computed: {
         dividedObjects() {
-          const chunks = [];
-          for (let i = 0; i < this.all_public_posts.length; i += this.postsPerRow) {
-            chunks.push(this.all_public_posts.slice(i, i + this.postsPerRow));
-          }
-          return chunks;
+            const chunks = [];
+            for (let i = 0; i < this.all_public_posts.length; i += this.postsPerRow) {
+                chunks.push(this.all_public_posts.slice(i, i + this.postsPerRow));
+            }
+            return chunks;
         }
     },
     async mounted() {
@@ -264,11 +264,11 @@ const allPublicEventsApp = VueInstance.createApp({
     },
     computed: {
         dividedObjects() {
-          const chunks = [];
-          for (let i = 0; i < this.all_public_events.length; i += this.eventsPerRow) {
-            chunks.push(this.all_public_events.slice(i, i + this.eventsPerRow));
-          }
-          return chunks;
+            const chunks = [];
+            for (let i = 0; i < this.all_public_events.length; i += this.eventsPerRow) {
+                chunks.push(this.all_public_events.slice(i, i + this.eventsPerRow));
+            }
+            return chunks;
         }
     },
     async mounted() {
@@ -466,9 +466,9 @@ const deleteClubApp = VueInstance.createApp({
             } else {
                 // Handle any errors or unsuccessful deletion
                 console.error("Failed to delete club.");
+            }
         }
     }
-}
 });
 
 
@@ -506,18 +506,18 @@ const userSettingsApp = VueInstance.createApp({
         getUserData() {
             fetch("/query/get_user", {
                 method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log(data);
-            this.user_object = data;
-            this.given_name = data.given_name;
-            this.family_name = data.family_name;
-            this.email = data.email;
-        });
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                this.user_object = data;
+                this.given_name = data.given_name;
+                this.family_name = data.family_name;
+                this.email = data.email;
+            });
         },
         async submitForm() {
             const userSettings = await fetch("/query/update_user_settings", {
@@ -566,6 +566,37 @@ const notificationsApp = VueInstance.createApp({
 });
 
 
+const isAdminCheckApp = VueInstance.createApp({
+    data() {
+        return {
+            isAdmin: false
+        };
+    },
+    mounted() {
+        this.getUser();
+    },
+    methods: {
+        async getUser() {
+            const response = await fetch("/query/get_user", {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    isAdmin: this.is_admin
+                })
+            });
+            if (response.ok) {
+                const data = await response.json();
+                this.isAdmin = data.is_admin;
+            }
+        }
+    },
+});
+
+function logout() {
+    window.location.href = "/logout";
+}
 
 function redirectToLoginPage() {
     window.location.href = "/login";
@@ -612,7 +643,7 @@ addClubApp.mount("#add-club");
 deleteClubApp.mount("#delete-club");
 userSettingsApp.mount("#user-settings");
 notificationsApp.mount("#notification-settings");
-
+isAdminCheckApp.mount("#admin-button");
 
 
 RSVPApp.mount("#RSVPs");
