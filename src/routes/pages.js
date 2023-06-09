@@ -2,7 +2,6 @@ const database = require("../configs/database");
 const router = require("express").Router();
 
 const homeRoute = (req, res) => {
-    console.log("aaa");
     if(req.isAuthenticated()){
         res.sendFile("explore.html", { root: "src/pages" });
     } else {
@@ -38,6 +37,21 @@ router.get('/pages/userSettings', (req, res) => {
     }
     res.redirect("/");
 });
+
+
+router.get('/pages/clubSettings', async (req, res) => {
+    if (req.isAuthenticated()) {
+        const isManager = await database.userIsManagerOrAdmin(req.query.club_id, req.user.user_id);
+        if(isManager){
+            res.sendFile("managerClubSettings.html", { root: "src/pages" });
+            return;
+        }
+        res.sendFile("userClubSettings.html", { root: "src/pages" });
+        return;
+    }
+    res.redirect("/");
+});
+
 
 
 router.get('/pages/clubSettings', (req, res) => {

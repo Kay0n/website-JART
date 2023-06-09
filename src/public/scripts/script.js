@@ -534,6 +534,7 @@ const notificationsApp = VueInstance.createApp({
     methods: {
         async submitForm() {
             console.log(this.email_notify_posts);
+            console.log(this.email_notify_events);
             const urlParams = new URLSearchParams(window.location.search);
             const queryData = urlParams.get('club_id');
             const notificationData = await fetch("/query/update_club_notifications", {
