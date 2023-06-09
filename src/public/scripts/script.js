@@ -518,13 +518,22 @@ const userSettingsApp = VueInstance.createApp({
             family_name: "",
             email: "",
             password: "",
-            user_object: {}
+            user_object: {},
+            errorMessages: []
         };
     },
     mounted() {
         this.getUserData();
     },
     methods: {
+        hasError(field) {
+            return this.errorMessages.some((msg) => msg[field]);
+        },
+
+        getErrorMessage(field) {
+            const errorObj = this.errorMessages.find((msg) => msg[field]);
+            return errorObj ? errorObj[field] : "";
+        },
         getUserData() {
             fetch("/query/get_user", {
                 method: 'POST',
@@ -532,8 +541,8 @@ const userSettingsApp = VueInstance.createApp({
                     'Content-Type': 'application/json'
                 }
             })
-            .then(response => response.json())
-            .then(data => {
+            .then((response) => response.json())
+            .then((data) => {
                 console.log(data);
                 this.user_object = data;
                 this.given_name = data.given_name;
@@ -542,18 +551,34 @@ const userSettingsApp = VueInstance.createApp({
             });
         },
         async submitForm() {
-            const userSettings = await fetch("/query/update_user_settings", {
+            const routeBody = {
+                given_name: this.given_name,
+                family_name: this.family_name,
+                email: this.email
+            };
+
+            if(this.password !== ""){
+                routeBody.password = this.password;
+            }
+            console.log(this.password);
+            console.log(routeBody);
+            const response = await fetch("/query/update_user_settings", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({
-                    given_name: this.given_name,
-                    family_name: this.family_name,
-                    email: this.email,
-                    password: this.password,
-                })
+                body: JSON.stringify(routeBody)
             });
+
+
+            if(response.ok){
+                window.location.reload();
+                return;
+            }
+
+            const errorMessagesArray = (await response.json()).errorMessages;
+            console.log(errorMessagesArray);
+            this.errorMessages = errorMessagesArray;
         }
     }
 });

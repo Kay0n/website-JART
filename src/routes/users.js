@@ -26,14 +26,12 @@ router.post(
         try {
 
             if(validator.returnSchemaErrors(req,res)){ return; }
-
             let hashedPassword;
             if(req.body.password){
-                hashedPassword = passwordUtils.hashPassword(req.body.password);
+                hashedPassword = await passwordUtils.hashPassword(req.body.password);
             } else {
                 hashedPassword = req.user.password;
             }
-
             const sql = `
                 UPDATE users
                 SET given_name = ?,
@@ -49,10 +47,7 @@ router.post(
                 req.body.email,
                 hashedPassword,
                 req.user.user_id
-            ]).catch((error) => {
-                console.error('Could not update user settings:', error);
-                return res.sendStatus(500);
-            });
+            ]);
 
             return res.sendStatus(201);
         } catch (err) {
