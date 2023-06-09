@@ -28,9 +28,6 @@
                     <a class="nav-link" href="#" onclick="goToMyClubs()"><span class="fas fa-users me-2"></span>My Clubs</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#"><span class="fas fa-building me-2"></span>Managed Clubs</a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link" href="#" onclick="goToSettingsPage()"><span class="fas fa-cog me-2"></span>Settings</a>
                 </li>
             </ul>
@@ -65,6 +62,7 @@
         <div id="main-content">
             <div class="container mt-4 text-center" id="club-name">
                 <h1>{{ club_name }}</h1>
+                <button type="submit" class="btn btn-success" v-on:click="submitForm">Join!</button>
             </div>
             <div class="container mt-4">
                 <div class="row">
