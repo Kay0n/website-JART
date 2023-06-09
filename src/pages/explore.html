@@ -32,7 +32,7 @@
     </style>
 </head>
 <body>
-    <div class="sidebar d-lg-block">
+    <div class="sidebar d-lg-block" id="admin-button" :class="{ 'hidden': !isAdmin }">
         <ul class="nav flex-column">
             <li class="nav-item">
                 <a class="nav-link" href="#" onclick="goToExplorePage()"><span class="fas fa-compass me-2"></span>Explore</a>
@@ -43,6 +43,12 @@
             <li class="nav-item">
                 <a class="nav-link" href="#" onclick="goToSettingsPage()"><span class="fas fa-cog me-2"></span>Settings</a>
             </li>
+            <li class="nav-item">
+				<a class="nav-link" href="/logout"><span class="fas fa-sign-out me-2"></span>Logout</a>
+			</li>
+            <li class="nav-item" v-if="isAdmin">
+				<a class="nav-link" href="/pages/adminPage"><span class="fas fa-sign-out me-2"></span>Administration</a>
+			</li>
         </ul>
     </div>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
