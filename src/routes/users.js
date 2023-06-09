@@ -123,8 +123,7 @@ router.post(
     notAuthSend401,
     async (req, res) => {
         try {
-            const response = await database.getUserFromID(req.user.user_id);
-            const user_object = response[0][0];
+            const user_object = await database.getUserFromID(req.user.user_id);
             res.status(200).json(user_object);
         } catch (err) {
             console.error(err);
