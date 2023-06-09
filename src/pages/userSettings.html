@@ -79,17 +79,14 @@
 			</div>
 			<hr>
 			<h3>My Clubs</h3>
-			<ul class="list-group">
-				<li class="list-group-item d-flex justify-content-between">
-					<span>Club 1</span>
-					<button type="button" class="btn btn-sm btn-danger">Unsubscribe</button>
-				</li>
-				<li class="list-group-item d-flex justify-content-between">
-					<span>Club 2</span>
-					<button type="button" class="btn btn-sm btn-danger">Unsubscribe</button>
-				</li>
-			</ul>
-
+			<div class="container" id="subscribed-clubs">
+				<ul class="list-group" v-for="subscribed_club in subscribed_clubs">
+					<li class="list-group-item d-flex justify-content-between">
+						<span>{{ subscribed_club.name }}</span>
+						<button type="button" class="btn btn-sm btn-danger">Unsubscribe</button>
+					</li>
+				</ul>
+			</div>
 		</div>
 	</div>
 </body>

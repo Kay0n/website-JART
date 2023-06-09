@@ -30,6 +30,27 @@ router.get(
     }
 );
 
+// === get subscribed clubs ===
+// requires user_id
+// returns array of clubs
+router.get(
+    "/get_subscribed_clubs",
+    async (req, res, next) => {
+        try{
+            let sql = `SELECT clubs.name FROM clubs
+                       INNER JOIN club_memberships ON clubs.club_id = club_memberships.club_id
+                       WHERE club_memberships.user_id = ?
+                       ORDER BY name;`;
+            const result = await database.query(sql, [req.user.user_id]);
+            const rows = result[0];
+            return res.status(200).json(rows);
+        } catch (err) {
+            console.error(err);
+            return res.sendStatus(500);
+        }
+    }
+);
+
 
 // === get club members ===
 // requires QUERY club_id
