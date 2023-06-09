@@ -85,12 +85,9 @@ passport.deserializeUser(async (user_id, done) => {
 
 
 const notAuthSend401 = (req, res, next) => {
-    console.log("middleware");
     if(!req.isAuthenticated()){
-        console.log("not auth");
         return res.sendStatus(401);
     }
-    console.log("auth");
     next();
 };
 const notAuthRedirectIndex = (req, res, next) => {

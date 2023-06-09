@@ -89,35 +89,28 @@ database.createUser = async (email, pass, given_name, family_name, is_admin = 0)
 };
 
 
-database.addMember = async (club_id, user_id) => {
-    const duplicateCheckSql = "SELECT COUNT(*) AS count FROM club_memberships WHERE user_id = ? AND club_id = ?;";
-    const duplicateCheckResult = await database.query(duplicateCheckSql, [user_id, club_id]);
+database.setMemberState = async (club_id, user_id, state) => {
 
-    if (duplicateCheckResult[0].count === 0) {
-        const insertSql = "INSERT INTO club_memberships (email_notify_posts, email_notify_events, is_manager, user_id, club_id) VALUES (?, ?, ?, ?, ?);";
-        await database.query(insertSql, [false, false, false, user_id, club_id]);
+    if(state){
+        const duplicateCheckSql = "SELECT COUNT(*) AS count FROM club_memberships WHERE user_id = ? AND club_id = ?;";
+        const duplicateCheckResult = await database.query(duplicateCheckSql, [user_id, club_id]);
+
+        if (duplicateCheckResult[0].count === 0) {
+            const insertSql = "INSERT INTO club_memberships (email_notify_posts, email_notify_events, is_manager, user_id, club_id) VALUES (?, ?, ?, ?, ?);";
+            await database.query(insertSql, [false, false, false, user_id, club_id]);
+        }
+        return;
     }
-};
-
-database.removeMember = async (club_id, user_id) => {
     const sql = "DELETE FROM club_memberships WHERE user_id = ? AND club_id = ?;";
     await database.query(sql, [user_id, club_id]);
 };
 
 
 
-database.makeManager = async (club_id, user_id) => {
 
-    const membership_query = "SELECT * FROM club_memberships WHERE user_id = ? AND club_id = ?;";
-    let has_membership = (await database.query(membership_query, [user_id, club_id]))[0][0];
-
-    if(has_membership){
-        const sql = "UPDATE club_memberships SET is_manager = TRUE WHERE user_id = ? AND club_id = ?;";
-        await database.query(sql, [user_id, club_id]);
-    } else {
-        const sql = "INSERT INTO club_memberships (email_notify_posts, email_notify_events, is_manager, user_id, club_id) VALUES (?, ?, ?, ?, ?);";
-        await database.query(sql, [false, false, true, user_id, club_id]);
-    }
+database.setManagerState = async (club_id, user_id, state) => {
+    const sql = "UPDATE club_memberships SET is_manager = ? WHERE user_id = ? AND club_id = ?;";
+    await database.query(sql, [state, user_id, club_id]);
 };
 
 

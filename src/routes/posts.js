@@ -10,9 +10,6 @@ const router = express.Router();
 // returns array of posts
 router.get(
     "/get_all_public_posts",
-    validator.checkSchema({
-
-    }),
     async (req, res, next) => {
         try {
             let sql = `SELECT * FROM club_posts WHERE is_private = 0 ORDER BY creation_time DESC;`;
@@ -52,7 +49,6 @@ router.get(
 
 // === get posts from user subscribed clubs ===
 // permission isAuthenticated
-// permission isMember
 // returns array of posts
 router.get(
     "/get_subscribed_club_posts",
@@ -73,7 +69,7 @@ router.get(
             res.json(rows);
         } catch (err) {
             console.error(err);
-            return res.sendStatus(500);
+            res.sendStatus(500);
         }
     }
 );
@@ -158,8 +154,7 @@ router.post(
     validator.checkSchema({
         title: schemas.title,
         content: schemas.text,
-        is_private: schemas.is_private,
-        club_id: schemas.club_id
+        is_private: schemas.is_private
     }),
     async (req, res, next) => {
         try {

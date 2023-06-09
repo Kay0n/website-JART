@@ -22,6 +22,7 @@ const getSchemaErrors = (req) => {
 const returnSchemaErrors = (req, res) => {
     const errorMessages = getSchemaErrors(req);
     if (errorMessages.length) {
+        console.error(req.body);
         console.error(errorMessages);
         res.status(400).json({ errorMessages });
         return true;
