@@ -10,7 +10,8 @@ const database = {};
 
 // create pool of connections for app use
 const pool = mysql.createPool({
-    host: "127.0.0.1",
+    host: "localhost",
+    user: "root",
     database: "wdcproject",
     connectionLimit: 10
 });

@@ -4,12 +4,9 @@
   "description": "Shared Repo - 2023 WDC Project.",
   "main": "src/app.js",
   "scripts": {
-    "prestart": "service mysql start",
     "start": "node src/app.js",
-    "predev": "service mysql start",
     "dev": "nodemon --watch src -e '*' src/app.js",
-    "presetup": "service mysql start",
-    "setup": "mysql < schema.sql;"
+    "setup": "mysql -u root < schema.sql;"
   },
   "keywords": [],
   "author": "",
@@ -29,6 +26,6 @@
     "passport-local": "^1.0.0"
   },
   "devDependencies": {
-    "nodemon": "^2.0.22"
+    "nodemon": "^3.1.0"
   }
 }

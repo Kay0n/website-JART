@@ -110,3 +110,6 @@ dist
 
 # VSCode configs
 .vscode/
+
+# mysql dir
+mysql
