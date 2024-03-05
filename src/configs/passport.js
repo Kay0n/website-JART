@@ -8,7 +8,7 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const GoogleStrategy = require("passport-google-oauth2").Strategy;
 const database = require("./database.js");
-const passwordUtils = require("./bcrypt.js");
+require('dotenv').config();
 
 
 // settings for strategies
@@ -17,8 +17,8 @@ const localOptions = {
     passwordField: "password"
 };
 const googleOptions = {
-    clientID: "762330984825-6du48rjium3fuq8118ketappimpeqpvj.apps.googleusercontent.com" ,
-    clientSecret: "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",
+    clientID: process.env.GOOGLE_CLIENT_ID ,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     callbackURL: "http://localhost:8080/auth/google"
 };
 
